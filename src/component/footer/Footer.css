@@ -34,10 +34,12 @@
     margin: 3px;
 }
 
+
 /* -----------footer-2--------- */
 
 .footer-2 {
     padding-left: 50px;
+
 }
 
 .footer-2 p {
@@ -132,6 +134,7 @@
     .footer-section {
         height: 100%;
         width: 100%;
+        margin-bottom: 0;
     }
 
     .footer-1 {
@@ -154,6 +157,10 @@
         margin: 0;
     }
 
+    .media-icon:hover {
+        color: orangered;
+    }
+
     /* -----------footer-2--------- */
     .footer-2 {
         padding: 0;
@@ -173,6 +180,10 @@
     .footer-2 ul li {
         font-size: 10px;
         cursor: pointer;
+    }
+
+    .footer-2 ul li:hover {
+        color: #ff9706;
     }
 
     /* -----------footer-3--------- */
