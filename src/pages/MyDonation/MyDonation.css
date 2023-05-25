@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap');
+
+table{
+        border-collapse: separate;
+        border-spacing: 0 25px;
+      
+      }
+thead th{
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+}
+tbody{
+    background-color: #F0F0F0;
+    height: 60px;
+    
+}
+tbody tr{
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 10px;
+    outline: 1px gray;
+    
+}
+tbody a{
+    color: var(--main-color);
+}
+
+/* --------mediaQuery---------- */
+
+@media screen and (max-width: 568px) {
+    
+}

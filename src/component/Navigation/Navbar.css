@@ -1,0 +1,173 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-color: #009368;
+  --main-color2: #fff;
+}
+
+/* ------Top-strip-Nav------ */
+
+.top-strip {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  background-color: var(--main-color);
+  height: 30px;
+  padding-left: 50px;
+}
+
+.top-strip-connect {
+  color: var(--main-color2);
+  text-decoration: none;
+  padding: 15px;
+}
+
+.left span {
+  font-size: 11px;
+  padding: 10px 0;
+}
+
+.right a {
+  font-size: 12px;
+  color: var(--main-color2);
+  padding: 10px 8px;
+}
+
+/* ----Navbar----- */
+
+.NavFont {
+  font-weight: 500;
+  color: var(--main-color2);
+  padding-right: 60px;
+}
+
+.NavbarMAin {
+  background: #004E37;
+}
+
+.logo {
+  padding-left: 14%;
+}
+
+.logo h4 {
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+
+.btn-donate {
+  background-color: transparent;
+  border: 1px solid;
+  border-radius: 6px;
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  margin-right: 60px;
+}
+
+/* -------listNav------- */
+
+.link-nav {
+  color: var(--main-color2);
+  text-decoration: none;
+  font-size: 12px;
+  padding: 15px;
+}
+
+.link-nav:hover {
+  color: rgb(240, 226, 75);
+  padding: 15px;
+}
+
+.listNav ul {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+  text-decoration: none;
+  list-style: none;
+}
+
+.listNav li {
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 18px;
+  text-align: left;
+}
+
+hr {
+  margin-left: 6%;
+  width: 95%;
+}
+
+
+.dropDownMain {
+  position: relative;
+}
+
+.dropDownMain ul.toggleDropdown {
+  display: none;
+  position: absolute;
+  width: 200px;
+  top: 40;
+  background-color: rgb(255, 255, 255);
+  list-style: none;
+  z-index: 2;
+  padding: 10px 0;
+}
+
+.dropDownMain ul.toggleDropdown .linkItem {
+  text-decoration: none;
+}
+
+
+.dropDownMain ul.toggleDropdown li {
+  padding: 8px 10px;
+  text-transform: capitalize;
+  color: #000;
+}
+
+.dropDownMain ul.toggleDropdown li:hover {
+  background-color: #e4e4e4;
+}
+
+.dropDownMain:hover ul.toggleDropdown {
+  display: block;
+}
+
+/* ---------Media query--------- */
+
+@media screen and (max-width: 568px) {
+  .navfont {
+    max-height: fit-content;
+    background-color: black;
+    width: 100%;
+    margin: 0;
+  }
+
+  .btn-donate {
+    background-color: transparent;
+    border: 2px solid;
+    margin-top: -90px;
+    margin-left: 89px;
+    border-radius: 1;
+  }
+
+  .navbar-collapse {
+    flex-basis: 100%;
+    flex-grow: 1;
+    align-items: center;
+    z-index: 2;
+  }
+}

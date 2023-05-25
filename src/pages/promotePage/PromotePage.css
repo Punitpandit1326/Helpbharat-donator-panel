@@ -1,0 +1,144 @@
+.promote-Count h3 {
+  padding: 0;
+}
+
+.socialIcon {
+  width: 65px;
+  height: 65px;
+  background-color: #0abd89a1;
+  text-align: center;
+  padding-top: 18px;
+  font-size: 30px;
+  margin: 10px 25px;
+  color: var(--main-color2);
+  border-radius: 2px;
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+.allboxes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stats-box {
+  margin-top: 40px;
+  width: 260px;
+  height: 208px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+.Facebook-stats p {
+  padding: 20px 29px;
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.leftlistRaised {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.listdiv li {
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding: 10px 31px;
+  list-style: none;
+}
+
+.listdiv2 p {
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding: 6px 29px;
+  list-style: none;
+}
+
+.D-btn {
+  margin: 46px 5px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.D-btn button {
+  width: 158px;
+  height: 44px;
+  border: none;
+  border-radius: 4px;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+}
+
+.addContbtn button {
+  border-radius: 4px;
+  border: none;
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 22px;
+  text-align: center;
+  padding: 10px;
+  background-color: #00a978;
+  color: var(--main-color2);
+  width: 217px;
+  height: 54px;
+}
+
+.tabl3 {
+  margin-top: -30px;
+  margin-bottom: 50px;
+}
+
+.tabl3 thead {
+  background-color: #eeeeee;
+  border-radius: 50px;
+}
+
+.tabl3 thead th {
+  padding: 20px 10px;
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  outline: none;
+}
+
+.tabl3 tbody tr td {
+  background-color: #fff;
+  border: none;
+  box-shadow: none;
+}
+
+.view-btn a {
+  text-decoration: none;
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 18px;
+  text-align: center;
+  padding: 8px 30px;
+  border: 2px solid #00a978;
+  border-radius: 20px;
+}
+
+.view-btn a:hover {
+  background-color: #00a978;
+  color: var(--main-color2);
+}

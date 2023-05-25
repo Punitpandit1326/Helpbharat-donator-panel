@@ -1,0 +1,245 @@
+.fundPage {
+  display: flex;
+  justify-content: center;
+  height: 375px;
+  width: 80%;
+  margin: 0 auto;
+  border: 2px solid #000;
+  border-radius: 10px;
+
+}
+
+.fundPage img {
+  margin: 20px 10px;
+}
+
+.fp-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fp-hero-section {
+  margin: 20px -20px;
+}
+
+.fp-hero-section h6 {
+  font-size: 22px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  text-align: left;
+}
+
+.fp-hero-section p {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  color: #656161;
+}
+
+.progressBarRow {
+  height: 13px;
+  width: 95%;
+}
+
+p.rup-fund {
+  margin-top: 30px;
+  color: #009368;
+  font-weight: 600;
+}
+
+p.rup-fund2 {
+  margin-left: 87%;
+  margin-top: -36px;
+  color: #009368;
+  font-weight: 600;
+}
+
+.dot {
+  padding-top: 15px;
+  color: #36383a;
+  font-size: 25px;
+}
+
+.rimage {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0 auto -190px;
+  white-space: nowrap;
+}
+
+.WalletSection {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border-right: 1px solid;
+  padding-right: 50px;
+}
+
+.ws-end {
+  border-right: none;
+}
+
+.p-wallet p {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.p-wallet h6 {
+  padding: 10px 20px;
+  margin: 0;
+}
+
+.icon-wallet-sec {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 10px;
+  font-size: 24px;
+  background-color: #e9e9e9;
+  text-align: center;
+  color: #33363f;
+  border-radius: 3.94px;
+}
+
+p.rup-fund3 {
+  margin-top: 30px;
+  color: #009368;
+  font-weight: 600;
+}
+
+p.rup-fund4 {
+  margin-left: 87%;
+  margin-top: -36px;
+  color: #009368;
+  font-weight: 600;
+}
+
+
+
+/* --------Container2Section------- */
+.fundPage2 {
+  margin-bottom: 30px;
+}
+
+.fundPage2 h6 {
+  width: 98%;
+}
+
+.fundPage2 p {
+  font-size: 16px;
+}
+
+.fundPage2 span {
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: #000000;
+}
+
+
+
+/* --------MediaQuery------- */
+
+@media screen and (max-width: 568px) {
+  .fundPage {
+    width: 98%;
+    height: 600px;
+    margin: 5% 1%;
+  }
+
+  .fundPage img {
+    margin: 20px 0px;
+    width: 100%;
+  }
+
+  .fundPage h6 {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    text-align: left;
+    padding: 75px 2px;
+    margin: 0;
+  }
+
+  .fundPage p {
+    font-size: 14px;
+    padding: 5px 0px;
+    position: absolute;
+    top: 383px;
+    left: 1px;
+  }
+
+  p.rup-fund {
+    margin-top: 115px;
+  }
+
+  p.rup-fund2 {
+    margin-top: 115px;
+    margin-left: 95%;
+  }
+
+  p.rup-fund3 {
+    margin-top: 144px;
+    padding-left: 79px;
+  }
+
+  p.rup-fund4 {
+    margin-top: 144px;
+    padding-left: 68%;
+  }
+
+  .fundPage span {
+    position: absolute;
+    bottom: 73px;
+    left: 62px;
+  }
+
+  .progressBarRow {
+    height: 13px;
+    margin: 80px 2px;
+    width: 95%;
+  }
+
+  .WalletSection {
+    border-right: none;
+  }
+
+  .walletsec-Icon {
+    display: none;
+  }
+
+  .walletsec-Icon2 {
+    display: none;
+  }
+
+  .fundPage p {
+    width: fit-content;
+    left: -70px;
+  }
+
+  p.rup-fund3 {
+    margin-top: 140px;
+    margin-left: 10px;
+    font-weight: 600;
+  }
+
+  p.large-para {
+    padding: 0;
+    width: 90%;
+    margin-top: 26px;
+    margin-left: 84px;
+  }
+
+  .WalletSection {
+    display: none;
+  }
+
+  .dot {
+    display: none;
+  }
+
+  span.raised-2 {
+    position: absolute;
+    bottom: 50px;
+    left: 67px;
+  }
+}
