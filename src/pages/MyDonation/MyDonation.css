@@ -1,34 +1,74 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap');
 
-table{
-        border-collapse: separate;
-        border-spacing: 0 25px;
-      
-      }
-thead th{
-    font-family: 'Inter', sans-serif;
-    font-size: 20px;
-    font-weight: 400;
+table {
+    border-collapse: separate;
+    border-spacing: 0 15px;
+
 }
-tbody{
-    background-color: #F0F0F0;
-    height: 60px;
-    
+
+thead {
+    background-color: #DFDFDF;
 }
-tbody tr{
-    font-family: 'Inter', sans-serif;
-    font-size: 20px;
+
+.table thead th {
+    border: none;
+    height: 55px;
+    margin: 0;
+    padding-bottom: 13px;
+}
+
+.table tbody {
+    border-top: 1px solid black;
+}
+
+tbody,
+td,
+th,
+tr {
+    border-top: 1px solid #E0E0E0;
+    border-bottom: 1px solid #E0E0E0;
+
+}
+
+tr td:nth-child(2) {
+    color: #00A978;
+    text-decoration: underline;
+    font-family: Inter;
     font-weight: 500;
-    border-radius: 10px;
-    outline: 1px gray;
-    
 }
-tbody a{
-    color: var(--main-color);
+
+tr td {
+    font-family: Inter;
+    font-weight: 500;
+}
+
+th:first-child {
+    border-left: 1px solid #E0E0E0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+}
+
+.anchor:last-child {
+    border-right: 1px solid #E0E0E0;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: center;
+
+
+}
+
+.anchor a {
+    text-align: center;
+    text-decoration: underline;
+    color: #00A978;
+    font-size: 15px;
+    font-family: Inter;
+    font-weight: 500;
+
+
 }
 
 /* --------mediaQuery---------- */
 
-@media screen and (max-width: 568px) {
-    
-}
+@media screen and (max-width: 568px) {}

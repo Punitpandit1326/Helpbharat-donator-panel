@@ -66,7 +66,9 @@ const Footer = () => {
                     </Row>
                 </Container>
             </div>
-
+            <div className='footer-strip'>
+                <p> © 2022 Helpbharat. All Rights Reserved.</p>
+            </div>
 
         </>
     )

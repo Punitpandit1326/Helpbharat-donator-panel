@@ -19,8 +19,8 @@ const CustomTab = ({ activeLink }) => {
             class: 'MyDonation'
         },
         {
-            name: "My Withdrawals",
-            class: 'MyWithdrawels'
+            name: "My Comments",
+            class: 'mycomments'
         },
     ]
 

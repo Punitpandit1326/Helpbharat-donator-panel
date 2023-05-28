@@ -19,13 +19,11 @@ const Myprofile = () => {
 
     return (
         <div style={{ backgroundColor: '#F5F5F5' }}>
-
             <CustomTab activeLink={"myprofile"} />
 
             {/* --------AccordianSection----------- */}
 
             <Container>
-
                 <Accordion defaultActiveKey="0">
                     <Accordion.Item eventKey="0">
                         <Accordion.Header
@@ -138,8 +136,9 @@ const Myprofile = () => {
                             </Form>
                         </Accordion.Body>
                     </Accordion.Item>
+                    <br />
                     <Accordion.Item eventKey="1">
-                        <Accordion.Header>Update Password</Accordion.Header>
+                        <Accordion.Header><h6>Update Password</h6></Accordion.Header>
                         <Accordion.Body>
                             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                                 <Row className="mb-3">
@@ -168,8 +167,8 @@ const Myprofile = () => {
                                         <Form.Label>Confirm Password</Form.Label>
                                         <Form.Control
                                             required
-                                            type="text"
-                                            placeholder="password"
+                                            type="password"
+                                            placeholder="Confirm Password"
                                             defaultValue=""
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -177,6 +176,62 @@ const Myprofile = () => {
                                     <div className='d-flex justify-content-end'>
                                         <Button className='border-0'
                                             style={{ backgroundColor: '#00A978', width: '185px', height: '51px', fontFamily: 'Inter', fontWeight: '600', fontFamily: '12px' }}>
+                                            Save Settings</Button>
+                                    </div>
+                                </Row>
+                            </Form>
+                        </Accordion.Body>
+                    </Accordion.Item>
+                    <br />
+                    <Accordion.Item eventKey="2">
+                        <Accordion.Header><h6>KYC & Bank Details</h6></Accordion.Header>
+                        <Accordion.Body>
+                            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                                <Row className="mb-3">
+                                    <Form.Group as={Col} md="6" controlId="validationCustom01">
+                                        <Form.Label>Bank Name</Form.Label>
+                                        <Form.Control
+                                            required
+                                            type="text"
+                                        />
+                                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                    </Form.Group>
+                                    <Form.Group as={Col} md="6" controlId="validationCustom02">
+                                        <Form.Label>Bank Account No.</Form.Label>
+                                        <Form.Control
+                                            required
+                                            type="telnumber"
+                                        />
+                                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                        <br />
+                                    </Form.Group>
+                                    <Form.Group as={Col} md="6" controlId="validationCustom02">
+                                        <Form.Label>IFSC Code</Form.Label>
+                                        <Form.Control
+                                            required
+                                            type="telnumber"
+                                        />
+                                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                    </Form.Group>
+                                    <Form.Group as={Col} md="6" controlId="validationCustom02">
+                                        <Form.Label>Branch Name</Form.Label>
+                                        <Form.Control
+                                            required
+                                            type="text"
+                                        />
+                                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                        <br />
+                                    </Form.Group>
+                                    <Form.Group controlId="formFile" className="mb-3">
+                                        <Form.Label>Upload Cancel Cheque</Form.Label>
+                                        <Form.Control type="file" />
+                                        <span
+                                            style={{ fontSize: '10px', fontWeight: '500', paddingLeft: '5px' }}>Please Upload max size of file is 2mb</span>
+                                    </Form.Group>
+
+                                    <div className='d-flex justify-content-end'>
+                                        <Button className='border-0'
+                                            style={{ backgroundColor: '#00A978', width: '185px', height: '51px', fontFamily: 'Inter', fontWeight: '700', fontFamily: '12px' }}>
                                             Save Settings</Button>
                                     </div>
                                 </Row>

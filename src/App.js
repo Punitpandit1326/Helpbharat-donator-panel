@@ -5,7 +5,7 @@ import Navigation from './component/Navigation/Navbar';
 import Myprofile from './pages/Myprofile/Myprofile';
 import Myfundraiser from './pages/Myfundraiser/Myfundraiser';
 import MyDonation from './pages/MyDonation/MyDonation';
-import MyWithdraw from './pages/withdraw/MyWithdraw';
+import MyComments from './pages/MyComments/MyComments';
 import DonationTab from './pages/DonationTab/DonationTab';
 import EditDonationTab from './pages/EditDonationTab/EditDonationTab';
 import DonationDetails from './pages/dontionDetails/DonationDetails';
@@ -27,7 +27,7 @@ function App() {
         <Route path='myprofile' element={<Myprofile />} />
         <Route path='myfundraiser' element={<Myfundraiser />} />
         <Route path='mydonation' element={<MyDonation />} />
-        <Route path='mywithdrawels' element={<MyWithdraw />} />
+        <Route path='mycomments' element={<MyComments />} />
         <Route path='donationtab' element={<DonationTab />} />
         <Route path='editdonationtab' element={<EditDonationTab />} />
         <Route path='donationdetails' element={<DonationDetails />} />
