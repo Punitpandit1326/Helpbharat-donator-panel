@@ -171,7 +171,7 @@ const DonationTab = () => {
 
             {/* ---------DocumentSection--------     */}
 
-            <Container Container className='DocumentSection' >
+            <Container className='DocumentSection' >
                 <div className="d-head">
                     <h5>Document</h5>
                 </div>
@@ -254,9 +254,9 @@ const DonationTab = () => {
 
             {/* --------FooterSection----------- */}
 
-            <div div >
+            <div>
                 <Footer />
-            </div >
+            </div>
         </>
     )
 }
