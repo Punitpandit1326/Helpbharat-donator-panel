@@ -1,13 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:ital,wght@0,300;0,400;1,300;1,400&family=Prata&display=swap');
 
 .accordion-item:first-of-type .accordion-button {
-  background-color: #CACACA3D;
   color: #000;
+  background-color: #CACACA3D;
+  position: relative;
+  z-index: 1;
 }
-
-/* .main-child {
-  width: 82%;
-} */
 
 .main-child-row {
   padding-top: 20px;

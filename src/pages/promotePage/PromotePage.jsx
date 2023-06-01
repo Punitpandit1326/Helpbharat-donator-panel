@@ -3,33 +3,28 @@ import './PromotePage.css';
 import { Container, Table, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaPencilAlt, FaDownload, FaRegCalendar, FaSortAmountDown, FaPlus } from 'react-icons/fa';
+import Footer from '../../component/footer/Footer';
 
 const PromotePage = () => {
     return (
         <>
             {/* -------TopHeaderSection---------- */}
 
-            <Container>
-                <div className="emptybox-2">
-                    <div className="emptybox3"></div>
-                    <div className="emptybox4"></div>
-                </div>
-            </Container>
-
             <Container className='mb-5'>
                 <Row>
-                    <Col lg={8} md={8}>
+                    <Col lg={9} md={9}>
                         <div className="dashboard">
                             <div className="listDash">
-                                <Link className='linkItem2 active' to={'/dashBoard'}><li>Dashboard</li></Link>
+                                <Link className='linkItem2' to={'/dashBoard'}><li>Dashboard</li></Link>
                                 <Link className='linkItem2' to={'/donationdb'}> <li>Donation</li></Link>
-                                <Link className='linkItem2' to={'/promotePage'}> <li>Promotions</li></Link>
+                                <Link className='linkItem2 active' to={'/promotePage'}> <li>Promotions</li></Link>
+                                <Link className='linkItem2' to={'/mywithdraw'}> <li>My Withdraw</li></Link>
                                 <Link className='linkItem2' to={'/setting'}><li>Settings</li></Link>
                             </div>
                         </div>
                     </Col>
-                    <Col lg={4} md={4}>
-                        <div className="edit-btn text-end">
+                    <Col lg={3} md={3}>
+                        <div className="edit-fund text-end">
                             <button>Edit Fundraiser <FaPencilAlt /></button>
                         </div>
                     </Col>
@@ -140,51 +135,56 @@ const PromotePage = () => {
 
                 <div className="D-btn">
                     <button><FaRegCalendar /> Date</button>
-                    <button style={{ marginRight: '58%' }}><FaSortAmountDown /> Sort Range </button>
+                    <button style={{ marginRight: '54%' }}><FaSortAmountDown /> Sort Range </button>
                     <div className="addContbtn">
                         <button>Add New Contact <FaPlus /></button>
                     </div>
 
                 </div>
 
-
-                <Table striped className='tabl3'>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email address</th>
-                            <th>Source</th>
-                            <th>Added On</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Nishant choudhary</td>
-                            <td><a href="#">Name@gmail.com</a></td>
-                            <td>Manual</td>
-                            <td>20/8/2022</td>
-                            <td className='view-btn'><a href="#">View</a></td>
-                        </tr>
-                        <tr>
-                            <td>Mithun</td>
-                            <td><a href="#">Name@gmail.com</a></td>
-                            <td>Manual</td>
-                            <td>20/8/2022</td>
-                            <td className='view-btn'><a href="#">View</a></td>
-                        </tr>
-                        <tr>
-                            <td>Ankit</td>
-                            <td><a href="#">Name@gmail.com</a></td>
-                            <td>Manual</td>
-                            <td>20/8/2022</td>
-                            <td className='view-btn'><a href="#">View</a></td>
-                        </tr>
-                    </tbody>
-                </Table>
-
+                <Container className='table-promote-section'>
+                    <Table striped className='tabl3'>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email address</th>
+                                <th>Source</th>
+                                <th>Added On</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Nishant choudhary</td>
+                                <td><a href="#" className='text-success'>Name@gmail.com</a></td>
+                                <td>Manual</td>
+                                <td>20/8/2022</td>
+                                <td className='view-btn'><a href="#">View</a></td>
+                            </tr>
+                            <tr>
+                                <td>Mithun</td>
+                                <td><a href="#" className='text-success'>Name@gmail.com</a></td>
+                                <td>Manual</td>
+                                <td>20/8/2022</td>
+                                <td className='view-btn'><a href="#">View</a></td>
+                            </tr>
+                            <tr>
+                                <td>Ankit</td>
+                                <td><a href="#" className='text-success'>Name@gmail.com</a></td>
+                                <td>Manual</td>
+                                <td>20/8/2022</td>
+                                <td className='view-btn'><a href="#">View</a></td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                </Container>
             </Container>
 
+            {/* --------FooterSection----------- */}
+
+            <div>
+                <Footer />
+            </div>
 
         </>
     )

@@ -147,8 +147,7 @@ const Myprofile = () => {
                                         <Form.Control
                                             required
                                             type="password"
-                                            placeholder="First name"
-                                            defaultValue=""
+                                            placeholder="Password"
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
@@ -157,8 +156,7 @@ const Myprofile = () => {
                                         <Form.Control
                                             required
                                             type="password"
-                                            placeholder="Last name"
-                                            defaultValue=""
+                                            placeholder="New Password"
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <br />
@@ -169,7 +167,6 @@ const Myprofile = () => {
                                             required
                                             type="password"
                                             placeholder="Confirm Password"
-                                            defaultValue=""
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>

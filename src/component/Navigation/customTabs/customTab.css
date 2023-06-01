@@ -13,7 +13,6 @@
 .customTabs.active {
   color: var(--main-color2);
   background-color: var(--main-color);
-  /* border-radius: 8px 0px 0px 8px; */
 }
 
 /* -------another-listNav------- */
@@ -62,7 +61,6 @@
     font-family: "Inter", sans-serif;
     font-size: 14px;
     font-weight: 300;
-    /* padding: 8px 10px; */
     line-height: 18px;
     width: fit-content;
     white-space: nowrap;

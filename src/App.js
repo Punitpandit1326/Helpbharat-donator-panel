@@ -14,6 +14,7 @@ import DashBoard from './pages/dashboard/DashBoard';
 import DonationDb from './pages/donationdb/DonationDb';
 import PromotePage from './pages/promotePage/PromotePage';
 import Setting from './pages/settings/Setting';
+import MyWithdraw from './pages/mywithdraw/MyWithdraw';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 
 
@@ -35,6 +36,7 @@ function App() {
         <Route path='dashboard' element={<DashBoard />} />
         <Route path='donationdb' element={<DonationDb />} />
         <Route path='promotepage' element={<PromotePage />} />
+        <Route path='mywithdraw' element={<MyWithdraw />} />
         <Route path='setting' element={<Setting />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>

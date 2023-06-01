@@ -3,7 +3,7 @@
 }
 
 .DonationCont hr {
-  margin: 10px -5px;
+  margin: 0 -5px;
   width: 97%;
 }
 
@@ -20,7 +20,6 @@
   text-align: center;
   padding: 15px 15px;
   font-size: 20px;
-
 }
 
 i.pecilIcon {
@@ -34,9 +33,8 @@ i.pecilIcon {
   border-radius: 5px;
 }
 
-
-
 /* ---------Donationleft-------- */
+
 .Imagesleft {
   margin-top: 10px;
   display: flex;
@@ -49,6 +47,10 @@ i.pecilIcon {
   justify-content: flex-start;
   gap: 60px;
   margin-top: 50px;
+}
+
+.Sectionleftt li.active {
+  border-bottom: 4px solid var(--main-color);
 }
 
 .Sectionleftt button {
@@ -75,12 +77,12 @@ i.pecilIcon {
 }
 
 .paraLeft p {
-  width: 90%;
+  padding-top: 20px;
   font-family: Poppins;
   font-size: 18px;
   font-weight: 400;
   line-height: 30px;
-  text-align: left;
+
 }
 
 .paraLeft img {
@@ -142,9 +144,6 @@ p.fraiserpara {
   margin-top: 30px;
 }
 
-
-
-
 .tr-donor {
   display: flex;
   justify-content: space-between;
@@ -181,7 +180,7 @@ p.fraiserpara {
 
 .donarInfo p {
   font-family: Poppins;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 400;
   margin: 0;
 }
@@ -201,7 +200,8 @@ p.donoted-inr {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 24px -9px;
+  margin: 24px 0;
+  padding: 0;
 }
 
 .donate-btn-price button {
@@ -221,7 +221,8 @@ p.donoted-inr {
 
 .donate-form {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .donate-form input {
@@ -310,16 +311,16 @@ p.donoted-inr {
 }
 
 .donate-Now2 {
-  width: 444px;
-  height: 65px;
-  font-size: 22px;
+  width: 100%;
+  height: 60px;
+  font-size: 20px;
   font-weight: 600;
   border-radius: 8px;
   background-color: #00a978;
   color: var(--main-color2);
   font-family: "Poppins", sans-serif;
   border: none;
-  margin: 20px 10px;
+  margin: 20px 0;
 }
 
 .donate-Now2:hover {
@@ -431,9 +432,86 @@ p.donoted-inr {
 
 .fontAwesomeSec p {
   font-family: Poppins;
-  font-size: 18px;
+  font-size: 1.12rem;
   font-weight: 500;
   line-height: 23px;
   text-align: left;
   padding-top: 10px;
+}
+
+@media screen and (max-width: 568px) {
+  .DonationCont h1 {
+    margin: 0;
+    font-size: 1.12rem;
+  }
+
+  i.pecilIcon {
+    right: 20px;
+  }
+
+  .pecilIcon {
+    font-size: 1.12rem;
+    padding: 10px 10px;
+  }
+
+  .Sectionleftt {
+    width: 100%;
+    overflow: scroll;
+  }
+
+  .Sectionleftt::-webkit-scrollbar {
+    display: none;
+  }
+
+  .paraLeft {
+    width: 100%;
+  }
+
+  .paraLeft p {
+    width: 100% !important;
+    font-size: 1rem !important;
+  }
+
+  .DonationRight {
+    width: 97%;
+    padding: 0;
+    margin: 20px 7px;
+    border-radius: 4px;
+    border: 1px solid #000;
+  }
+
+  .DonationRight h2 {
+    font-size: 1.375rem;
+  }
+
+  .BlackBox {
+    width: 56px;
+    height: 56px;
+  }
+
+  .BlackBox h4 {
+    font-size: 2rem;
+  }
+
+  .tr-donor p {
+    font-size: 1.375rem;
+  }
+
+  .donorInfo-main {
+    padding: 0 !important;
+  }
+
+  .donate-btn-price {
+    width: 95%;
+    margin: 10px 10px;
+  }
+
+  .donate-form {
+    flex-direction: column;
+  }
+
+  .donate-form input {
+    width: 95%;
+    margin-left: 10px;
+  }
 }

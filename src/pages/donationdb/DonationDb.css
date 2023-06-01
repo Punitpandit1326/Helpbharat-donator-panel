@@ -1,67 +1,9 @@
-/* -------TopHeaderSection---------- */
-
-.emptybox-2 {
-  display: flex;
-  justify-content: center;
-  gap: 60px;
-  padding-top: 40px;
-  margin-bottom: 20px;
-}
-
-.emptybox3 {
-  height: 200px;
-  width: 620px;
-  background-color: #d9d9d9;
-}
-
-.emptybox4 {
-  height: 200px;
-  width: 620px;
-  background-color: #d9d9d9;
-}
-
-.dashboard2 {
-  margin: 50px 100px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.listDash2 {
-  display: flex;
-  justify-content: space-between;
-}
-
-.listDash2 li {
-  margin-top: 20px;
-  list-style: none;
-  padding: 0 40px;
-  font-family: Inter;
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 24px;
-  text-align: center;
-}
-
-.edit-btn button {
-  margin-right: -1px;
-  font-family: Inter;
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 24px;
-  letter-spacing: 0em;
-  text-align: left;
-  padding: 16px 45px;
-  border-radius: 5px;
-  background-color: #e99e01;
-  border: none;
-  color: var(--main-color2);
-}
-
+*/
 /* -----------DashboardHeroSection----------- */
 
-h3 {
+.export-Cont h3 {
   font-family: Poppins;
-  font-size: 34px;
+  font-size: 30px;
   font-weight: 600;
   line-height: 36px;
   text-align: left;
@@ -74,11 +16,9 @@ h3 {
 }
 
 .export-Sec p {
-  margin: -10px 0;
   font-family: Inter;
   font-size: 18px;
   font-weight: 400;
-
 }
 
 .export-Sec button {
@@ -103,7 +43,7 @@ h3 {
 }
 
 .Btn-SecTion {
-  margin: 40px 0px;
+  margin: 30px 10px;
   display: flex;
   justify-content: space-between;
 }
@@ -140,25 +80,18 @@ h3 {
   padding-top: 15px;
 }
 
-.tabl2 {
-  padding: 0px 12px;
-}
-
-.tabl2 thead {
+.donation-table thead {
   background-color: #eeeeee;
-  border-radius: 50px;
+  border-radius: 8px;
 }
 
-.tabl2 thead th {
-  padding: 20px 10px;
+.donation-table thead th {
   font-family: Inter;
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 24px;
-  outline: none;
+  font-size: 18px;
+  font-weight: 600;
 }
 
-.tabl2 tbody tr td {
+.donation-table tbody tr td {
   background-color: #fff;
   border: none;
   box-shadow: none;
@@ -184,4 +117,59 @@ h3 {
   line-height: 22px;
   letter-spacing: 0em;
   text-align: center;
+}
+
+@media screen and (max-width: 568px) {
+  .export-Cont {
+    margin: 20px 0;
+  }
+
+  .export-Sec {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin: 35px 0px;
+  }
+
+  .export-Sec p {
+    font-size: 1rem;
+  }
+
+  .export-Cont span {
+    font-size: 18px;
+  }
+
+  .Btn-SecTion {
+    width: 95%;
+    margin: 30px 3px;
+  }
+
+  .table-container-section {
+    overflow: scroll;
+    padding: 0;
+  }
+
+  .donation-table thead th {
+    font-size: 16px;
+    white-space: nowrap;
+  }
+
+  .donation-table tr td a {
+    white-space: nowrap;
+    color: var(--main-color);
+  }
+
+  .donation-table tr td:nth-child(2) {
+    color: black;
+  }
+
+  .right_BtN {
+    flex-direction: column;
+  }
+
+  .right_BtN button {
+    width: 97%;
+    white-space: nowrap;
+  }
 }

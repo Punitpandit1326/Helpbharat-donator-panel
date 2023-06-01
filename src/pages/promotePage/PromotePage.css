@@ -112,18 +112,22 @@
 }
 
 .tabl3 thead th {
-  padding: 20px 10px;
+  padding: 15px 10px;
   font-family: Inter;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   line-height: 24px;
   outline: none;
 }
 
 .tabl3 tbody tr td {
-  background-color: #fff;
+  background-color: var(--main-color2);
   border: none;
   box-shadow: none;
+}
+
+.view-btn {
+  text-align: end;
 }
 
 .view-btn a {
@@ -133,7 +137,8 @@
   font-weight: 500;
   line-height: 18px;
   text-align: center;
-  padding: 8px 30px;
+  padding: 8px 40px;
+  color: var(--main-color);
   border: 2px solid #00a978;
   border-radius: 20px;
 }
@@ -141,4 +146,47 @@
 .view-btn a:hover {
   background-color: #00a978;
   color: var(--main-color2);
+}
+
+/* ---------mediaQuery---------- */
+
+@media screen and (max-width: 568px) {
+  .socialIcon {
+    width: 55px;
+    height: 55px;
+    padding-top: 15px;
+    font-size: 24px;
+    margin: 5px 10px;
+  }
+
+  .allboxes {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+  }
+
+  .D-btn {
+    flex-wrap: wrap;
+  }
+
+  .table-promote-section {
+    overflow: scroll;
+  }
+
+  .table thead th {
+    height: 65px;
+  }
+
+  .tabl3 tr td {
+    white-space: nowrap;
+  }
+
+  .tabl3 thead th {
+    font-size: 16px;
+  }
+
+  .tabl3 {
+    margin: 0;
+  }
 }

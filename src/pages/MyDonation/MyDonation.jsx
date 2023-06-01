@@ -1,8 +1,8 @@
 import React from 'react';
 import './MyDonation.css';
-import { Table, Button, Container, Row, Col, Nav, Navbar, Accordion } from 'react-bootstrap';
+import { Container, Accordion } from 'react-bootstrap';
 import CustomTab from '../../component/Navigation/customTabs/CustomTab';
-
+import Footer from '../../component/footer/Footer';
 
 const MyDonation = () => {
   return (
@@ -18,8 +18,8 @@ const MyDonation = () => {
             <Accordion.Header>My Donations</Accordion.Header>
             <Accordion.Body>
               <div className="row w-100 m-0">
-                <div className="col-12">
-                  <table responsive="sm" class="table">
+                <div className="col-12 table-section">
+                  <table responsive="sm" className="table">
                     <thead className='pb-5'>
                       <tr>
                         <th>
@@ -81,6 +81,13 @@ const MyDonation = () => {
           </Accordion.Item>
         </Accordion>
       </Container>
+
+      {/* --------FooterSection----------- */}
+
+      <div>
+        <Footer />
+      </div>
+
     </>
   );
 }

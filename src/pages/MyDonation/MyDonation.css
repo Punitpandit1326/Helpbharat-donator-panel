@@ -30,7 +30,7 @@ tr {
 
 }
 
-tr td:nth-child(2) {
+.table tr td:nth-child(2) {
     color: #00A978;
     text-decoration: underline;
     font-family: Inter;
@@ -71,4 +71,14 @@ th:first-child {
 
 /* --------mediaQuery---------- */
 
-@media screen and (max-width: 568px) {}
+@media screen and (max-width: 568px) {
+
+    .table-section {
+        overflow: hidden;
+        overflow-x: scroll;
+    }
+
+    table {
+        width: 100%;
+    }
+}

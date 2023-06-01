@@ -1,0 +1,127 @@
+.hero-withdraw-section {
+    height: 322px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 8px;
+    border: 1px solid #E1DEDE;
+    background-color: #FBFBFB;
+}
+
+.hero-withdraw-section p {
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.hero-withdraw-section h5 {
+    font-family: Inter;
+    font-size: 50px;
+    font-weight: 500;
+}
+
+.hero-withdraw-section h6 {
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.hero-withdraw-section a {
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+    color: var(--main-color);
+}
+
+.req-btn {
+    margin-top: 10px;
+    width: 327px;
+    height: 54px;
+    border-radius: 5px;
+    background-color: var(--main-color);
+    border: none;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--main-color2);
+}
+
+h6.past-withdraw {
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 600;
+    padding-top: 20px;
+}
+
+/* -------Table-Section------- */
+
+table .table2 {
+    border-collapse: collapse;
+}
+
+.table2 thead th:nth-child(4) {
+    height: 55px;
+    padding-bottom: 15px;
+    border-top-Right-radius: 8px;
+    border-bottom-Right-radius: 8px;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+    box-shadow: none;
+}
+
+.table2 tbody td:nth-child(1) {
+    border-left: 1px solid #E0E0E0;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.table2 tbody td a {
+    color: #00A978;
+}
+
+.table2 tbody td:nth-child(4) {
+    border-right: 1px solid #E0E0E0;
+    border-top-Right-radius: 8px;
+    border-bottom-Right-radius: 8px;
+}
+
+p.table-footer {
+    width: 90%;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 600;
+    padding-top: 20px;
+}
+
+
+@media screen and (max-width: 568px) {
+    .hero-withdraw-section {
+        width: 96%;
+        margin-left: 10px;
+    }
+
+    .withdraw-table-section {
+        overflow: scroll;
+    }
+
+    .table2 th {
+        white-space: nowrap;
+    }
+
+    .table2 tbody td a {
+        white-space: nowrap;
+    }
+
+    .endSection {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .endSection button {
+        height: auto;
+        padding: 10px 0;
+    }
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import './MyComments.css';
 import CustomTab from '../../component/Navigation/customTabs/CustomTab';
 import { Accordion, Container, Row, Col } from 'react-bootstrap';
+import Footer from '../../component/footer/Footer';
 
 
 const MyComments = () => {
@@ -48,6 +49,7 @@ const MyComments = () => {
               </Row>
             </Accordion.Body>
           </Accordion.Item>
+          <br />
           <Accordion.Item eventKey="1">
             <Accordion.Header> <h6 className='text-decoration-underline text-success'>Plant Tree, Save Earth & Lives Secure the Future</h6></Accordion.Header>
             <Accordion.Body>
@@ -56,6 +58,12 @@ const MyComments = () => {
           </Accordion.Item>
         </Accordion>
       </Container>
+
+      {/* --------FooterSection----------- */}
+
+      <div>
+        <Footer />
+      </div>
     </>
   )
 }

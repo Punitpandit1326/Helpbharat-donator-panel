@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Footer from '../../component/footer/Footer';
 import './DonationTab.css'
 import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -25,20 +26,17 @@ const DonationTab = () => {
                         <img style={{ width: '97%' }} src={activeImage} alt="Image" />
 
                         <div className='Imagesleft'>
-
                             <img style={{ width: '80px' }} src="/Image/Img1.png" alt="Image" onClick={() => setActiveImage("/Image/Img1.png")} />
                             <img style={{ width: '80px' }} src="/Image/Img5.png" alt="Image" onClick={() => setActiveImage("/Image/Img5.png")} />
                             <img style={{ width: '80px' }} src="/Image/Img3.png" alt="Image" onClick={() => setActiveImage("/Image/Img3.png")} />
                             <img style={{ width: '80px' }} src="/Image/Img4.png" alt="Image" onClick={() => setActiveImage("/Image/Img4.png")} />
-
-
                         </div>
 
                         <div className="Sectionleftt">
-                            <li onClick={() => setActiveTab("About")}> About</li>
-                            <li onClick={() => setActiveTab("Documents")}>Documents</li>
-                            <li onClick={() => setActiveTab("Updates")}>Updates</li>
-                            <li onClick={() => setActiveTab("Comments")}>Comments</li>
+                            <li className={activeTab === "About" && 'active'} onClick={() => setActiveTab("About")}> About</li>
+                            <li className={activeTab === "Documents" && 'active'} onClick={() => setActiveTab("Documents")}>Documents</li>
+                            <li className={activeTab === "Updates" && 'active'} onClick={() => setActiveTab("Updates")}>Updates</li>
+                            <li className={activeTab === "Comments" && 'active'} onClick={() => setActiveTab("Comments")}>Comments</li>
                         </div>
                         <hr />
 
@@ -140,8 +138,7 @@ const DonationTab = () => {
                             <p className='donoted-inr'>8 nov 2022</p>
                         </div>
                         }
-
-                        <div className="btn donate-btn-price">
+                        <div className="donate-btn-price">
                             <button>₹500</button>
                             <button>₹1000</button>
                             <button>₹1500</button>
@@ -172,10 +169,9 @@ const DonationTab = () => {
                 </Row>
             </Container>
 
-
             {/* ---------DocumentSection--------     */}
 
-            <Container className='DocumentSection'>
+            <Container Container className='DocumentSection' >
                 <div className="d-head">
                     <h5>Document</h5>
                 </div>
@@ -255,6 +251,12 @@ const DonationTab = () => {
                     </Col>
                 </Row>
             </Container>
+
+            {/* --------FooterSection----------- */}
+
+            <div div >
+                <Footer />
+            </div >
         </>
     )
 }
