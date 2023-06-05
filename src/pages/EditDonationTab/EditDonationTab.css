@@ -48,11 +48,6 @@
   margin-top: 40px;
 }
 
-/* .DonationCont hr {
-  margin: 10px -5px;
-  width: 97%;
-} */
-
 .DonationLeft2 {
   margin-top: 50px;
 }
@@ -77,9 +72,14 @@
   border: none;
 }
 
-.Sectionleftt button:active {
+
+.Sectionleftt li.active-tab {
   border-bottom: 2px solid var(--main-color);
-  padding-top: 10px;
+  /* padding-top: 10px; */
+}
+
+.Sectionleftt li:hover {
+  padding: none;
 }
 
 .paraLeft p {
@@ -185,9 +185,6 @@ input[type="text"]#fund-input0 {
   border-radius: 5px;
 }
 
-
-
-
 .topdonor2 {
   display: flex;
   justify-content: space-between;
@@ -196,7 +193,7 @@ input[type="text"]#fund-input0 {
 
 .topdonor2 p {
   font-family: Poppins;
-  font-size: 25px;
+  font-size: 22px;
   font-weight: 600;
   line-height: 27px;
   padding-bottom: 10px;
@@ -459,4 +456,98 @@ input[type="text"]#fund-input0 {
   line-height: 23px;
   text-align: left;
   padding-top: 10px;
+}
+
+@media screen and (max-width: 568px) {
+  .bottomNav p {
+    padding: 14px 5px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 0;
+    white-space: nowrap;
+  }
+
+  .bottomNav a {
+    margin: 4px;
+  }
+
+  .DonationCont {
+    margin-top: 15px;
+  }
+
+  .DonationCont2 h2 {
+    font-size: 18px;
+    margin: 0;
+    padding: 4px 8px;
+  }
+
+  .pencilIcon {
+    font-size: 14px;
+    margin-left: 8px;
+  }
+
+  .DonationLeft2 {
+    margin-top: 20px;
+  }
+
+  .DonationRight2 {
+    border: 1px solid #000;
+    margin-top: 20px;
+    border-radius: 7px;
+  }
+
+  .BlackBox2 {
+    width: 55px;
+    height: 55px;
+  }
+
+  .Blackbox2-main p {
+    font-size: 18px;
+  }
+
+  #fund-input0 {
+    margin-top: 8px;
+  }
+
+  .PriceDeatailsLeft {
+    padding: 0px 8px;
+    margin-top: 20px !important;
+  }
+
+  .topdonor2 p {
+    font-size: 18px;
+    margin: 0px 24px;
+    white-space: nowrap;
+  }
+
+  .supportfund2 {
+    height: auto;
+  }
+
+  .social-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
+    font-weight: 600;
+    padding-top: 12px;
+    margin-right: 0;
+  }
+
+  .supportfund h2 {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    padding: 0px;
+  }
+
+  .fontAwesomeSec p {
+    font-size: 14px;
+    font-weight: 400;
+    padding-top: 0;
+  }
+
+  .Imagesleft {
+    gap: 5px;
+    margin-top: 15px;
+  }
 }

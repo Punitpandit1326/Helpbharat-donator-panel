@@ -56,12 +56,17 @@
   padding-left: 14%;
 }
 
-.logo h4 {
+.logo-link {
   font-family: Inter;
   font-size: 20px;
   font-weight: 600;
+  color: var(--main-color2);
+  text-decoration: none;
 }
 
+.logo-link:hover {
+  color: var(--main-color2);
+}
 
 .btn-donate {
   background-color: transparent;
@@ -111,7 +116,6 @@ hr {
   width: 95%;
 }
 
-
 .dropDownMain {
   position: relative;
 }
@@ -123,14 +127,13 @@ hr {
   top: 40;
   background-color: rgb(255, 255, 255);
   list-style: none;
-  z-index: 2;
+  z-index: 4;
   padding: 10px 0;
 }
 
 .dropDownMain ul.toggleDropdown .linkItem {
   text-decoration: none;
 }
-
 
 .dropDownMain ul.toggleDropdown li {
   padding: 8px 10px;
@@ -149,6 +152,10 @@ hr {
 /* ---------Media query--------- */
 
 @media screen and (max-width: 568px) {
+  .top-strip {
+    display: none;
+  }
+
   .navfont {
     max-height: fit-content;
     background-color: black;

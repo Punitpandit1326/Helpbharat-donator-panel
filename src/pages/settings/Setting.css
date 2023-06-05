@@ -8,7 +8,7 @@
 
 .settingSection h4 {
   font-family: Inter;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
   padding: 20px 0;
 }
@@ -21,24 +21,24 @@
 }
 
 .curreny-section {
-  border: 1px solid #929292;
-  border-radius: 10px;
-  width: 360px;
-  height: 75px;
+  width: 320px;
+  height: 65px;
   display: flex;
   justify-content: space-between;
+  border-radius: 10px;
+  border: 1px solid #929292;
 }
 
 .curreny-section p {
   font-family: Inter;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
 }
 
 #dropoption2 {
   font-family: Inter;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 15px;
   border: none;
   color: #000;
   text-align: center;
@@ -57,7 +57,7 @@
 
 .endSection p {
   font-family: Inter;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: 0em;
   text-align: left;
@@ -69,7 +69,7 @@
   top: 46px;
   left: 18px;
   font-family: Inter;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
 }
 

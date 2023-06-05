@@ -60,22 +60,27 @@ const MyWithdraw = () => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Nishant</td>
-                            <td>20/8/2022</td>
-                            <td><a href="#">Save infant orphans with urgent .....</a></td>
+                            <td>20/05/2023</td>
+                            <td>₹1000</td>
+                            <td>N156200401494241</td>
                             <td>Paid</td>
                         </tr>
                         <tr>
-                            <td >Ankur</td>
-                            <td>@20/8/2022</td>
-                            <td><a href="#">Save infant orphans with urgent .....</a></td>
+                            <td>20/8/2022</td>
+                            <td >₹1000</td>
+                            <td>N156200401494241</td>
                             <td>Paid</td>
                         </tr>
                         <tr>
-                            <td>Mithun</td>
                             <td>20/8/2022</td>
-                            <td><a href="#">Save infant orphans with urgent .....
-                            </a></td>
+                            <td>₹1000</td>
+                            <td>-----</td>
+                            <td>Paid</td>
+                        </tr>
+                        <tr>
+                            <td>20/8/2022</td>
+                            <td>₹1000</td>
+                            <td>-----</td>
                             <td>Paid</td>
                         </tr>
                     </tbody>

@@ -78,8 +78,13 @@ table .table2 {
     border-bottom-left-radius: 8px;
 }
 
-.table2 tbody td a {
-    color: #00A978;
+.table2 tbody td:nth-child(2) {
+    text-decoration: none;
+    color: black;
+}
+
+.table2 tbody td:last-child {
+    color: var(--main-color);
 }
 
 .table2 tbody td:nth-child(4) {

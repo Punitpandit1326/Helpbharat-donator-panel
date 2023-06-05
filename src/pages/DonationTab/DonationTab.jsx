@@ -178,7 +178,7 @@ const DonationTab = () => {
                 <Row>
                     <Col xl={6} md={10} className='DocumentLeft' >
                         <div style={{ backgroundColor: '#EBEBEB' }}>
-                            <img style={{ width: '300px', height: "auto", marginLeft: '28%' }} src={activeDoc} alt="Image" />
+                            <img className='document-image-section' src={activeDoc} alt="Image" />
                         </div>
 
 

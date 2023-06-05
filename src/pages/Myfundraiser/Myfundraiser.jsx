@@ -1,11 +1,13 @@
 import React from 'react';
 import './Myfundraiser.css';
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
 import CustomTab from '../../component/Navigation/customTabs/CustomTab';
 import Accordion from 'react-bootstrap/Accordion';
 import Footer from '../../component/footer/Footer';
 
 const Myfundraiser = () => {
+  const navigate = useNavigate();
   return (
     <div style={{ backgroundColor: '#F5F5F5' }}>
       <CustomTab activeLink={"MyFundraiser"} />
@@ -27,14 +29,14 @@ const Myfundraiser = () => {
                     <p>Time stood still for 12-year-old Shrikant when he got the news that his father, a debt-ridden farmer from Beed, had taken his own life.<a href="#" className='text-success text-decoration-underline'>More</a> </p>
                     <div className="raised-section">
                       <h4>₹1700 <span>Raised</span></h4>
-                      <h3>Goal <span>₹5000</span></h3>
+                      <h3>Goal <span style={{ fontSize: '15px', fontWeight: '600', color: '#00A978' }}>₹5000</span></h3>
                     </div>
                     <ProgressBar variant="success" now={40} className='progress-bar-1' />
                   </Col>
                 </Row>
                 <div className='btn-view'>
-                  <button className='bg-white text-success' style={{ border: '1px solid #00A978' }}>View Dashboard</button>
-                  <button>Edit Fundraiser</button>
+                  <button className='bg-white text-success' onClick={() => navigate("/donationtab")} style={{ border: '1px solid #00A978' }}>View Dashboard</button>
+                  <button onClick={() => navigate("/editdonationtab")}>Edit Fundraiser</button>
                 </div>
 
               </Container>
@@ -52,12 +54,12 @@ const Myfundraiser = () => {
                     <p>Time stood still for 12-year-old Shrikant when he got the news that his father, a debt-ridden farmer from Beed, had taken his own life.<a href="#" className='text-success text-decoration-underline'>More</a> </p>
                     <div className="raised-section">
                       <h4>₹1700 <span>Raised</span></h4>
-                      <h3>Goal <span>₹5000</span></h3>
+                      <h3>Goal <span style={{ fontSize: '15px', fontWeight: '600', color: '#00A978' }}>₹5000</span></h3>
                     </div>
                     <ProgressBar variant="success" now={60} className='progress-bar-1' />
                   </Col>
                 </Row>
-                <div className='btn-view mx-auto'>
+                <div className='btn-view'>
                   <button className='bg-white text-success' style={{ border: '1px solid #00A978' }}>View Dashboard</button>
                   <button>Edit Fundraiser</button>
                 </div>
@@ -75,7 +77,7 @@ const Myfundraiser = () => {
       </div>
 
 
-    </div>
+    </div >
   )
 }
 

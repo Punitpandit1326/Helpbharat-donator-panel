@@ -10,7 +10,7 @@ const Navigation = ({ activeLink }) => {
       <div className="top-strip">
         <div className="left">
           <a href='javascript:void(0)' className='top-strip-connect'><i class="fas fa-phone"></i> <span>+1-206-156 2849</span></a>
-          <a href='javascript:void(0)' className='top-strip-connect'><i class="fas fa-envelope"></i> <span>info@harity.com</span></a>
+          <a href='javascript:void(0)' className='top-strip-connect'><i class="fas fa-envelope"></i> <span>info@helpbharat.com</span></a>
         </div>
         <div className="right ms-5">
           <ul>
@@ -23,7 +23,8 @@ const Navigation = ({ activeLink }) => {
       </div>
       <Navbar expand="lg" variant='dark' className='NavbarMAin' style={{ height: '79px' }}>
         <Container>
-          <Navbar.Brand href="#" className='logo'><h4>HelpBharat</h4></Navbar.Brand>
+          <Navbar.Brand href="#" className='logo'>
+            <h4><Link to={'/'} className='logo-link'>HelpBharat</Link></h4></Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -44,6 +45,7 @@ const Navigation = ({ activeLink }) => {
                   <Link className={'linkItem'} to={'dashboard'}> <li>Dashboard</li></Link>
                   <Link className={'linkItem'} to={'donationdb'}> <li>Dashboard Dontation</li></Link>
                   <Link className={'linkItem'} to={'promotepage'}> <li>Dashboard Promotion</li></Link>
+                  <Link className={'linkItem'} to={'mywithdraw'}> <li>My Withdrawals</li></Link>
                   <Link className={'linkItem'} to={'setting'}> <li>Dashboard Settings</li></Link>
                 </ul>
               </Link>

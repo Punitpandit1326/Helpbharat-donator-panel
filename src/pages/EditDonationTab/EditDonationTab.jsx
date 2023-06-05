@@ -44,10 +44,10 @@ const EditDonationTab = () => {
                         </div>
 
                         <div className="Sectionleftt">
-                            <li onClick={() => setActiveTab("About")}> About</li>
-                            <li onClick={() => setActiveTab("Documents")}>Documents</li>
-                            <li onClick={() => setActiveTab("Updates")}>Updates</li>
-                            <li onClick={() => setActiveTab("Comments")}>Comments</li>
+                            <li className={`${activeTab === 'About' ? 'active-tab' : ''}`} onClick={() => setActiveTab("About")}> About</li>
+                            <li className={`${activeTab === 'Documents' ? 'active-tab' : ''}`} onClick={() => setActiveTab("Documents")}>Documents</li>
+                            <li className={`${activeTab === 'Updates' ? 'active-tab' : ''}`} onClick={() => setActiveTab("Updates")}>Updates</li>
+                            <li className={`${activeTab === 'Comments' ? 'active-tab' : ''}`} onClick={() => setActiveTab("Comments")}>Comments</li>
                         </div>
                         <hr />
 
@@ -203,7 +203,7 @@ const EditDonationTab = () => {
                     </div>
                     <Col xl={6} md={10} className='DocumentLeft' >
                         <div style={{ backgroundColor: '#EBEBEB' }}>
-                            <img style={{ width: '300px', height: 'auto', marginLeft: '28%' }} src={activeDoc} alt="Image" />
+                            <img className='document-image-section' src={activeDoc} alt="Image" />
                         </div>
 
 
@@ -274,7 +274,7 @@ const EditDonationTab = () => {
                     </Col>
                 </Row>
             </Container>
-        </div>
+        </div >
     )
 }
 

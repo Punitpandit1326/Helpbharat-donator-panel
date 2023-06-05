@@ -53,7 +53,7 @@ const MyComments = () => {
           <Accordion.Item eventKey="1">
             <Accordion.Header> <h6 className='text-decoration-underline text-success'>Plant Tree, Save Earth & Lives Secure the Future</h6></Accordion.Header>
             <Accordion.Body>
-              <h1 className='d-flex justify-content-center'>No Comments Yet</h1>
+              <h5 className='d-flex justify-content-center my-5'>No Comments Yet</h5>
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>

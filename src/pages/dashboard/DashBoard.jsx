@@ -18,7 +18,7 @@ const DashBoard = () => {
   const [donarTab, setDonarTab] = useState(true)
 
   return (
-    <div style={{ backgroundColor: '#F5F5F5' }}>
+    <>
       {/* -------TopHeaderSection---------- */}
 
       <Container className='donation-head'>
@@ -190,7 +190,7 @@ const DashBoard = () => {
         <Footer />
       </div>
 
-    </div >
+    </>
   )
 }
 

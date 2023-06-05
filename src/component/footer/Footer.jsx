@@ -10,7 +10,7 @@ const Footer = () => {
         <>
             <div className='footer-section'>
                 <Container>
-                    <Row>
+                    <Row className='pt-4'>
                         <Col sm={12} md={4} lg={3}>
                             <div className='footer-1'>
                                 <h6>HelpBharat</h6>

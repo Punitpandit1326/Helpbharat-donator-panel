@@ -1,23 +1,27 @@
 /* -------TopHeaderSection---------- */
 
 .dashboard {
-  margin: 30px 0;
+  margin: 50px -5px;
   list-style: none;
   border-radius: 8px;
   overflow: hidden;
   background-color: var(--main-color2);
-  box-shadow: 0 2px 4px rgba(67, 65, 65, 0.5);
+  box-shadow: 0px 10px 25px rgba(33, 52, 48, 0.08);
 }
 
 .listDash {
+  height: 50px;
   display: flex;
   justify-content: space-between;
+  box-shadow: 0px 20px 25px rgba(76, 103, 100, 0.1);
 }
 
 .listDash li {
   font-family: "Inter", sans-serif;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .listDash li:nth-child(4) {
@@ -28,31 +32,24 @@
 .linkItem2 {
   text-decoration: none;
   color: #000000;
-  padding: 20px 36px;
+  padding: 15px 31px;
   width: 100%;
 }
 
 .linkItem2.active {
-  padding: 20px 36px;
-  width: 100%;
-  background-color: var(--main-color);
-  color: #fff;
-}
-
-.linkItem2:hover {
-  padding: 20px 36px;
+  padding: 15px 31px;
   width: 100%;
   background-color: var(--main-color);
   color: #fff;
 }
 
 .edit-fund button {
-  margin: 30px 0;
-  height: 40px;
+  width: 170px;
+  height: 50px;
+  margin: 50px 0;
   font-family: Inter;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 0 15px;
+  font-size: 15px;
+  font-weight: 600;
   border-radius: 5px;
   background-color: #e99e01;
   border: none;
@@ -72,34 +69,27 @@
   height: 130px;
   background-color: var(--main-color2);
   border-radius: 8px;
-  box-shadow: 0px 10px 25px rgba(33, 52, 48, 0.08);
+  box-shadow: 0px 10px 25px rgba(33, 52, 48, 0.12);
 }
 
 .HeroSectionBox p {
   margin: 10px;
   font-family: Inter;
-  font-size: 20px;
-  font-weight: 500;
-}
-
-.wallet-sec {
-  display: flex;
-  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .wallet-sec p {
   font-family: Inter;
   font-size: 40px;
   font-weight: 500;
-  letter-spacing: 0em;
-  text-align: left;
 }
 
 .lhs_row_container {
   align-items: flex-start;
   justify-content: space-between;
+  padding-top: 30px;
   margin: 0;
-  margin-top: 20px;
 }
 
 .lhs_row_container>.col-md-6 {
@@ -177,7 +167,6 @@
   font-family: Inter;
   left: 0;
   bottom: 32px;
-  text-shadow: 0 0 4px grey;
   color: black;
   position: absolute;
   width: 100%;
@@ -195,13 +184,14 @@
 }
 
 .donorInfo-main {
-  padding: 15px;
+  padding: 10px;
 }
 
 .donor-paragraph {
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
+  padding: 0 20px;
   position: relative;
 }
 
@@ -210,14 +200,16 @@
   font-family: Poppins;
   font-size: 18px;
   font-weight: 600;
-  border-bottom: 4px solid var(--main-color2);
   margin: 10px 20px;
+  cursor: pointer;
+  border-bottom: 4px solid var(--main-color2);
 }
 
 
 .donor-paragraph li.active {
   border-bottom: 5px solid #00A978;
   padding-bottom: 20px;
+  text-align: center;
 }
 
 .donor-paragraph::before {
@@ -361,7 +353,7 @@
 
   .edit-fund {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
   }
 
@@ -455,5 +447,14 @@
   .Donors-Section {
     width: 96%;
     margin-left: 6px;
+  }
+
+  .donor-paragraph {
+    padding: 0;
+    margin-top: 15px;
+  }
+
+  .donor-paragraph li {
+    white-space: nowrap;
   }
 }
