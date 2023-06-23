@@ -60,8 +60,8 @@ const Myfundraiser = () => {
                   </Col>
                 </Row>
                 <div className='btn-view'>
-                  <button className='bg-white text-success' style={{ border: '1px solid #00A978' }}>View Dashboard</button>
-                  <button>Edit Fundraiser</button>
+                  <button className='bg-white text-success' style={{ border: '1px solid #00A978' }} onClick={() => navigate("/donationtab")}>View Dashboard</button>
+                  <button onClick={() => navigate("/editdonationtab")}>Edit Fundraiser</button>
                 </div>
               </Container>
 

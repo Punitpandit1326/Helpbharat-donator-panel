@@ -11,7 +11,7 @@ const DonationTab = () => {
     const [activeImage, setActiveImage] = useState("/Image/Img1.png")
     const [activeDoc, setActiveDoc] = useState("/Image/doc1.png")
     const [activeTab, setActiveTab] = useState("About")
-    const [donarTab, setDonarTab] = useState("donorInfo-main")
+    const [donarTab, setDonarTab] = useState(true)
     const onClick = () => setShowStatements(prevShow => !prevShow)
     return (
         <>
@@ -83,7 +83,7 @@ const DonationTab = () => {
                     {/* --------RightSection---------- */}
 
                     <Col md={5} className='DonationRight'>
-                        <h2 style={{ margin: '20px' }}>Donate Now</h2>
+                        <h2>Donate Now</h2>
                         <div className='BlackBox-main'>
                             <div className='BlackBox'><h4>G</h4></div>
                             <p className='fraiserpara'>Fundraiser by Give</p>
@@ -101,13 +101,13 @@ const DonationTab = () => {
                         </div>
 
                         <div className='topdonor tr-donor'>
-                            <p className='t-donor' onClick={() => setDonarTab("donorInfo-main")}>Top Donors</p>
-                            <p className='r-donor'>Recent Donors</p>
+                            <p className={`${donarTab && 'active'}`} onClick={() => setDonarTab(true)}>Top Donors</p>
+                            <p className={`${!donarTab && 'active'}`} onClick={() => setDonarTab(false)}>Recent Donors</p>
 
                         </div>
                         <hr style={{ width: '94%', marginLeft: '20px' }} />
 
-                        {donarTab === "donorInfo-main" && <div className="donorInfo-main">
+                        {donarTab && <div className="donorInfo-main">
 
                             <div className="donarInfo">
                                 <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", }} /> <p>Someone donated INR <strong>500</strong></p>
@@ -138,6 +138,8 @@ const DonationTab = () => {
                             <p className='donoted-inr'>8 nov 2022</p>
                         </div>
                         }
+                        {!donarTab && <div className='recent-main'> Hello World</div>}
+
                         <div className="donate-btn-price">
                             <button>₹500</button>
                             <button>₹1000</button>
@@ -171,7 +173,7 @@ const DonationTab = () => {
 
             {/* ---------DocumentSection--------     */}
 
-            <Container className='DocumentSection' >
+            <Container Container className='DocumentSection' >
                 <div className="d-head">
                     <h5>Document</h5>
                 </div>
@@ -226,11 +228,7 @@ const DonationTab = () => {
                                 <i className="social-icon fab fa-instagram"></i>
                                 <i className="social-icon fab fa-whatsapp"></i>
                             </div>
-
-
                         </div>
-
-
 
                         <div className="supportfund">
                             <h2>Supporting Fundraiser</h2>

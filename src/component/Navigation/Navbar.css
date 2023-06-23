@@ -157,17 +157,21 @@ hr {
   }
 
   .navfont {
-    max-height: fit-content;
-    background-color: black;
+    height: 300px;
     width: 100%;
     margin: 0;
+    background-color: black;
+  }
+
+  .dropDownMain:hover ul.toggleDropdown {
+    display: none;
   }
 
   .btn-donate {
     background-color: transparent;
     border: 2px solid;
     margin-top: -90px;
-    margin-left: 89px;
+    margin-left: 13px;
     border-radius: 1;
   }
 

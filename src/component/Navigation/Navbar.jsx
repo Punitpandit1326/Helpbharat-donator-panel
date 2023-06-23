@@ -38,10 +38,8 @@ const Navigation = ({ activeLink }) => {
               <Link to={'/'} className='dropDownMain link-nav'>More <IoMdArrowDropdown />
                 <ul className='toggleDropdown'>
                   <Link className={'linkItem'} to={'myfundraiser'}> <li>Myfund Raiser</li></Link>
-                  <Link className={'linkItem'} to={'donationdetails'}> <li>donation detail</li></Link>
                   <Link className={'linkItem'} to={'donationtab'}> <li>Donation Tab</li></Link>
                   <Link className={'linkItem'} to={'editdonationtab'}> <li>Edit Donationtab</li></Link>
-                  <Link className={'linkItem'} to={'paymentdetails'}> <li>Payment detail</li></Link>
                   <Link className={'linkItem'} to={'dashboard'}> <li>Dashboard</li></Link>
                   <Link className={'linkItem'} to={'donationdb'}> <li>Dashboard Dontation</li></Link>
                   <Link className={'linkItem'} to={'promotepage'}> <li>Dashboard Promotion</li></Link>

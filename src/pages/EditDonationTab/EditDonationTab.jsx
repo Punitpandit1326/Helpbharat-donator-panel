@@ -12,7 +12,7 @@ const EditDonationTab = () => {
     const [activeImage, setActiveImage] = useState("/Image/Img1.png")
     const [activeDoc, setActiveDoc] = useState("/Image/doc1.png")
     const [activeTab, setActiveTab] = useState("About")
-    const [donarTab, setDonarTab] = useState("donorInfo-main")
+    const [donarTab, setDonarTab] = useState(true)
     const onClick = () => setShowStatements(prevShow => !prevShow)
 
     return (
@@ -92,9 +92,7 @@ const EditDonationTab = () => {
                     {/* --------RightSection---------- */}
 
                     <Col md={5} className='DonationRight DonationRight2'>
-                        <h1 style={{ margin: '20px' }}>Donate Now</h1>
-
-
+                        <h1>Donate Now</h1>
                         <div className='Blackbox2-main'>
                             <div className='BlackBox BlackBox2'>
                                 <i className="far fa-image"></i>
@@ -103,15 +101,13 @@ const EditDonationTab = () => {
                             <input type="text" id='fund-input0' />
                         </div>
 
-
-
                         <div className='PriceDeatailsLeft'>
                             <p>₹1700 <span style={{ fontWeight: '400', fontSize: '1rem' }}>Raised</span> </p>
                             <input type="text" id='fund-input' />
                         </div>
                         <br />
 
-                        <ProgressBar variant="success" now={30} style={{ width: '90%', marginLeft: '20px', border: '1px solid' }} />
+                        <ProgressBar variant="success" now={30} style={{ width: '90%', marginLeft: '20px' }} />
 
                         <div className='PriceDeatailsLeft'>
                             <p>43 Supporters</p>
@@ -119,13 +115,13 @@ const EditDonationTab = () => {
                         </div>
 
                         <div className='topdonor2'>
-                            <p className='t-donor' onClick={() => setDonarTab("donorInfo-main")}>Top Donors</p>
-                            <p className='r-donor'>Recent Donors</p>
+                            <p className={`${donarTab && 'active'}`} onClick={() => setDonarTab(true)}>Top Donors</p>
+                            <p className={`${!donarTab && 'active'}`} onClick={() => setDonarTab(false)}>Recent Donors</p>
 
                         </div>
                         <hr style={{ width: '94%', marginLeft: '20px' }} />
 
-                        {donarTab === "donorInfo-main" && <div className="donorInfo-main">
+                        {donarTab && <div className="donorInfo-main">
 
                             <div className="donarInfo">
                                 <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
@@ -162,6 +158,8 @@ const EditDonationTab = () => {
                             </div>
                             <p className='donoted-inr'>8 nov 2022</p>
                         </div>}
+
+                        {!donarTab && <div className="Recent-main-section">Hello Recent Section</div>}
                         <div className='btn-main'>
                             <div className="btn donate-btn donate-btn2">
                                 <button>₹500</button>

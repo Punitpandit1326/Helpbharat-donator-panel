@@ -138,14 +138,12 @@ const DashBoard = () => {
             <div className='donor-paragraph'>
               <li className={`${donarTab && 'active'}`} onClick={() => setDonarTab(true)}>Top Donors</li>
               <li className={`${!donarTab && 'active'}`} onClick={() => setDonarTab(false)}> Recent Donors </li>
-
             </div>
 
             {donarTab && <div className="donorInfo-main">
               <div className="donarInfo-para">
                 <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
                 <p>Someone donated INR <span>500</span> </p>
-
               </div>
               <p className='donoted-para'>8 nov 2022</p>
               <div className="donarInfo-para m-0">
@@ -154,7 +152,6 @@ const DashBoard = () => {
 
               </div>
               <p className='donoted-para'>8 nov 2022</p>
-
 
               <div className="donarInfo-para m-0">
                 <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />

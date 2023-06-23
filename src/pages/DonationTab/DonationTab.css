@@ -8,9 +8,9 @@
 }
 
 .DonationCont h1 {
-  margin-top: 80px;
+  margin: 0;
   font-family: Poppins;
-  font-size: 40px;
+  font-size: 33px;
   font-weight: 600;
   width: 95%;
 }
@@ -18,8 +18,8 @@
 .pecilIcon {
   color: aliceblue;
   text-align: center;
-  padding: 15px 15px;
-  font-size: 20px;
+  padding: 13px 13px;
+  font-size: 18px;
 }
 
 i.pecilIcon {
@@ -104,31 +104,31 @@ i.pecilIcon {
 }
 
 .DonationRight h2 {
-  margin-top: 80px;
+  margin: 20px 10px;
   font-family: Poppins;
   font-size: 30px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .BlackBox-main {
   display: flex;
   justify-content: flex-start;
   gap: 20px;
-  margin-left: 15px;
+  margin-left: 10px;
 }
 
 .BlackBox {
-  width: 68px;
-  height: 68px;
-  background-color: #000;
+  width: 64px;
+  height: 64px;
   border-radius: 5px;
+  background-color: #000;
 
 }
 
 .BlackBox h4 {
-  font-size: 42px;
+  font-size: 34px;
   text-align: center;
-  padding-top: 6px;
+  padding-top: 10px;
   font-weight: 600;
   color: var(--main-color2);
 }
@@ -152,19 +152,25 @@ p.fraiserpara {
   padding: 0 25px;
 }
 
+.tr-donor p.active {
+  border-bottom: 5px solid #00A978;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
 .tr-donor p {
   font-family: Poppins;
-  font-size: 25px;
+  font-size: 22px;
   font-weight: 600;
-  line-height: 27px;
+  margin-bottom: 0;
   padding-bottom: 10px;
   border-bottom: 4px solid var(--main-color2);
 }
 
-.tr-donor p:hover {
+/* .tr-donor p:hover {
   padding-bottom: 10px;
   border-bottom: 4px solid var(--main-color);
-}
+} */
 
 .topdonor {
   margin-top: 50px;
@@ -413,26 +419,24 @@ p.donoted-inr {
 }
 
 .supportfund {
-  margin-top: 40px;
-  height: 550px;
-  border: 1px solid #000;
+  margin-top: 30px;
+  height: auto;
   border-radius: 5px;
-  margin-bottom: 50px;
+  border: 1px solid #000;
 }
 
 .supportfund h2 {
-  padding: 20px 30px;
+  padding: 15px 30px;
   font-family: "Poppins", sans-serif;
-  font-size: 30px;
-  font-weight: 500;
-  line-height: 35px;
+  font-size: 26px;
+  font-weight: 600;
 }
 
 .fontAwesomeSec {
+  width: 90%;
   display: flex;
   justify-content: center;
   gap: 20px;
-  width: 90%;
   margin-left: 25px;
 }
 
@@ -442,7 +446,7 @@ p.donoted-inr {
   font-weight: 500;
   line-height: 23px;
   text-align: left;
-  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 @media screen and (max-width: 568px) {
