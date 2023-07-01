@@ -203,31 +203,27 @@ const EditDonationTab = () => {
                             <img className='document-image-section' src={activeDoc} alt="Image" />
                         </div>
 
-
                         <div className='Imagesleft'>
 
                             <img style={{ width: '80px' }} src="/Image/doc1.png" alt="Image" onClick={() => setActiveDoc("/Image/doc1.png")} />
                             <img style={{ width: '80px' }} src="/Image/doc2.png" alt="Image" onClick={() => setActiveDoc("/Image/doc2.png")} />
                             <img style={{ width: '80px' }} src="/Image/doc3.png" alt="Image" onClick={() => setActiveDoc("/Image/doc3.png")} />
                             <img style={{ width: '80px' }} src="/Image/doc4.png" alt="Image" onClick={() => setActiveDoc("/Image/doc4.png")} />
-
-
                         </div>
                     </Col>
 
-                    <Col md={5} className='Documentright-main2'>
+                    <Col md={5} className='Documentright-main2 pt-5'>
                         <div className="product-price">
                             <div className="product-price-child1" style={{
                                 fontSize: '18px',
                                 fontWeight: '500',
-                                paddingBottom: '20px'
+                                paddingBottom: '7px'
                             }}>
                                 Tax Deduction
                                 <div className="i-btn" style={{ marginLeft: '10px' }}>i
                                     <div className="hover-box">
                                         <strong>Information</strong>
                                         <p>Actual price may be differ based on multiple factor Click to know more</p>
-                                        <div className="underb">Click to know more</div>
                                     </div>
                                 </div>
                             </div>

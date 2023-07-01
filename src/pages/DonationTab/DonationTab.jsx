@@ -175,7 +175,7 @@ const DonationTab = () => {
                     <h5>Document</h5>
                 </div>
                 <Row>
-                    <Col md={7} className='DocumentLeft' >
+                    <Col md={7} className='DocumentLeft p-4' >
                         <div style={{ backgroundColor: '#EBEBEB' }}>
                             <img className='document-image-section' src={activeDoc} alt="Image" />
                         </div>
@@ -201,7 +201,6 @@ const DonationTab = () => {
                                     <div className="hover-box">
                                         <strong>Information</strong>
                                         <p>Actual price may be differ based on multiple factor Click to know more</p>
-                                        <div className="underb">Click to know more</div>
                                     </div>
                                 </div>
                             </div>

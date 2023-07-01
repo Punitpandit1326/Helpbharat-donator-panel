@@ -24,7 +24,7 @@
 i.pecilIcon {
   position: absolute;
   top: 0;
-  right: 8%;
+  right: 9%;
   color: aliceblue;
   text-align: center;
   border: none;
@@ -379,7 +379,7 @@ p.donoted-inr {
 }
 
 .Documentright-main2 {
-  margin: -31% 0 0 0;
+  margin: -34% 0 0 0;
 }
 
 .Documentright-main2 span {
@@ -417,7 +417,7 @@ p.donoted-inr {
   font-family: Poppins;
   font-size: 16px;
   font-weight: 600;
-  padding-top: 20px;
+  padding-top: 30px;
 
 }
 
@@ -428,6 +428,7 @@ p.donoted-inr {
 }
 
 .supportfund {
+  width: 89%;
   height: auto;
   padding: 15px;
   border-radius: 10px;
