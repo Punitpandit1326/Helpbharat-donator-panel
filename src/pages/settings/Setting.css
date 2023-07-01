@@ -1,9 +1,8 @@
 .settingSection h3 {
   font-family: Inter;
-  font-size: 26px;
-  font-weight: 500;
+  font-size: 22px;
+  font-weight: 600;
   padding: 0;
-
 }
 
 .settingSection h4 {
@@ -59,8 +58,6 @@
   font-family: Inter;
   font-size: 18px;
   font-weight: 600;
-  letter-spacing: 0em;
-  text-align: left;
   padding: 15px 19px;
 }
 
@@ -74,17 +71,15 @@
 }
 
 .endSection button {
-  margin: 16px 20px;
   height: 54px;
   width: 201px;
-  border-radius: 5px;
-  background-color: rgba(255, 0, 0, 0.69);
-  color: var(--main-color2);
   font-family: Inter;
   font-size: 16px;
   font-weight: 600;
-  line-height: 34px;
-  letter-spacing: 0em;
-  text-align: center;
   border: none;
+  border-radius: 5px;
+  margin: 16px 20px;
+  text-align: center;
+  color: var(--main-color2);
+  background-color: rgba(255, 0, 0, 0.69);
 }

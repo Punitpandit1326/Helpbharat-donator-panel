@@ -24,7 +24,7 @@ const Navigation = ({ activeLink }) => {
       <Navbar expand="lg" variant='dark' className='NavbarMAin' style={{ height: '79px' }}>
         <Container>
           <Navbar.Brand href="#" className='logo'>
-            <h4><Link to={'/'} className='logo-link'>HelpBharat</Link></h4></Navbar.Brand>
+            <h4 className='text-white'><Link to={'/'} className='logo-link'>HelpBharat</Link></h4></Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav

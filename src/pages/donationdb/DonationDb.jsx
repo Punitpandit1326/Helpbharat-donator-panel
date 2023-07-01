@@ -44,8 +44,6 @@ const DonationDb = () => {
 
         {/* -----------TableSection---------- */}
 
-        <span>You have recieved 0 donations with a total amount of ₹ 0 </span>
-
         <div className='Btn-SecTion'>
           <div className="btn-RighT">
             <p> <FaRegCalendar /> &nbsp; Date Range</p>
@@ -55,36 +53,30 @@ const DonationDb = () => {
             <p> <FaSortAmountDown /> &nbsp; Sort Items</p>
           </div>
         </div>
-        <Container fluid className='table-container-section'>
+        <Container fluid className='table-container-section p-0'>
           <Table striped className='donation-table'>
             <thead>
               <tr>
                 <th>Fundraiser</th>
                 <th>Donated On</th>
-                <th>Fundraiser Name</th>
-                <th style={{ textAlign: 'right' }}>Donation Amount</th>
+                <th>Donation Amount</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Nishant</td>
                 <td>20/8/2022</td>
-                <td><a href="#">Save infant orphans with urgent .....</a></td>
-                <td style={{ textAlign: 'right' }}>₹ 400</td>
+                <td>₹ 400</td>
               </tr>
               <tr>
                 <td>Ankur</td>
                 <td>20/8/2022</td>
-                <td><a href="#">Save infant orphans with urgent .....</a></td>
-                <td style={{ textAlign: 'right' }}>₹ 200</td>
+                <td>₹ 200</td>
               </tr>
               <tr>
-
                 <td>Mithun</td>
                 <td>20/8/2022</td>
-                <td><a href="#">Save infant orphans with urgent .....
-                </a></td>
-                <td style={{ textAlign: 'right' }}>₹ 600</td>
+                <td>₹ 600</td>
               </tr>
             </tbody>
           </Table>

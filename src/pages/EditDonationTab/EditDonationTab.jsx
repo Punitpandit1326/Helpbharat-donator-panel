@@ -4,6 +4,7 @@ import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FaPen, FaCalendarAlt } from "react-icons/fa";
+import Footer from '../../component/footer/Footer';
 
 
 
@@ -23,7 +24,7 @@ const EditDonationTab = () => {
 
             </div>
 
-            <Container className='DonationCont DonationCont2'>
+            <Container className='DonationCont2'>
                 <h2>Help Ashok save kids orphaned by farmer suicides. Donate Now <FaPen className='pencilIcon' /></h2>
 
                 <Row>
@@ -49,7 +50,7 @@ const EditDonationTab = () => {
                             <li className={`${activeTab === 'Updates' ? 'active-tab' : ''}`} onClick={() => setActiveTab("Updates")}>Updates</li>
                             <li className={`${activeTab === 'Comments' ? 'active-tab' : ''}`} onClick={() => setActiveTab("Comments")}>Comments</li>
                         </div>
-                        <hr />
+                        <hr className='donation-underline' />
 
                         {activeTab === "About" && <div className="paraLeft">
                             <p>About ipsum dolor sit amet, consectetur adipiscing elit.
@@ -91,10 +92,10 @@ const EditDonationTab = () => {
 
                     {/* --------RightSection---------- */}
 
-                    <Col md={5} className='DonationRight DonationRight2'>
+                    <Col md={4} className='DonationRight2'>
                         <h1>Donate Now</h1>
                         <div className='Blackbox2-main'>
-                            <div className='BlackBox BlackBox2'>
+                            <div className='green-box'>
                                 <i className="far fa-image"></i>
                             </div>
                             <p>Fundraiser by</p>
@@ -102,12 +103,12 @@ const EditDonationTab = () => {
                         </div>
 
                         <div className='PriceDeatailsLeft'>
-                            <p>₹1700 <span style={{ fontWeight: '400', fontSize: '1rem' }}>Raised</span> </p>
+                            <p>₹1700 <span>Raised</span> </p>
                             <input type="text" id='fund-input' />
                         </div>
                         <br />
 
-                        <ProgressBar variant="success" now={30} style={{ width: '90%', marginLeft: '20px' }} />
+                        <ProgressBar variant="success" now={30} style={{ height: '10px' }} />
 
                         <div className='PriceDeatailsLeft'>
                             <p>43 Supporters</p>
@@ -119,9 +120,9 @@ const EditDonationTab = () => {
                             <p className={`${!donarTab && 'active'}`} onClick={() => setDonarTab(false)}>Recent Donors</p>
 
                         </div>
-                        <hr style={{ width: '94%', marginLeft: '20px' }} />
+                        <hr style={{ margin: '0', width: '100%' }} />
 
-                        {donarTab && <div className="donorInfo-main">
+                        {donarTab && <div className="donorInfo-main p-0 mt-3">
 
                             <div className="donarInfo">
                                 <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
@@ -150,7 +151,6 @@ const EditDonationTab = () => {
 
                             </div>
                             <p className='donoted-inr'>8 nov 2022</p>
-
                             <div className="donarInfo m-0">
                                 <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
                                 <p>Someone donated INR <strong>500</strong> </p>
@@ -184,9 +184,8 @@ const EditDonationTab = () => {
                             </div>
                         </div>
                         <div className="dn-section">
-                            <button className='btn donate-Now'>Donate Now</button>
+                            <button className='donate-Now'>Donate Now</button>
                         </div>
-
                     </Col>
                 </Row>
             </Container>
@@ -199,7 +198,7 @@ const EditDonationTab = () => {
                     <div className="d-head">
                         <h5>Document</h5>
                     </div>
-                    <Col xl={6} md={10} className='DocumentLeft' >
+                    <Col md={7} className='DocumentLeft' >
                         <div style={{ backgroundColor: '#EBEBEB' }}>
                             <img className='document-image-section' src={activeDoc} alt="Image" />
                         </div>
@@ -216,7 +215,7 @@ const EditDonationTab = () => {
                         </div>
                     </Col>
 
-                    <Col xl={5} md={10} className='Documentright-main2'>
+                    <Col md={5} className='Documentright-main2'>
                         <div className="product-price">
                             <div className="product-price-child1" style={{
                                 fontSize: '18px',
@@ -260,11 +259,11 @@ const EditDonationTab = () => {
                                 <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
                                 <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
                             </div>
-                            <div className='fontAwesomeSec' style={{ marginTop: '20px' }}>
+                            <div className='fontAwesomeSec'>
                                 <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
                                 <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
                             </div>
-                            <div className='fontAwesomeSec' style={{ marginTop: '20px' }}>
+                            <div className='fontAwesomeSec'>
                                 <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
                                 <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
                             </div>
@@ -272,7 +271,13 @@ const EditDonationTab = () => {
                     </Col>
                 </Row>
             </Container>
-        </div >
+
+            {/* --------FooterSection----------- */}
+
+            <div>
+                <Footer />
+            </div>
+        </div>
     )
 }
 

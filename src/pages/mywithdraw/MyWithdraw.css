@@ -61,6 +61,14 @@ table .table2 {
     border-collapse: collapse;
 }
 
+.withdraw-table-section tbody tr td:first-child {
+    padding-left: 100px;
+}
+
+.withdraw-table-section thead th:first-child {
+    padding-left: 100px;
+}
+
 .table2 thead th:nth-child(4) {
     height: 55px;
     padding-bottom: 15px;

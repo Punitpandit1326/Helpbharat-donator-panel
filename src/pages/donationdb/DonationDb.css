@@ -2,7 +2,7 @@
 
 .export-Cont h3 {
   font-family: Poppins;
-  font-size: 30px;
+  font-size: 22px;
   font-weight: 600;
   margin: 0;
 }
@@ -10,12 +10,12 @@
 .export-Sec {
   display: flex;
   justify-content: space-between;
-  margin: 35px 0px;
+  margin: 14px 0px;
 }
 
 .export-Sec p {
   font-family: Inter;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
 }
 
@@ -34,13 +34,13 @@
 
 .export-Cont span {
   font-family: Inter;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
-  margin-top: -30px;
+
 }
 
 .Btn-SecTion {
-  margin: 30px 10px;
+  margin: 35px 0;
   display: flex;
   justify-content: space-between;
 }
@@ -77,18 +77,32 @@
 
 .donation-table thead {
   background-color: #eeeeee;
-  border-radius: 8px;
 }
 
 .donation-table thead th {
   font-family: Inter;
   font-size: 1rem;
   font-weight: 600;
+  padding-left: 21px;
+}
+
+.donation-table thead th:nth-child(2) {
+  text-align: center;
+}
+
+.donation-table thead th:last-child {
+  text-align: center;
 }
 
 .donation-table tbody td:nth-child(2) {
   color: #000;
+  text-align: center;
   text-decoration: none;
+}
+
+.donation-table tbody td:last-child {
+  text-align: center;
+
 }
 
 .donation-table a {

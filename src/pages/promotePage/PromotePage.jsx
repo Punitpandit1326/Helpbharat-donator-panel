@@ -47,7 +47,6 @@ const PromotePage = () => {
                 <div className="social-media-icon">
                     <i className="socialIcon fab fa-facebook-f"></i>
                     <i className="socialIcon fab fa-twitter"></i>
-                    <i className="socialIcon fab fa-instagram"></i>
                     <i className="socialIcon fab fa-whatsapp"></i>
                 </div>
                 <div className="allboxes">
@@ -133,17 +132,16 @@ const PromotePage = () => {
                     </div>
                 </div>
 
-                <div className="D-btn">
-                    <button><FaRegCalendar /> Date</button>
+                <div className="promotepage-btn">
+                    <button><FaRegCalendar /> Date Range</button>
                     <button style={{ marginRight: '54%' }}><FaSortAmountDown /> Sort Range </button>
                     <div className="addContbtn">
                         <button>Add New Contact <FaPlus /></button>
                     </div>
-
                 </div>
 
-                <Container className='table-promote-section'>
-                    <Table striped className='tabl3'>
+                <Container fluid>
+                    <Table striped className='table-promote-section'>
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -185,7 +183,6 @@ const PromotePage = () => {
             <div>
                 <Footer />
             </div>
-
         </>
     )
 }
