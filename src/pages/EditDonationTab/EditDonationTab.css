@@ -1,18 +1,17 @@
 .DonationCont2 h2 {
-  width: 100%;
+  width: 93%;
   font-family: Poppins;
-  font-size: 35px;
+  font-size: 22px;
   font-weight: 600;
-  margin: 0;
-  padding: 15px 22px;
+  margin-top: 30px;
+  padding: 15px 5px;
   border-radius: 5px;
-  border: 2px solid #000;
+  border: 1px solid #d9d9d9;
 }
 
 .pencilIcon {
   color: #00a978;
-  font-size: 25px;
-  margin-left: 20px;
+  font-size: 18px;
 }
 
 /* -------bottomNav-------- */
@@ -49,7 +48,7 @@
 }
 
 .DonationLeft2 {
-  margin-top: 50px;
+  margin-top: 25px;
 }
 
 /* ---------Donationleft-------- */
@@ -75,7 +74,6 @@
 
 .Sectionleftt li.active-tab {
   border-bottom: 4px solid var(--main-color);
-
 }
 
 .Sectionleftt li:hover {
@@ -85,7 +83,7 @@
 .paraLeft p {
   width: 90%;
   font-family: Poppins;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 30px;
   text-align: left;
@@ -103,15 +101,17 @@
 /* -------DonationRight----------- */
 
 .DonationRight2 {
-  margin-top: 45px;
-  border: 1px solid #D9D9D9;
-  height: auto;
-  border-radius: 10px;
   position: relative;
+  height: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 25px;
+  border: 1px solid #D9D9D9;
 }
 
 .DonationRight2 h1 {
-  margin: 15px 5px;
+  font-size: 22px;
+  font-weight: 600;
 }
 
 .Blackbox2-main {
@@ -120,20 +120,29 @@
 }
 
 .BlackBox2 {
-  width: 68px;
-  height: 66px;
+  width: 60px;
+  height: 60px;
   background-color: #00a978;
 }
 
 .Blackbox2-main p {
   font-family: Poppins;
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 600;
   padding-top: 10px;
 }
 
-.BlackBox {
-  font-size: 40px;
+.green-box {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  background-color: var(--main-color);
+
+}
+
+.green-box {
+  font-size: 26px;
+  padding-top: 6px;
   text-align: center;
   color: var(--main-color2);
 }
@@ -143,8 +152,8 @@
   height: 40px;
   border-radius: 5px;
   outline: none;
-  margin: 10px 30px 0 0;
-  border: 1px solid #00a978;
+  margin: 10px 0 0 0;
+  border: 1px solid #d9d9d9;
 }
 
 input[type="text"]#fund-input0 {
@@ -156,10 +165,9 @@ input[type="text"]#fund-input0 {
   padding: 10px 10px;
   height: 40px;
   border-radius: 5px;
-  border: 1px solid #00A978;
+  border: 1px solid #d9d9d9;
   outline: none;
 }
-
 
 .fa-image {
   text-align: center;
@@ -172,13 +180,14 @@ input[type="text"]#fund-input0 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 30px;
+  padding: 0;
 }
 
 .PriceDeatailsLeft p {
   font-family: Poppins;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
 }
 
 .d-lefts {
@@ -192,17 +201,16 @@ input[type="text"]#fund-input0 {
 .topdonor2 {
   display: flex;
   justify-content: space-between;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .topdonor2 p {
   font-family: Poppins;
-  font-size: 22px;
+  font-size: 15px;
   font-weight: 600;
-  line-height: 27px;
   padding-bottom: 10px;
-  border-bottom: 4px solid #f3f3f3;
-  margin: 0 20px;
+  border-bottom: 4px solid #fcfcfc;
+  margin: 0 1px;
 }
 
 .topdonor2 p.active {
@@ -211,17 +219,16 @@ input[type="text"]#fund-input0 {
 }
 
 .donarInfo {
-  padding-left: 20px;
-  margin-top: 20px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 25px;
+  gap: 15px;
+  margin-top: 0;
 }
 
 .donarInfo p {
   font-family: Poppins;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 400;
   margin: 0;
 }
@@ -237,19 +244,20 @@ input[type="text"]#fund-input0 {
 /* --------inputForm------ */
 
 .donate-form input {
-  height: 54px;
+  height: 40px !important;
   padding: 10px;
   margin-left: 10px;
-  border: 1px solid;
+  border: 1px solid #d9d9d9;
   border-radius: 5px;
 }
 
 .donate-form input::placeholder {
-  padding: 0;
   font-family: "Poppins", sans-serif;
-  font-size: 15px;
+  padding: 0;
+  font-size: 12px;
   color: #828282;
-  text-align: left;
+  outline: none;
+  border: none;
 }
 
 .i-btn-main {
@@ -321,15 +329,14 @@ input[type="text"]#fund-input0 {
 
 .donate-Now {
   width: 100%;
-  height: 65px;
-  font-size: 22px;
-  font-weight: 600;
+  height: 45px;
+  font-size: 15px;
+  font-weight: 500;
   border-radius: 8px;
   background-color: #00a978;
   color: var(--main-color2);
   font-family: "Poppins", sans-serif;
   border: none;
-  margin: 20px 10px;
 }
 
 .donate-Now:hover {
@@ -337,6 +344,7 @@ input[type="text"]#fund-input0 {
 }
 
 .donate-btn2 {
+  padding: 0;
   border: none;
   display: flex;
   justify-content: space-between;
@@ -345,7 +353,7 @@ input[type="text"]#fund-input0 {
 }
 
 .donate-btn2 button {
-  width: 87px;
+  width: 77px;
   height: 44px;
   border-radius: 5px;
   color: #000;
@@ -353,8 +361,8 @@ input[type="text"]#fund-input0 {
   font-size: 15px;
   font-weight: 500;
   background-color: var(--main-color2);
-  border: 1px solid black;
-  margin-top: 140px;
+  border: 1px solid #D9D9D9;
+  margin-top: 70px;
 }
 
 
@@ -362,7 +370,7 @@ input[type="text"]#fund-input0 {
 /* ---------DocumentSection----------- */
 
 .DocumentSection {
-  margin-top: 50px;
+  margin-top: 35px;
 }
 
 .Documentright {
@@ -391,7 +399,7 @@ input[type="text"]#fund-input0 {
 }
 
 .another-btn button {
-  padding: 15px 30px;
+  padding: 10px 20px;
   width: fit-content;
   white-space: nowrap;
   border-radius: 5px;
@@ -419,29 +427,29 @@ input[type="text"]#fund-input0 {
 }
 
 .social-icon {
-  width: 56px;
-  height: 56px;
-  background-color: #0abd89a1;
+  width: 45px;
+  height: 45px;
   text-align: center;
-  padding-top: 18px;
-  font-size: 22px;
-  margin-right: 45px;
+  padding-top: 14px;
+  font-size: 20px;
+  margin-right: 20px;
   color: var(--main-color2);
   border-radius: 5px;
   font-weight: 500;
+  background-color: #00a978
 }
 
 .supportfund2 {
   height: auto;
-  margin-top: 50px;
-  border: 1px solid #000;
+  margin-top: 30px;
+  border: 1px solid #d9d9d9;
   border-radius: 5px;
 }
 
 .supportfund h2 {
-  padding: 15px 0 0 15px !important;
+  padding: 0;
   font-family: "Poppins", sans-serif;
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 600;
 }
 
@@ -449,16 +457,16 @@ input[type="text"]#fund-input0 {
   display: flex;
   justify-content: center;
   gap: 20px;
-  width: 90%;
-  margin-left: 25px;
+  padding-top: 10px;
+  margin-left: 0px;
 }
 
 .fontAwesomeSec p {
   margin: 0;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 400;
   font-family: Poppins;
-  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 @media screen and (max-width: 568px) {
@@ -513,7 +521,7 @@ input[type="text"]#fund-input0 {
   }
 
   .PriceDeatailsLeft {
-    padding: 0px 8px;
+    padding: 0;
     margin-top: 20px !important;
   }
 
@@ -554,3 +562,5 @@ input[type="text"]#fund-input0 {
     margin-top: 15px;
   }
 }
+
+@media screen and (min-width: 1200px) {}
