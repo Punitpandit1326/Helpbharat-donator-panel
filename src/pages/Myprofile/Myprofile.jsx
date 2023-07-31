@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './Myprofile.css';
+import CustomTab from '../../component/customTabs/CustomTab'
 import Footer from '../../component/footer/Footer';
 import Accordion from 'react-bootstrap/Accordion';
-import CustomTab from '../../component/Navigation/customTabs/CustomTab';
+
 import { Container, Form, Row, Col, Button } from 'react-bootstrap';
 const Myprofile = () => {
     const [validated, setValidated] = useState(false);
@@ -40,12 +41,12 @@ const Myprofile = () => {
                                         <Form.Label>Name</Form.Label>
                                         <Form.Control
                                             required
-                                            type="password"
+                                            type="text"
                                             placeholder="Nishant Choudhary"
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
-                                    <Form.Group as={Col} md="6" controlId="validationCustom02">
+                                    <Form.Group as={Col} md="6" controlId="validationCustom02" className='form-input'>
                                         <Form.Label>Phone Number</Form.Label>
                                         <Form.Control
                                             required
@@ -67,7 +68,7 @@ const Myprofile = () => {
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
 
-                                    <Form.Group as={Col} md="6" controlId="validationCustom04">
+                                    <Form.Group as={Col} md="6" controlId="validationCustom04" className='form-input'>
                                         <Form.Label>Country</Form.Label>
                                         <Form.Select aria-label="Default select example">
                                             <option>Open this select menu</option>
@@ -87,7 +88,7 @@ const Myprofile = () => {
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
-                                    <Form.Group as={Col} md="6" controlId="validationCustom06">
+                                    <Form.Group as={Col} md="6" controlId="validationCustom06" className='form-input'>
                                         <Form.Label>Pincode</Form.Label>
                                         <Form.Control
                                             required
@@ -127,10 +128,8 @@ const Myprofile = () => {
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <br />
                                     </Form.Group>
-                                    <Col className='d-flex justify-content-end'>
-                                        <Button className='border-0'
-                                            style={{ backgroundColor: '#00A978', width: '185px', height: '51px', fontFamily: 'Inter', fontWeight: '600', fontFamily: '12px' }}>
-                                            Save Settings</Button>
+                                    <Col className='d-flex justify-content-end  save-btn'>
+                                        <button type='submit'>Save Settings</button>
                                     </Col>
                                 </Row>
                             </Form>
@@ -142,7 +141,7 @@ const Myprofile = () => {
                         <Accordion.Body>
                             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                                 <Row className="mb-3">
-                                    <Form.Group as={Col} md="6" controlId="validationCustom01">
+                                    <Form.Group as={Col} md="6" controlId="validationCustom01" >
                                         <Form.Label>Password</Form.Label>
                                         <Form.Control
                                             required
@@ -151,7 +150,7 @@ const Myprofile = () => {
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
-                                    <Form.Group as={Col} md="6" controlId="validationCustom02">
+                                    <Form.Group as={Col} md="6" controlId="validationCustom02" className='form-input'>
                                         <Form.Label>New Password</Form.Label>
                                         <Form.Control
                                             required
@@ -170,10 +169,8 @@ const Myprofile = () => {
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
-                                    <div className='d-flex justify-content-end'>
-                                        <Button className='border-0'
-                                            style={{ backgroundColor: '#00A978', width: '185px', height: '51px', fontFamily: 'Inter', fontWeight: '600', fontFamily: '12px' }}>
-                                            Save Settings</Button>
+                                    <div className='d-flex justify-content-end  save-btn'>
+                                        <Button>Save Settings</Button>
                                     </div>
                                 </Row>
                             </Form>
@@ -226,10 +223,8 @@ const Myprofile = () => {
                                             style={{ fontSize: '10px', fontWeight: '500', paddingLeft: '5px' }}>Please Upload max size of file is 2mb</span>
                                     </Form.Group>
 
-                                    <div className='d-flex justify-content-end'>
-                                        <Button className='border-0'
-                                            style={{ backgroundColor: '#00A978', width: '185px', height: '51px', fontFamily: 'Inter', fontWeight: '700', fontFamily: '12px' }}>
-                                            Save Settings</Button>
+                                    <div className='d-flex justify-content-end  save-btn'>
+                                        <Button>Save Settings</Button>
                                     </div>
                                 </Row>
                             </Form>

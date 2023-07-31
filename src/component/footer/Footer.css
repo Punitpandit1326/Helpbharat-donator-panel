@@ -15,30 +15,31 @@
     color: var(--main-color2);
     padding-top: 20px;
     font-family: Inter;
-    font-size: 27px;
+    font-size: 22px;
     font-weight: 600;
 }
 
 .footer-1 p {
-    color: var(--main-color2);
     font-family: Poppins;
     font-size: 12px;
     font-weight: 400;
-    line-height: 17px;
-    padding-top: 10px;
+    color: var(--main-color2);
 }
 
 .media-icon {
+    margin: 5px;
+    cursor: pointer;
     color: var(--main-color2);
-    margin: 3px;
 }
 
+.media-icon:hover {
+    color: #ff9706;
+}
 
 /* -----------footer-2--------- */
 
 .footer-2 {
     padding-left: 50px;
-
 }
 
 .footer-2 p {
@@ -51,12 +52,17 @@
 
 .footer-2 ul li {
     padding: 0;
-    list-style: none;
-    color: var(--main-color2);
     font-family: Poppins;
+    list-style: none;
     font-size: 12px;
     font-weight: 400;
-    line-height: 22px;
+    line-height: 23px;
+    cursor: pointer;
+    color: var(--main-color2);
+}
+
+.footer-2 ul li:hover {
+    color: #ff9706;
 }
 
 /* -----------footer-3--------- */
@@ -112,8 +118,10 @@
 .footer-4 input {
     width: 140px;
     height: 43px;
-    border-radius: 3.75px;
     border: none;
+    padding: 5px;
+    outline: none;
+    border-radius: 3px;
 }
 
 .btn-send {

@@ -1,7 +1,7 @@
 import React from 'react';
 import './MyDonation.css';
 import { Container, Accordion } from 'react-bootstrap';
-import CustomTab from '../../component/Navigation/customTabs/CustomTab';
+import CustomTab from '../../component/customTabs/CustomTab'
 import Footer from '../../component/footer/Footer';
 
 const MyDonation = () => {

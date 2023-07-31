@@ -10,7 +10,7 @@
 .export-Sec {
   display: flex;
   justify-content: space-between;
-  margin: 14px 0px;
+  margin: 14px 0 0;
 }
 
 .export-Sec p {
@@ -20,11 +20,11 @@
 }
 
 .export-Sec button {
+  width: 160px;
   height: 50px;
-  width: 121px;
   font-family: Inter;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
   border: none;
   border-radius: 5px;
@@ -36,7 +36,6 @@
   font-family: Inter;
   font-size: 18px;
   font-weight: 500;
-
 }
 
 .Btn-SecTion {
@@ -45,19 +44,13 @@
   justify-content: space-between;
 }
 
-.btn-RighT {
+.btn-RighT button {
   width: 160px;
   height: 50px;
-  background-color: #ede9e9;
-  border-radius: 5px;
-}
-
-.btn-RighT p {
-  font-family: Inter;
-  font-size: 15px;
+  border: none;
+  cursor: pointer;
   font-weight: 600;
-  text-align: center;
-  padding-top: 15px;
+  border-radius: 5px;
 }
 
 .btn-LefT {
@@ -73,6 +66,7 @@
   font-size: 15px;
   font-weight: 600;
   padding-top: 15px;
+  cursor: pointer;
 }
 
 .donation-table thead {
@@ -125,6 +119,7 @@
   justify-content: end;
   gap: 20px;
   margin: 30px 0;
+  cursor: pointer;
 }
 
 .right_BtN button {
@@ -137,6 +132,16 @@
   font-size: 15px;
   font-weight: 500;
 }
+
+.react-datepicker button {
+  width: 10px;
+}
+
+/* .btn-RighT .react-datepicker__month-container {
+  background: aliceblue;
+  position: relative;
+  z-index: 999;
+} */
 
 /* -------MediaQuery--------- */
 
@@ -157,13 +162,25 @@
     font-size: 1rem;
   }
 
+  .export-Sec button {
+    width: 100%;
+  }
+
   .export-Cont span {
     font-size: 18px;
   }
 
   .Btn-SecTion {
     width: 95%;
+    gap: 10px;
+    flex-direction: column;
     margin: 30px 3px;
+  }
+
+  .btn-RighT .react-datepicker__month-container {
+    float: left;
+    position: absolute;
+    background: aliceblue;
   }
 
   .table-container-section {

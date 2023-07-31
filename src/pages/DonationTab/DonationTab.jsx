@@ -1,18 +1,29 @@
 import React, { useState } from 'react';
-import Footer from '../../component/footer/Footer';
 import './DonationTab.css'
-import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import Footer from '../../component/footer/Footer';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
 
 const DonationTab = () => {
-    const [showStatements, setShowStatements] = useState("");
+    // const [showStatements, setShowStatements] = useState("");
     const [activeImage, setActiveImage] = useState("/Image/Img1.png")
     const [activeDoc, setActiveDoc] = useState("/Image/doc1.png")
     const [activeTab, setActiveTab] = useState("About")
     const [donarTab, setDonarTab] = useState(true)
-    const onClick = () => setShowStatements(prevShow => !prevShow)
+    const [isFade, setIsFade] = useState(true);
+
+    const handleToggleImage = (src) => {
+        setIsFade(false)
+        setActiveImage(src)
+
+        setTimeout(() => {
+            setIsFade(true)
+        }, [300])
+    }
+
+
     return (
         <>
             <Container className='DonationCont'>
@@ -23,13 +34,13 @@ const DonationTab = () => {
                     {/* --------leftSection---------- */}
 
                     <Col md={7} className='DonationLeft'>
-                        <img style={{ width: '97%' }} src={activeImage} alt="Image" />
+                        <img className={`${isFade ? 'active' : ''} main-image`} src={activeImage} alt="Image" />
 
                         <div className='Imagesleft'>
-                            <img style={{ width: '80px' }} src="/Image/Img1.png" alt="Image" onClick={() => setActiveImage("/Image/Img1.png")} />
-                            <img style={{ width: '80px' }} src="/Image/Img5.png" alt="Image" onClick={() => setActiveImage("/Image/Img5.png")} />
-                            <img style={{ width: '80px' }} src="/Image/Img3.png" alt="Image" onClick={() => setActiveImage("/Image/Img3.png")} />
-                            <img style={{ width: '80px' }} src="/Image/Img4.png" alt="Image" onClick={() => setActiveImage("/Image/Img4.png")} />
+                            <img style={{ width: '80px' }} src="/Image/Img1.png" alt="Image" onClick={() => handleToggleImage("/Image/Img1.png")} />
+                            <img style={{ width: '80px' }} src="/Image/Img5.png" alt="Image" onClick={() => handleToggleImage("/Image/Img5.png")} />
+                            <img style={{ width: '80px' }} src="/Image/Img3.png" alt="Image" onClick={() => handleToggleImage("/Image/Img3.png")} />
+                            <img style={{ width: '80px' }} src="/Image/Img4.png" alt="Image" onClick={() => handleToggleImage("/Image/Img4.png")} />
                         </div>
 
                         <div className="Sectionleftt">
@@ -39,7 +50,6 @@ const DonationTab = () => {
                             <li className={activeTab === "Comments" && 'active'} onClick={() => setActiveTab("Comments")}>Comments</li>
                         </div>
                         <hr className='donation-underline' />
-
                         {activeTab === "About" && <div className="paraLeft">
                             <p>About ipsum dolor sit amet, consectetur adipiscing elit.
                                 Nunc vulputate libero et velit interdum, ac aliquet odio
@@ -170,12 +180,12 @@ const DonationTab = () => {
 
             {/* ---------DocumentSection--------     */}
 
-            <Container Container className='DocumentSection' >
+            <Container className='DocumentSection' >
                 <div className="d-head">
                     <h5>Document</h5>
                 </div>
                 <Row>
-                    <Col md={7} className='DocumentLeft p-4' >
+                    <Col md={7} className='DocumentLeft' >
                         <div style={{ backgroundColor: '#EBEBEB' }}>
                             <img className='document-image-section' src={activeDoc} alt="Image" />
                         </div>
@@ -183,18 +193,18 @@ const DonationTab = () => {
                         <div className='Imagesleft'>
 
                             <img style={{ width: '80px' }} src="/Image/doc1.png" alt="Image" onClick={() => setActiveDoc("/Image/doc1.png")} />
-                            <img style={{ width: '80px' }} src="/Image/doc2.png" alt="Image" onClick={() => setActiveDoc("/Image/doc2.png")} />
+                            <img style={{ width: '80px' }} src="/Image/adharcard2.png" alt="Image" onClick={() => setActiveDoc("/Image/adharcard2.png")} />
                             <img style={{ width: '80px' }} src="/Image/doc3.png" alt="Image" onClick={() => setActiveDoc("/Image/doc3.png")} />
-                            <img style={{ width: '80px' }} src="/Image/doc4.png" alt="Image" onClick={() => setActiveDoc("/Image/doc4.png")} />
+                            <img style={{ width: '80px' }} src="/Image/pancard.jpg" alt="Image" onClick={() => setActiveDoc("/Image/pancard.jpg")} />
                         </div>
                     </Col>
 
-                    <Col md={5} className='Documentright-main2'>
+                    <Col md={5} className='Documentright-main'>
                         <div className="product-price">
                             <div className="product-price-child1" style={{
-                                fontSize: '20px',
+                                fontSize: '18px',
                                 fontWeight: '600',
-                                paddingBottom: '10px'
+                                padding: '10px 0'
                             }}>
                                 Tax Deduction
                                 <div className="i-btn">i

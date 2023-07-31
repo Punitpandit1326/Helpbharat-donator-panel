@@ -1,10 +1,10 @@
 import React from 'react';
 import './Myfundraiser.css';
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
-import CustomTab from '../../component/Navigation/customTabs/CustomTab';
 import Accordion from 'react-bootstrap/Accordion';
 import Footer from '../../component/footer/Footer';
+import CustomTab from '../../component/customTabs/CustomTab'
+import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
 
 const Myfundraiser = () => {
   const navigate = useNavigate();

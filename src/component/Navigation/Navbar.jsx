@@ -21,7 +21,7 @@ const Navigation = ({ activeLink }) => {
           </ul>
         </div>
       </div>
-      <Navbar expand="lg" variant='dark' className='NavbarMAin' style={{ height: '79px' }}>
+      <Navbar expand="lg" variant='dark' className='NavbarMAin'>
         <Container>
           <Navbar.Brand href="#" className='logo'>
             <h4 className='text-white'><Link to={'/'} className='logo-link'>HelpBharat</Link></h4></Navbar.Brand>

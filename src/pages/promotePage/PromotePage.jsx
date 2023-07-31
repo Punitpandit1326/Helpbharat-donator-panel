@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './PromotePage.css';
-import { Container, Table, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import { useNavigate } from 'react-router-dom';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Container, Table, Row, Col } from 'react-bootstrap';
 import { FaPencilAlt, FaDownload, FaRegCalendar, FaSortAmountDown, FaPlus } from 'react-icons/fa';
 import Footer from '../../component/footer/Footer';
 
 const PromotePage = () => {
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [showCalendar, setShowCalendar] = useState(false);
+
+
+    const navigate = useNavigate();
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        setShowCalendar(false);
+    };
+
+    const handleClick = () => {
+        setShowCalendar(true);
+    };
     return (
         <>
             {/* -------TopHeaderSection---------- */}
 
-            <Container className='mb-5'>
+            <Container>
                 <Row>
                     <Col lg={9} md={9}>
                         <div className="dashboard">
@@ -33,8 +49,6 @@ const PromotePage = () => {
 
             {/* -----------PromoteHeroSection-------------- */}
 
-
-
             <Container className='export-Cont promote-Count'>
                 <h3>Promote</h3>
                 <div className='export-Sec'>
@@ -55,7 +69,7 @@ const PromotePage = () => {
                         <div className="Facebook-stats">
                             <p>Facebook stats</p>
                         </div>
-                        <hr style={{ width: '230px', color: '#000', marginRight: '-15px' }} />
+                        <hr className='promote-line' />
                         <div className="leftlistRaised">
                             <div className="listdiv">
                                 <li>Total Raised</li>
@@ -74,7 +88,7 @@ const PromotePage = () => {
                         <div className="Facebook-stats">
                             <p>Twitter stats</p>
                         </div>
-                        <hr style={{ width: '230px', color: '#000', marginRight: '-15px' }} />
+                        <hr className='promote-line' />
                         <div className="leftlistRaised">
                             <div className="listdiv">
                                 <li>Total Raised</li>
@@ -82,7 +96,6 @@ const PromotePage = () => {
                                 <li>Total Visits</li>
                             </div>
                             <div className='listdiv2'>
-
                                 <p style={{ paddingLeft: '21px' }}>₹ 0</p>
                                 <p >0 </p>
                                 <p>0</p>
@@ -94,7 +107,7 @@ const PromotePage = () => {
                         <div className="Facebook-stats">
                             <p>Instagram stats</p>
                         </div>
-                        <hr style={{ width: '230px', color: '#000', marginRight: '-15px' }} />
+                        <hr className='promote-line' />
                         <div className="leftlistRaised">
                             <div className="listdiv">
                                 <li>Total Raised</li>
@@ -114,7 +127,7 @@ const PromotePage = () => {
                         <div className="Facebook-stats">
                             <p>Whatsapp stats</p>
                         </div>
-                        <hr style={{ width: '230px', color: '#000', marginRight: '-15px' }} />
+                        <hr className='promote-line' />
                         <div className="leftlistRaised">
                             <div className="listdiv">
                                 <li>Total Raised</li>
@@ -131,16 +144,26 @@ const PromotePage = () => {
 
                     </div>
                 </div>
-
-                <div className="promotepage-btn">
-                    <button><FaRegCalendar /> Date Range</button>
-                    <button style={{ marginRight: '54%' }}><FaSortAmountDown /> Sort Range </button>
+                <div className='promotepage-main-section'>
+                    <div className="promotepage-btn">
+                        {selectedDate ? (
+                            <button onClick={handleClick}>{selectedDate.toDateString()}</button>
+                        ) : (
+                            <button onClick={handleClick}><FaRegCalendar /> Date Range</button>
+                        )}
+                        {showCalendar && (
+                            <DatePicker
+                                className="calendar-datepicker"
+                                selected={selectedDate}
+                                onChange={handleDateChange} inline />
+                        )}
+                        <button><FaSortAmountDown /> Sort Range </button>
+                    </div>
                     <div className="addContbtn">
                         <button>Add New Contact <FaPlus /></button>
                     </div>
                 </div>
-
-                <Container fluid>
+                <Container fluid className='table-container p-0'>
                     <Table striped className='table-promote-section'>
                         <thead>
                             <tr>

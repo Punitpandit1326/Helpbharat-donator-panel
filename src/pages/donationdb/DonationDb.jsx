@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './DonationDb.css';
-import { FaPencilAlt, FaRegCalendar, FaSortAmountDown, FaLocationArrow, FaPlus } from 'react-icons/fa';
-import Footer from '../../component/footer/Footer';
-import { Container, Table, Row, Col } from 'react-bootstrap';
-import { FaDownload } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import { FaDownload } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
+import Footer from '../../component/footer/Footer';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Container, Table, Row, Col } from 'react-bootstrap';
+import { FaPencilAlt, FaRegCalendar, FaSortAmountDown, FaLocationArrow, FaPlus } from 'react-icons/fa';
 
 const DonationDb = () => {
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [showCalendar, setShowCalendar] = useState(false);
+
+
+  const navigate = useNavigate();
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setShowCalendar(false);
+  };
+
+  const handleClick = () => {
+    setShowCalendar(true);
+  };
+
   return (
     <>
       {/* -------TopHeaderSection---------- */}
@@ -46,7 +63,15 @@ const DonationDb = () => {
 
         <div className='Btn-SecTion'>
           <div className="btn-RighT">
-            <p> <FaRegCalendar /> &nbsp; Date Range</p>
+            {selectedDate ? (
+              <button onClick={handleClick}>{selectedDate.toDateString()}</button>
+            ) : (
+              <button className='calendar-btn' onClick={handleClick}><FaRegCalendar /> Date Range</button>
+            )}
+            {showCalendar && (
+              <DatePicker selected={selectedDate} onChange={handleDateChange} inline />
+            )}
+
           </div>
 
           <div className="btn-LefT">

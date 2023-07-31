@@ -9,7 +9,7 @@
 
 :root {
   --main-color: #009368;
-  --main-color2: #fff;
+  --main-color2: #ffffff;
 }
 
 /* ------Top-strip-Nav------ */
@@ -38,6 +38,10 @@
   font-size: 12px;
   color: var(--main-color2);
   padding: 10px 8px;
+}
+
+.right a:hover {
+  color: chocolate;
 }
 
 /* ----Navbar----- */
@@ -122,13 +126,13 @@ hr {
 
 .dropDownMain ul.toggleDropdown {
   display: none;
-  position: absolute;
   width: 200px;
-  top: 40;
-  background-color: rgb(255, 255, 255);
-  list-style: none;
+  top: 40px;
   z-index: 4;
   padding: 10px 0;
+  list-style: none;
+  position: absolute;
+  background-color: rgb(255, 255, 255);
 }
 
 .dropDownMain ul.toggleDropdown .linkItem {
@@ -164,7 +168,11 @@ hr {
   }
 
   .dropDownMain:hover ul.toggleDropdown {
-    display: none;
+    /* display: none; */
+  }
+
+  .dropDownMain ul.toggleDropdown {
+    z-index: 4;
   }
 
   .btn-donate {

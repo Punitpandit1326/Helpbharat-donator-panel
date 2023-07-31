@@ -1,15 +1,16 @@
 import React from 'react';
 import './Setting.css';
-import { Container, Row, Col } from 'react-bootstrap';
-import { FaPencilAlt, } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { FaPencilAlt, } from 'react-icons/fa';
 import Footer from '../../component/footer/Footer';
+import { Container, Row, Col } from 'react-bootstrap';
+
 const Setting = () => {
     return (
         <>
             {/* -------TopHeaderSection---------- */}
 
-            <Container className='mb-5'>
+            <Container>
                 <Row>
                     <Col lg={9} md={9}>
                         <div className="dashboard">
@@ -33,7 +34,7 @@ const Setting = () => {
             {/* -----------SettingHeroSection-------------- */}
 
             <Container>
-                <div className='settingSection mx-0'>
+                <div className='settingSection'>
                     <h3>Setting</h3>
                     <h4>You can change your account settings for the following options</h4>
                     <div className="curreny-section">

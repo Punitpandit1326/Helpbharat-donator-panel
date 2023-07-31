@@ -1,3 +1,7 @@
+.settingSection {
+  margin: 25px 0 0;
+}
+
 .settingSection h3 {
   font-family: Inter;
   font-size: 22px;
@@ -9,28 +13,29 @@
   font-family: Inter;
   font-size: 18px;
   font-weight: 400;
-  padding: 20px 0;
+  margin-bottom: 20px;
 }
 
 .settingSection p {
   font-family: Inter;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 400;
-  padding: 20px 30px;
+  padding: 15px 25px;
+  margin: 0;
 }
 
 .curreny-section {
-  width: 320px;
-  height: 65px;
+  width: 240px;
+  height: 50px;
   display: flex;
   justify-content: space-between;
   border-radius: 10px;
-  border: 1px solid #929292;
+  border: 1px solid #d9d9d9;
 }
 
 .curreny-section p {
   font-family: Inter;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
 }
 
@@ -43,43 +48,56 @@
   text-align: center;
   margin-right: 30px;
   outline: none;
+  background-color: #fff;
 }
 
 .endSection {
-  border: 1px solid #929292;
-  border-radius: 10px;
-  margin: 40px 0px;
   display: flex;
-  justify-content: space-between;
   position: relative;
+  margin: 20px 0px;
+  border-radius: 10px;
+  justify-content: space-between;
+  border: 1px solid #d9d9d9;
+
+  & p {
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 15px 19px;
+    margin: 0;
+  }
+
+  & span {
+    position: absolute;
+    top: 40px;
+    left: 18px;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 400;
+  }
+
+  & button {
+    height: 45px;
+    width: 180px;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    margin: 16px 20px;
+    text-align: center;
+    color: var(--main-color2);
+    background-color: rgba(255, 0, 0, 0.69);
+  }
 }
 
-.endSection p {
-  font-family: Inter;
-  font-size: 18px;
-  font-weight: 600;
-  padding: 15px 19px;
-}
+/* -------MediaQuery--------- */
 
-.endSection span {
-  position: absolute;
-  top: 46px;
-  left: 18px;
-  font-family: Inter;
-  font-size: 18px;
-  font-weight: 400;
-}
-
-.endSection button {
-  height: 54px;
-  width: 201px;
-  font-family: Inter;
-  font-size: 16px;
-  font-weight: 600;
-  border: none;
-  border-radius: 5px;
-  margin: 16px 20px;
-  text-align: center;
-  color: var(--main-color2);
-  background-color: rgba(255, 0, 0, 0.69);
+@media screen and (max-width: 568px) {
+  .endSection button {
+    width: 95%;
+    height: auto;
+    padding: 10px 0;
+    margin: 20px auto 15px;
+  }
 }

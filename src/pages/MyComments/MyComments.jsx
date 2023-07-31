@@ -1,6 +1,6 @@
 import React from 'react';
 import './MyComments.css';
-import CustomTab from '../../component/Navigation/customTabs/CustomTab';
+import CustomTab from '../../component/customTabs/CustomTab'
 import { Accordion, Container, Row, Col } from 'react-bootstrap';
 import Footer from '../../component/footer/Footer';
 

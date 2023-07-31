@@ -207,9 +207,9 @@
 
 
 .donor-paragraph li.active {
-  border-bottom: 5px solid #00A978;
-  padding-bottom: 20px;
   text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 5px solid #00A978;
 }
 
 .donor-paragraph::before {
@@ -248,8 +248,6 @@
   color: #828282;
   font-weight: 500;
 }
-
-
 
 /* --------------updateSection------------ */
 
@@ -375,8 +373,8 @@
   }
 
   .GoalSection {
-    width: 96%;
-    margin-left: 12px;
+    width: 100%;
+    margin-left: 14px;
   }
 
   .GoalSection p {
@@ -423,13 +421,17 @@
   }
 
   .lhs_row_container>.col-md-6 {
-    width: calc(100% - 10px) !important;
+    width: calc(100% - 25px) !important;
   }
 
   .updateSection {
-    padding: 18px;
-    width: 96%;
-    margin: 0 0 10px 12px;
+    padding: 10px;
+    width: 100%;
+    margin: 0 0 10px 14px;
+  }
+
+  .Updatepara {
+    margin-bottom: 10px;
   }
 
   .Updatepara p {
@@ -437,17 +439,18 @@
   }
 
   .Updatepara h6 {
-    font-size: 7px;
+    font-size: 11px;
   }
 
   .Updatepara a {
-    padding: 6px 10px;
-    font-size: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 6px 30px;
   }
 
   .Donors-Section {
-    width: 96%;
-    margin-left: 6px;
+    margin-left: 14px;
   }
 
   .donor-paragraph {
@@ -456,6 +459,28 @@
   }
 
   .donor-paragraph li {
+    font-size: 15px;
     white-space: nowrap;
+    margin: 10px 20px;
+  }
+
+  .donoted-para {
+    padding-left: 54px;
+    font-size: 14px;
+  }
+
+  .donarInfo-para {
+    padding: 0;
+  }
+
+  .donarInfo-para p {
+    font-size: 15px;
+  }
+
+  .svg-inline--fa {
+    display: var(--fa-display, inline-block);
+    height: 2.5rem;
+    overflow: visible;
+    vertical-align: 0.875em;
   }
 }

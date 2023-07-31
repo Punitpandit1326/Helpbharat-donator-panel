@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './DashBoard.css';
 import { FaPencilAlt } from 'react-icons/fa';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -14,8 +14,8 @@ import { Link, } from 'react-router-dom';
 
 
 const DashBoard = () => {
+  const [donarTab, setDonarTab] = useState(true);
 
-  const [donarTab, setDonarTab] = useState(true)
 
   return (
     <>

@@ -9,12 +9,21 @@ import Footer from '../../component/footer/Footer';
 
 
 const EditDonationTab = () => {
-    const [showStatements, setShowStatements] = useState("");
+    // const [showStatements, setShowStatements] = useState("");
     const [activeImage, setActiveImage] = useState("/Image/Img1.png")
     const [activeDoc, setActiveDoc] = useState("/Image/doc1.png")
     const [activeTab, setActiveTab] = useState("About")
     const [donarTab, setDonarTab] = useState(true)
-    const onClick = () => setShowStatements(prevShow => !prevShow)
+    const [isFade, setIsFade] = useState(true);
+
+    const handleToggleImage = (src) => {
+        setIsFade(false)
+        setActiveImage(src)
+
+        setTimeout(() => {
+            setIsFade(true)
+        }, [300])
+    }
 
     return (
         <div>
@@ -26,20 +35,19 @@ const EditDonationTab = () => {
 
             <Container className='DonationCont2'>
                 <h2>Help Ashok save kids orphaned by farmer suicides. Donate Now <FaPen className='pencilIcon' /></h2>
-
                 <Row>
 
                     {/* --------leftSection---------- */}
 
                     <Col md={7} className='DonationLeft DonationLeft2'>
-                        <img style={{ width: '97%' }} src={activeImage} alt="Image" />
+                        <img className={`${isFade ? 'active' : ''} main-image`} src={activeImage} alt="Image" />
 
                         <div className='Imagesleft'>
 
-                            <img style={{ width: '80px' }} src="/Image/Img1.png" alt="Image" onClick={() => setActiveImage("/Image/Img1.png")} />
-                            <img style={{ width: '80px' }} src="/Image/Img5.png" alt="Image" onClick={() => setActiveImage("/Image/Img5.png")} />
-                            <img style={{ width: '80px' }} src="/Image/Img3.png" alt="Image" onClick={() => setActiveImage("/Image/Img3.png")} />
-                            <img style={{ width: '80px' }} src="/Image/Img4.png" alt="Image" onClick={() => setActiveImage("/Image/Img4.png")} />
+                            <img style={{ width: '80px' }} src="/Image/Img1.png" alt="Image" onClick={() => handleToggleImage("/Image/Img1.png")} />
+                            <img style={{ width: '80px' }} src="/Image/Img5.png" alt="Image" onClick={() => handleToggleImage("/Image/Img5.png")} />
+                            <img style={{ width: '80px' }} src="/Image/Img3.png" alt="Image" onClick={() => handleToggleImage("/Image/Img3.png")} />
+                            <img style={{ width: '80px' }} src="/Image/Img4.png" alt="Image" onClick={() => handleToggleImage("/Image/Img4.png")} />
 
 
                         </div>
@@ -206,18 +214,18 @@ const EditDonationTab = () => {
                         <div className='Imagesleft'>
 
                             <img style={{ width: '80px' }} src="/Image/doc1.png" alt="Image" onClick={() => setActiveDoc("/Image/doc1.png")} />
-                            <img style={{ width: '80px' }} src="/Image/doc2.png" alt="Image" onClick={() => setActiveDoc("/Image/doc2.png")} />
+                            <img style={{ width: '80px' }} src="/Image/adharcard2.png" alt="Image" onClick={() => setActiveDoc("/Image/adharcard2.png")} />
                             <img style={{ width: '80px' }} src="/Image/doc3.png" alt="Image" onClick={() => setActiveDoc("/Image/doc3.png")} />
-                            <img style={{ width: '80px' }} src="/Image/doc4.png" alt="Image" onClick={() => setActiveDoc("/Image/doc4.png")} />
+                            <img style={{ width: '80px' }} src="/Image/pancard.jpg" alt="Image" onClick={() => setActiveDoc("/Image/pancard.jpg")} />
                         </div>
                     </Col>
 
-                    <Col md={5} className='Documentright-main2 pt-5'>
+                    <Col md={5} className='Documentright-main2'>
                         <div className="product-price">
                             <div className="product-price-child1" style={{
-                                fontSize: '18px',
-                                fontWeight: '500',
-                                paddingBottom: '7px'
+                                fontSize: '16px',
+                                fontWeight: '600',
+                                padding: '10px, 0'
                             }}>
                                 Tax Deduction
                                 <div className="i-btn" style={{ marginLeft: '10px' }}>i
@@ -244,12 +252,9 @@ const EditDonationTab = () => {
                                 <i className="social-icon fab fa-instagram"></i>
                                 <i className="social-icon fab fa-whatsapp"></i>
                             </div>
-
-
                         </div>
 
-
-                        <div className="supportfund supportfund2 ">
+                        <div className="supportfund supportfund2">
                             <h2>Supporting Fundraiser</h2>
                             <div className='fontAwesomeSec'>
                                 <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
