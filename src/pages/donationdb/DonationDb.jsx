@@ -13,8 +13,8 @@ const DonationDb = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
 
-
   const navigate = useNavigate();
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
     setShowCalendar(false);

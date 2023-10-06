@@ -1,10 +1,17 @@
 import React from 'react';
 import './Navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Container, Nav, Navbar, } from 'react-bootstrap';
 import { IoMdArrowDropdown } from "react-icons/io";
 
+
+
 const Navigation = ({ activeLink }) => {
+
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/login')
+  }
   return (
     <>
       <div className="top-strip">
@@ -48,7 +55,7 @@ const Navigation = ({ activeLink }) => {
                 </ul>
               </Link>
             </Nav>
-            <Button className='btn-donate'>Get Started</Button>
+            <Button onClick={handleClick} className='btn-donate'>Get Started</Button>
           </Navbar.Collapse>
         </Container>
       </Navbar>

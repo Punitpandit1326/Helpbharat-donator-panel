@@ -1,0 +1,160 @@
+.signup {
+    background: rgba(0, 0, 0, 0.56);
+    padding: 50px 0;
+}
+
+.signup .form_box {
+    background: #fff;
+    width: 50%;
+    margin: 0 auto;
+    border-radius: 7px;
+    padding: 20px;
+}
+
+.signup .form_box h2 {
+    font-size: 20px;
+    text-align: center;
+}
+
+.signup .form_box p {
+    color: #000;
+    text-align: center;
+    font-size: 15px;
+    padding: 0px 0 10px;
+}
+
+.signup .form_box .form-group {
+    position: relative;
+}
+
+.signup .form_box .form-group svg {
+    position: absolute;
+    top: 64%;
+    right: 3%;
+    font-size: 13px;
+}
+
+.signup .form_box label {
+    padding-bottom: 10px;
+    font-size: 15px;
+}
+
+.signup .form_box button.start {
+    width: 100%;
+    display: inherit;
+    background: #00A978;
+    border: #00A978;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.signup .form_box a.login {
+    width: 100%;
+    font-size: 15px;
+    display: inherit;
+    color: #000;
+    text-decoration: unset;
+    text-align: center;
+    position: relative;
+    margin: 30px 0;
+}
+
+.signup .form_box a.login::after {
+    position: absolute;
+    content: "";
+
+}
+
+.signup .form_box .email-login {
+    background: #FAFAFF;
+    border: 0.66095px solid #D9D9D9;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-around;
+    line-height: 16px;
+    padding-top: 10px;
+}
+
+.signup .form_box .email-login div {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.signup .form_box .email-login h6 {
+    background: #D9D9D9;
+    color: #737373;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+}
+
+.signup .form_box .email-login p {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 !important;
+}
+
+.signup .form_box .email-login span {
+    font-size: 13px;
+}
+
+.signup .form_box .email-login h5 svg {
+    font-size: 25px;
+}
+
+.signup .form_box button.fb {
+    background: #1877F2;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+    border: #1877F2;
+    width: 100%;
+    font-size: 15px;
+    margin: 20px 0 30px;
+}
+
+.signup .form_box button.fb svg {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.signup .form_box p.agree {
+    color: #808082;
+    width: 65%;
+    margin: 0 auto;
+    font-size: 14px;
+    padding: 0;
+}
+
+.signup .form_box a.account {
+    color: #00A978;
+    text-decoration: underline;
+    padding: 10px 0 20px;
+    font-size: 11px;
+    font-weight: 500;
+    display: block;
+    text-align: center;
+}
+
+.signup .form_box ul li {
+    width: 100%;
+}
+
+.signup .form_box ul li .nav-link {
+    color: #000;
+    border: 1px solid #D9D9D9;
+    font-size: 15px;
+    font-weight: 500;
+    width: 100%;
+    border-radius: 0px 5px 5px 0px;
+}
+
+.signup .form_box ul li .nav-link.active {
+    background: #F0F0F0;
+    border: 1px solid #D9D9D9;
+    border-radius: 5px 0px 0px 5px;
+}

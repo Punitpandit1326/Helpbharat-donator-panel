@@ -1,12 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Myprofile.css';
 import CustomTab from '../../component/customTabs/CustomTab'
 import Footer from '../../component/footer/Footer';
 import Accordion from 'react-bootstrap/Accordion';
-
 import { Container, Form, Row, Col, Button } from 'react-bootstrap';
+import { donatorUrl } from '../../utils/url';
+import Cookies from 'universal-cookie';
+
 const Myprofile = () => {
+    const [user, setUser] = useState({})
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [email, setEmail] = useState('')
     const [validated, setValidated] = useState(false);
+
+    const cookie = new Cookies();
+    const tokenWeb = cookie.get('token_web');
+    console.log(tokenWeb, "token recived");
+
+    const fetchUser = async () => {
+        try {
+            const response = await fetch(`${donatorUrl}user`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${tokenWeb}`
+                }
+            });
+            const data = await response.json();
+            if (!data.success) {
+                setError(data.message)
+                return
+            }
+            setUser(data.response.data);
+            setLoading(false);
+        }
+        catch (error) {
+            setError(false)
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        return () => fetchUser();
+    }, [])
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -19,6 +55,7 @@ const Myprofile = () => {
     };
 
     return (
+
         <div style={{ backgroundColor: '#F5F5F5' }}>
             <CustomTab activeLink={"myprofile"} />
 
@@ -26,6 +63,7 @@ const Myprofile = () => {
 
             <Container>
                 <Accordion defaultActiveKey="0">
+
                     <Accordion.Item eventKey="0">
                         <Accordion.Header
                             style={{
@@ -35,7 +73,8 @@ const Myprofile = () => {
                             }}>
                             <h6>Personal Details</h6></Accordion.Header>
                         <Accordion.Body>
-                            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+
+                            {user && <Form noValidate validated={validated} onSubmit={handleSubmit}>
                                 <Row className="mb-3">
                                     <Form.Group as={Col} md="6" controlId="validationCustom01">
                                         <Form.Label>Name</Form.Label>
@@ -43,6 +82,7 @@ const Myprofile = () => {
                                             required
                                             type="text"
                                             placeholder="Nishant Choudhary"
+                                            defaultValue={user.name}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
@@ -64,6 +104,7 @@ const Myprofile = () => {
                                             required
                                             type="email"
                                             placeholder="Nishu12364gmail.com"
+                                            defaultValue={user.email}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
@@ -71,10 +112,10 @@ const Myprofile = () => {
                                     <Form.Group as={Col} md="6" controlId="validationCustom04" className='form-input'>
                                         <Form.Label>Country</Form.Label>
                                         <Form.Select aria-label="Default select example">
-                                            <option>Open this select menu</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            <option>Select Country</option>
+                                            <option value="1">India</option>
+                                            <option value="2">United State</option>
+                                            <option value="3">Ohter</option>
                                         </Form.Select>
                                         <br />
                                     </Form.Group>
@@ -132,9 +173,10 @@ const Myprofile = () => {
                                         <button type='submit'>Save Settings</button>
                                     </Col>
                                 </Row>
-                            </Form>
+                            </Form>}
                         </Accordion.Body>
                     </Accordion.Item>
+
                     <br />
                     <Accordion.Item eventKey="1">
                         <Accordion.Header><h6>Update Password</h6></Accordion.Header>

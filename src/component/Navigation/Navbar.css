@@ -16,11 +16,11 @@
 
 .top-strip {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100%;
   background-color: var(--main-color);
   height: 30px;
-  padding-left: 50px;
+  padding: 0 100px;
 }
 
 .top-strip-connect {
@@ -56,13 +56,9 @@
   background: #004E37;
 }
 
-.logo {
-  padding-left: 14%;
-}
-
 .logo-link {
   font-family: Inter;
-  font-size: 20px;
+  font-size: 1.3rem;
   font-weight: 600;
   color: var(--main-color2);
   text-decoration: none;
@@ -73,14 +69,24 @@
 }
 
 .btn-donate {
-  background-color: transparent;
-  border: 1px solid;
-  border-radius: 6px;
   font-family: Inter;
-  font-size: 12px;
+  font-size: 0.8rem;
   font-weight: 600;
   text-align: center;
-  margin-right: 60px;
+  border-radius: 4px;
+  border: 1px solid;
+  background-color: transparent;
+}
+
+.btn-donate:hover {
+  color: rgb(240, 226, 75);
+  border: 1px solid var(--main-color2);
+  background-color: #004E37;
+}
+
+.btn-donate:active {
+  border: 1px solid var(--main-color2) !important;
+  background-color: #004E37 !important;
 }
 
 /* -------listNav------- */
