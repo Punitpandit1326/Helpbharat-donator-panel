@@ -1,6 +1,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Route, Routes, BrowserRouter, } from "react-router-dom";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Navigation from './component/Navigation/Navbar';
 import Myprofile from './pages/Myprofile/Myprofile';
 import Myfundraiser from './pages/Myfundraiser/Myfundraiser';

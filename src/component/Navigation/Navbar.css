@@ -69,6 +69,7 @@
 }
 
 .btn-donate {
+  width: 100px;
   font-family: Inter;
   font-size: 0.8rem;
   font-weight: 600;

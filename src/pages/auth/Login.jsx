@@ -6,22 +6,25 @@ import './auth.css';
 import { url } from '../../utils/url';
 import Cookies from 'universal-cookie';
 import { useAuth } from '../../App';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Login = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(true)
     const [userLogin, setUserLogin] = useState({
         email: '',
         password: ''
     });
+    const { loggedIn, login } = useAuth();
 
-    const { loggedIn, login } = useAuth()
 
     const hanldeSubmit = async (e) => {
-
         e.preventDefault();
-
         try {
+            toast.info('Please wait...', { autoClose: false });
             const response = await fetch(`${url}signin`, {
                 method: 'POST',
                 headers: {
@@ -32,24 +35,33 @@ const Login = () => {
             const data = await response.json();
             console.log(data);
 
-            if (!data.success) {
-                throw new Error(data.error);
+            if (!data.response.success) {
+                console.log(data);
+                toast.dismiss();
+                toast.error('Error: ' + data.response.message, { autoClose: 5000 });
+                return
             }
-            else {
-                const token = data.response.data.access_token;
-                const cookie = new Cookies();
-                const user = data.response.data.user;
-                cookie.set('token_web', token)
-                cookie.set('user', user)
-                login()
-                navigate("/")
-            }
+            const token = data.response.data.access_token;
+            console.log(data.response.data.access_token, 'data');
+            const cookie = new Cookies();
+            const user = data.response.data.user;
+            cookie.set('token_web', token)
+            cookie.set('user', user)
+            login();
+            navigate("/");
+            toast.dismiss();
         }
         catch (error) {
             console.log('api error throw', error);
+            toast.dismiss(); // Hide the loading toast
+            toast.error('An error occurred. Please try again later.', { autoClose: 5000 });
         }
-
     }
+
+    useEffect(() => {
+        hanldeSubmit();
+        return () => hanldeSubmit();
+    }, [])
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -61,6 +73,7 @@ const Login = () => {
             <div className="signup">
                 <div className="container">
                     <div className="form_box">
+                        <ToastContainer />
                         <form onSubmit={hanldeSubmit}>
                             <h2>Login </h2>
                             <p>Enter your details to get started</p>
@@ -91,6 +104,7 @@ const Login = () => {
                                         />
                                         {/* <IoIosUnlock /> */}
                                     </div>
+
                                     <button className="start" type="submit">Get Started</button>
                                     <Link to="/signup" className="account">Dont't Have Any Account Yet </Link>
 

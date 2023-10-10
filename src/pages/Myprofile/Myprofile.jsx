@@ -6,43 +6,68 @@ import Accordion from 'react-bootstrap/Accordion';
 import { Container, Form, Row, Col, Button } from 'react-bootstrap';
 import { donatorUrl } from '../../utils/url';
 import Cookies from 'universal-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Myprofile = () => {
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState({
+        name: '',
+        number: '',
+        email: '',
+        country: '',
+        city: '',
+        pincode: '',
+        address: '',
+        birth: '',
+        panCard: ''
+    });
+    const [detail, setDetails] = useState({
+        bank_name: '',
+        bank_account_no: '',
+        ifsc: '',
+        branch: '',
+        document: ''
+    });
+
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(true)
-    const [email, setEmail] = useState('')
+    const [isEditable, setIsEditable] = useState(false)
     const [validated, setValidated] = useState(false);
+    const [passwordData, setPasswordData] = useState({
+        currentPassword: '',
+        oldPassword: '',
+        newPassword: '',
+    });
 
     const cookie = new Cookies();
     const tokenWeb = cookie.get('token_web');
-    console.log(tokenWeb, "token recived");
+    const authUser = cookie.get('user');
+    const userId = authUser._id;
 
     const fetchUser = async () => {
-        try {
-            const response = await fetch(`${donatorUrl}user`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${tokenWeb}`
-                }
-            });
-            const data = await response.json();
-            if (!data.success) {
-                setError(data.message)
-                return
+
+        const response = await fetch(`${donatorUrl}user`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${tokenWeb}`
             }
-            setUser(data.response.data);
-            setLoading(false);
+        });
+        const data = await response.json();
+
+        if (!data.success) {
+            setError(data.message)
+            return
         }
-        catch (error) {
-            setError(false)
-            setLoading(false);
-        }
+        setUser(data.data);
+        setLoading(false);
+        toast.dismiss();
     }
 
     useEffect(() => {
-        return () => fetchUser();
-    }, [])
+        fetchUser();
+        return () => { };
+    }, []);
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -54,6 +79,217 @@ const Myprofile = () => {
         setValidated(true);
     };
 
+    const handleChangePassword = async (e) => {
+        e.preventDefault();
+
+        if (passwordData.newPassword !== passwordData.confirmPassword) {
+            alert('New password and confirm password do not match.');
+            return;
+        }
+
+        console.log(authUser);
+
+        try {
+            const response = await fetch(`${donatorUrl}change-password`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${tokenWeb}`,
+                },
+                body: JSON.stringify({
+                    currentPassword: passwordData.currentPassword,
+                    newPassword: passwordData.newPassword,
+                    email: authUser.email
+                }),
+            });
+
+            if (!response.success) {
+                throw new Error('Password change failed');
+            }
+
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setPasswordData({ ...passwordData, [name]: value });
+    };
+
+    const handleFileChange = (e) => {
+        // Set the selected file in the state
+        setDetails({ ...detail, document: e.target.files[0] });
+    };
+
+    // ---------Edit-Users-Api----------
+
+    const fetchEditUsers = async (e) => {
+        e.preventDefault();
+        try {
+            toast.info('Please wait...', { autoClose: false });
+
+            const res = await fetch(`${donatorUrl}user/${userId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${tokenWeb}`
+                },
+                body: JSON.stringify(user),
+
+            });
+
+            const data = await res.json();
+            console.log(data, "api was calling");
+            if (!data.success) {
+                toast.dismiss();
+                toast.error('Error: ' + data.response.message, { autoClose: 5000 });
+                throw new Error(data.message || 'Request failed');
+            }
+            setLoading(false);
+            toast.dismiss();
+        }
+        catch (error) {
+            setError(error.message || 'An error occurred');
+            setLoading(false);
+            toast.dismiss(); // Hide the loading toast
+            toast.error('An error occurred. Please try again later.', { autoClose: 5000 });
+        }
+    }
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setUser({ ...user, [name]: value })
+    };
+
+    const handleDocChange = (e) => {
+        const { name, value } = e.target;
+        setDetails({ ...detail, [name]: value })
+    };
+
+    // -----------get-user-account----------
+
+    const fetchDetails = async () => {
+        try {
+            const resp = await fetch(`${donatorUrl}account/?user_id=${userId}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${tokenWeb}`
+                },
+            });
+            const data = await resp.json();
+
+            console.log(data, "error1");
+
+            if (!data.success) {
+                setError(data.message);
+            }
+
+            setDetails(data.data[0]);
+
+            if (data.data.length >= 1) {
+                console.log("yes account is available");
+                setIsEditable(true)
+            } else {
+                console.log("no account is not available");
+                setIsEditable(false)
+            }
+
+            console.log(data.data, "error2");
+            setLoading(false);
+        }
+
+        catch (error) {
+            setError(error.message)
+            setLoading(false)
+        }
+    };
+
+    const postAccountDetails = async (e) => {
+        e.preventDefault();
+        console.log("form is submitting");
+        try {
+
+            const formData = new FormData();
+            formData.append('user_id', userId);
+            formData.append('document', detail.document);
+            formData.append('branch', detail.branch);
+            formData.append('ifsc', detail.ifsc);
+            formData.append('bank_account_no', detail.bank_account_no);
+            formData.append('bank_name', detail.bank_name);
+
+
+            console.log("is form data loaded", formData);
+
+            const resp = await fetch(`${donatorUrl}account/?user_id=${userId}`, {
+                method: 'post',
+                headers: {
+                    'Authorization': `Bearer ${tokenWeb}`
+                },
+                body: formData
+            });
+            const result = await resp.json();
+
+            if (!result.success) {
+                console.log("response error", result.message);
+                setError(result.message);
+            }
+            // setDetails(result.data);
+            console.log(result.data, "error2");
+            setLoading(false);
+        }
+
+        catch (error) {
+            console.log("catch error", error.message);
+            setError(error.message)
+            setLoading(false)
+        }
+    };
+
+    const editAccountDetails = async (e) => {
+        e.preventDefault();
+        try {
+
+            const formData = new FormData();
+            formData.append('user_id', userId);
+            formData.append('document', detail.document);
+            formData.append('branch', detail.branch);
+            formData.append('ifsc', detail.ifsc);
+            formData.append('bank_account_no', detail.bank_account_no);
+            formData.append('bank_name', detail.bank_name);
+
+
+            const response = await fetch(`${donatorUrl}account/${userId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${tokenWeb}`
+                },
+                body: formData,
+            });
+            const data = await response.json();
+            console.log(data, "api was calling");
+            if (!data.success) {
+                console.log("response error", response.message);
+                setError(response.message);
+            }
+            console.log(response.data, "error2");
+            setLoading(false);
+        }
+        catch (error) {
+            setError(error.message || 'An error occurred');
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchDetails();
+        return () => {
+
+        };
+    }, [])
+
     return (
 
         <div style={{ backgroundColor: '#F5F5F5' }}>
@@ -62,9 +298,9 @@ const Myprofile = () => {
             {/* --------AccordianSection----------- */}
 
             <Container>
-                <Accordion defaultActiveKey="0">
 
-                    <Accordion.Item eventKey="0">
+                <Accordion defaultActiveKey="0">
+                    <Accordion.Item eventKey="1">
                         <Accordion.Header
                             style={{
                                 fontFamily: 'Inter',
@@ -73,16 +309,18 @@ const Myprofile = () => {
                             }}>
                             <h6>Personal Details</h6></Accordion.Header>
                         <Accordion.Body>
-
-                            {user && <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                            <ToastContainer />
+                            {user && <Form noValidate validated={validated} onSubmit={fetchEditUsers}>
                                 <Row className="mb-3">
                                     <Form.Group as={Col} md="6" controlId="validationCustom01">
                                         <Form.Label>Name</Form.Label>
                                         <Form.Control
                                             required
                                             type="text"
-                                            placeholder="Nishant Choudhary"
+                                            name='name'
+                                            placeholder="name"
                                             defaultValue={user.name}
+                                            onChange={handleInputChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
@@ -90,32 +328,37 @@ const Myprofile = () => {
                                         <Form.Label>Phone Number</Form.Label>
                                         <Form.Control
                                             required
-                                            type="telnumber"
-                                            placeholder="+91 0987654321"
-                                            defaultValue=""
+                                            type="tel"
+                                            name='number'
+                                            placeholder="+91"
+                                            defaultValue={user.mobile_number}
+                                            onChange={handleInputChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <br />
                                     </Form.Group>
 
                                     <Form.Group as={Col} md="6" controlId="validationCustom03">
-                                        <Form.Label>Email Address</Form.Label>
+                                        <Form.Label>Email </Form.Label>
                                         <Form.Control
                                             required
                                             type="email"
-                                            placeholder="Nishu12364gmail.com"
+                                            name='email'
+                                            placeholder="xxx@mail.com"
                                             defaultValue={user.email}
+                                            onChange={handleInputChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
 
                                     <Form.Group as={Col} md="6" controlId="validationCustom04" className='form-input'>
                                         <Form.Label>Country</Form.Label>
-                                        <Form.Select aria-label="Default select example">
+                                        <Form.Select aria-label="Default select example"
+                                            name='country' onChange={handleInputChange}>
                                             <option>Select Country</option>
                                             <option value="1">India</option>
                                             <option value="2">United State</option>
-                                            <option value="3">Ohter</option>
+                                            <option value="3">Other</option>
                                         </Form.Select>
                                         <br />
                                     </Form.Group>
@@ -126,6 +369,8 @@ const Myprofile = () => {
                                             required
                                             type="text"
                                             placeholder="New Delhi"
+                                            name='city'
+                                            onChange={handleInputChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
@@ -133,8 +378,10 @@ const Myprofile = () => {
                                         <Form.Label>Pincode</Form.Label>
                                         <Form.Control
                                             required
-                                            type="telnumber"
+                                            type="tel"
+                                            name='pincode'
                                             placeholder="110044"
+                                            onChange={handleInputChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <br />
@@ -144,7 +391,9 @@ const Myprofile = () => {
                                         <Form.Control
                                             required
                                             type="text"
+                                            name='address'
                                             placeholder="h-132 lal kuan new delhi"
+                                            onChange={handleInputChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <br />
@@ -154,7 +403,8 @@ const Myprofile = () => {
                                         <Form.Control
                                             required
                                             type="date"
-                                            placeholder=""
+                                            name='birth'
+                                            onChange={handleInputChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <br />
@@ -164,7 +414,9 @@ const Myprofile = () => {
                                         <Form.Control
                                             required
                                             type="text"
-                                            placeholder="GJDBKF6765M"
+                                            name='panCard'
+                                            placeholder="Enter Your Pan"
+                                            onChange={handleInputChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <br />
@@ -174,21 +426,25 @@ const Myprofile = () => {
                                     </Col>
                                 </Row>
                             </Form>}
+
                         </Accordion.Body>
                     </Accordion.Item>
 
                     <br />
-                    <Accordion.Item eventKey="1">
+                    <Accordion.Item eventKey="2">
                         <Accordion.Header><h6>Update Password</h6></Accordion.Header>
                         <Accordion.Body>
-                            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                            <Form noValidate validated={validated} onSubmit={handleChangePassword}>
                                 <Row className="mb-3">
                                     <Form.Group as={Col} md="6" controlId="validationCustom01" >
                                         <Form.Label>Password</Form.Label>
                                         <Form.Control
                                             required
                                             type="password"
-                                            placeholder="Password"
+                                            placeholder="Current Password"
+                                            name="currentPassword"
+                                            value={passwordData.currentPassword}
+                                            onChange={handleChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
@@ -198,6 +454,9 @@ const Myprofile = () => {
                                             required
                                             type="password"
                                             placeholder="New Password"
+                                            name="newPassword"
+                                            value={passwordData.newPassword}
+                                            onChange={handleChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <br />
@@ -208,27 +467,34 @@ const Myprofile = () => {
                                             required
                                             type="password"
                                             placeholder="Confirm Password"
+                                            name="confirmPassword"
+                                            value={passwordData.confirmPassword}
+                                            onChange={handleChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
                                     <div className='d-flex justify-content-end  save-btn'>
-                                        <Button>Save Settings</Button>
+                                        <Button type='submit'>Save Settings</Button>
                                     </div>
                                 </Row>
                             </Form>
                         </Accordion.Body>
                     </Accordion.Item>
                     <br />
-                    <Accordion.Item eventKey="2">
+
+                    <Accordion.Item eventKey="3">
                         <Accordion.Header><h6>KYC & Bank Details</h6></Accordion.Header>
                         <Accordion.Body>
-                            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                            {detail && <Form noValidate validated={validated} onSubmit={isEditable ? editAccountDetails : postAccountDetails}>
                                 <Row className="mb-3">
                                     <Form.Group as={Col} md="6" controlId="validationCustom01">
                                         <Form.Label>Bank Name</Form.Label>
                                         <Form.Control
                                             required
                                             type="text"
+                                            defaultValue={detail.bank_name}
+                                            name='bank_name'
+                                            onChange={handleDocChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
@@ -236,7 +502,10 @@ const Myprofile = () => {
                                         <Form.Label>Bank Account No.</Form.Label>
                                         <Form.Control
                                             required
-                                            type="telnumber"
+                                            type="tel"
+                                            defaultValue={detail.bank_account_no}
+                                            name='bank_account_no'
+                                            onChange={handleDocChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <br />
@@ -245,7 +514,10 @@ const Myprofile = () => {
                                         <Form.Label>IFSC Code</Form.Label>
                                         <Form.Control
                                             required
-                                            type="telnumber"
+                                            type='text'
+                                            defaultValue={detail.ifsc}
+                                            name='ifsc'
+                                            onChange={handleDocChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     </Form.Group>
@@ -254,22 +526,25 @@ const Myprofile = () => {
                                         <Form.Control
                                             required
                                             type="text"
+                                            defaultValue={detail.branch}
+                                            name='branch'
+                                            onChange={handleDocChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <br />
                                     </Form.Group>
                                     <Form.Group controlId="formFile" className="mb-3">
                                         <Form.Label>Upload Cancel Cheque</Form.Label>
-                                        <Form.Control type="file" />
+                                        <Form.Control type="file" onChange={handleFileChange} />
                                         <span
                                             style={{ fontSize: '10px', fontWeight: '500', paddingLeft: '5px' }}>Please Upload max size of file is 2mb</span>
                                     </Form.Group>
 
                                     <div className='d-flex justify-content-end  save-btn'>
-                                        <Button>Save Settings</Button>
+                                        <Button type='submit'>Save Settings</Button>
                                     </div>
                                 </Row>
-                            </Form>
+                            </Form>}
                         </Accordion.Body>
                     </Accordion.Item>
                 </Accordion>

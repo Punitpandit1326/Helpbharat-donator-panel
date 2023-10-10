@@ -3,15 +3,21 @@ import './Navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Container, Nav, Navbar, } from 'react-bootstrap';
 import { IoMdArrowDropdown } from "react-icons/io";
-
+import { useAuth } from "../../App"
 
 
 const Navigation = ({ activeLink }) => {
-
   const navigate = useNavigate();
+  const { loggedIn, logout } = useAuth();
+
   const handleClick = () => {
     navigate('/login')
   }
+  const userLogout = () => {
+    logout()
+    navigate("/login")
+  };
+
   return (
     <>
       <div className="top-strip">
@@ -55,7 +61,9 @@ const Navigation = ({ activeLink }) => {
                 </ul>
               </Link>
             </Nav>
-            <Button onClick={handleClick} className='btn-donate'>Get Started</Button>
+            {loggedIn ? (<Button className='btn-donate' onClick={userLogout}>Logout</Button>) :
+              <Button onClick={handleClick} className='btn-donate'>Get Started</Button>
+            }
           </Navbar.Collapse>
         </Container>
       </Navbar>
