@@ -458,6 +458,8 @@ p.donoted-inr {
   font-weight: 500;
 }
 
+/* ------media_Queries-------- */
+
 @media screen and (max-width: 568px) {
   .DonationCont h1 {
     margin: 0;
@@ -474,9 +476,13 @@ p.donoted-inr {
     padding: 5px 5px;
   }
 
+  .Sectionleft_main {
+    overflow: hidden;
+  }
+
   .Sectionleftt {
     width: 100%;
-    overflow: scroll;
+    overflow-x: auto;
   }
 
   .Sectionleftt::-webkit-scrollbar {
@@ -603,6 +609,10 @@ p.donoted-inr {
     font-family: "Poppins", sans-serif;
     padding: 0;
     text-align: start !important;
+  }
+
+  .fontAwesomeSec {
+    margin-left: 0;
   }
 
   .fontAwesomeSec p {

@@ -8,6 +8,7 @@ import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
 
 const DonationTab = () => {
     // const [showStatements, setShowStatements] = useState("");
+    const [currentValue, setCurrentValue] = useState(0);
     const [activeImage, setActiveImage] = useState("/Image/Img1.png")
     const [activeDoc, setActiveDoc] = useState("/Image/doc1.png")
     const [activeTab, setActiveTab] = useState("About")
@@ -21,7 +22,10 @@ const DonationTab = () => {
         setTimeout(() => {
             setIsFade(true)
         }, [300])
-    }
+    };
+    const handleButtonClick = (value) => {
+        setCurrentValue(value);
+    };
 
 
     return (
@@ -42,12 +46,13 @@ const DonationTab = () => {
                             <img style={{ width: '80px' }} src="/Image/Img3.png" alt="Image" onClick={() => handleToggleImage("/Image/Img3.png")} />
                             <img style={{ width: '80px' }} src="/Image/Img4.png" alt="Image" onClick={() => handleToggleImage("/Image/Img4.png")} />
                         </div>
-
-                        <div className="Sectionleftt">
-                            <li className={activeTab === "About" && 'active'} onClick={() => setActiveTab("About")}> About</li>
-                            <li className={activeTab === "Documents" && 'active'} onClick={() => setActiveTab("Documents")}>Documents</li>
-                            <li className={activeTab === "Updates" && 'active'} onClick={() => setActiveTab("Updates")}>Updates</li>
-                            <li className={activeTab === "Comments" && 'active'} onClick={() => setActiveTab("Comments")}>Comments</li>
+                        <div className='Sectionleft_main'>
+                            <div className="Sectionleftt">
+                                <li className={activeTab === "About" && 'active'} onClick={() => setActiveTab("About")}> About</li>
+                                <li className={activeTab === "Documents" && 'active'} onClick={() => setActiveTab("Documents")}>Documents</li>
+                                <li className={activeTab === "Updates" && 'active'} onClick={() => setActiveTab("Updates")}>Updates</li>
+                                <li className={activeTab === "Comments" && 'active'} onClick={() => setActiveTab("Comments")}>Comments</li>
+                            </div>
                         </div>
                         <hr className='donation-underline' />
                         {activeTab === "About" && <div className="paraLeft">
@@ -150,14 +155,14 @@ const DonationTab = () => {
                         {!donarTab && <div className='recent-main'> Hello World</div>}
 
                         <div className="donate-btn-price">
-                            <button>₹500</button>
-                            <button>₹1000</button>
-                            <button>₹1500</button>
-                            <button>₹2000</button>
+                            <button onClick={() => handleButtonClick(500)}>₹500</button>
+                            <button onClick={() => handleButtonClick(1000)}>₹1000</button>
+                            <button onClick={() => handleButtonClick(1500)}>₹1500</button>
+                            <button onClick={() => handleButtonClick(2000)}>₹2000</button>
                         </div>
 
                         <div className="donate-form">
-                            <input type="text" placeholder='Enter Custom Amount' />
+                            <input type="text" placeholder='Enter Custom Amount' value={currentValue} />
                             <div className='i-btn-main'>
                                 <div className="i-btn">i
                                     <div className="hover-box">
