@@ -210,6 +210,7 @@ const Myprofile = () => {
     const postAccountDetails = async (e) => {
         e.preventDefault();
         console.log("form is submitting");
+
         try {
 
             const formData = new FormData();
@@ -250,6 +251,7 @@ const Myprofile = () => {
 
     const editAccountDetails = async (e) => {
         e.preventDefault();
+        const toastId = toast.loading('Please wait...');
         try {
 
             const formData = new FormData();
@@ -273,13 +275,17 @@ const Myprofile = () => {
             if (!data.success) {
                 console.log("response error", response.message);
                 setError(response.message);
+                toast.update(toastId, data.response.message)
             }
             console.log(response.data, "error2");
             setLoading(false);
+            toast.dismiss();
         }
         catch (error) {
             setError(error.message || 'An error occurred');
             setLoading(false);
+            toast.dismiss(); // Hide the loading toast
+            toast.error(error.message, { autoClose: 2000 });
         }
     }
 
@@ -485,7 +491,7 @@ const Myprofile = () => {
                     <Accordion.Item eventKey="3">
                         <Accordion.Header><h6>KYC & Bank Details</h6></Accordion.Header>
                         <Accordion.Body>
-                            { <Form noValidate validated={validated} onSubmit={isEditable ? editAccountDetails : postAccountDetails}>
+                            {<Form noValidate validated={validated} onSubmit={isEditable ? editAccountDetails : postAccountDetails}>
                                 <Row className="mb-3">
                                     <Form.Group as={Col} md="6" controlId="validationCustom01">
                                         <Form.Label>Bank Name</Form.Label>
@@ -535,7 +541,7 @@ const Myprofile = () => {
                                     </Form.Group>
                                     <Form.Group controlId="formFile" className="mb-3">
                                         <Form.Label>Upload Cancel Cheque</Form.Label>
-                                        <Form.Control type="file"   onChange={handleFileChange} />
+                                        <Form.Control type="file" onChange={handleFileChange} />
                                         <span
                                             style={{ fontSize: '10px', fontWeight: '500', paddingLeft: '5px' }}>Please Upload max size of file is 2mb</span>
                                     </Form.Group>
