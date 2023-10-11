@@ -263,10 +263,11 @@ const Myprofile = () => {
             formData.append('bank_name', detail.bank_name);
 
 
-            const response = await fetch(`${donatorUrl}account/${userId}`, {
+            const response = await fetch(`${donatorUrl}account`, {
                 method: 'PATCH',
                 headers: {
-                    'Authorization': `Bearer ${tokenWeb}`
+                    'Authorization': `Bearer ${tokenWeb}`,
+
                 },
                 body: formData,
             });
