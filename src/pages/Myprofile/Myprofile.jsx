@@ -214,7 +214,7 @@ const Myprofile = () => {
         try {
 
             const formData = new FormData();
-            formData.append('user_id', userId);
+            // formData.append('user_id', userId);
             formData.append('document', detail.document);
             formData.append('branch', detail.branch);
             formData.append('ifsc', detail.ifsc);
@@ -224,7 +224,7 @@ const Myprofile = () => {
 
             console.log("is form data loaded", formData);
 
-            const resp = await fetch(`${donatorUrl}account/?user_id=${userId}`, {
+            const resp = await fetch(`${donatorUrl}account`, {
                 method: 'post',
                 headers: {
                     'Authorization': `Bearer ${tokenWeb}`
@@ -243,7 +243,7 @@ const Myprofile = () => {
         }
 
         catch (error) {
-            console.log("catch error", error.message);
+            console.log("catch error", error);
             setError(error.message)
             setLoading(false)
         }
