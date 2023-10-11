@@ -35,15 +35,15 @@ const Myprofile = () => {
     const [isEditable, setIsEditable] = useState(false)
     const [validated, setValidated] = useState(false);
     const [passwordData, setPasswordData] = useState({
-        currentPassword: '',
+        old_password: '',
         oldPassword: '',
-        newPassword: '',
+        new_password: '',
     });
 
     const cookie = new Cookies();
     const tokenWeb = cookie.get('token_web');
     const authUser = cookie.get('user');
-    const userId = authUser._id;
+    const userId = authUser?._id;
 
     const fetchUser = async () => {
 
@@ -82,7 +82,7 @@ const Myprofile = () => {
     const handleChangePassword = async (e) => {
         e.preventDefault();
 
-        if (passwordData.newPassword !== passwordData.confirmPassword) {
+        if (passwordData.new_password !== passwordData.confirmPassword) {
             alert('New password and confirm password do not match.');
             return;
         }
@@ -97,8 +97,8 @@ const Myprofile = () => {
                     'Authorization': `Bearer ${tokenWeb}`,
                 },
                 body: JSON.stringify({
-                    currentPassword: passwordData.currentPassword,
-                    newPassword: passwordData.newPassword,
+                    old_password: passwordData.old_password,
+                    new_password: passwordData.new_password,
                     email: authUser.email
                 }),
             });
@@ -173,7 +173,7 @@ const Myprofile = () => {
 
     const fetchDetails = async () => {
         try {
-            const resp = await fetch(`${donatorUrl}account/?user_id=${userId}`, {
+            const resp = await fetch(`${donatorUrl}account`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${tokenWeb}`
@@ -237,7 +237,7 @@ const Myprofile = () => {
                 console.log("response error", result.message);
                 setError(result.message);
             }
-            // setDetails(result.data);
+            setDetails(result.data);
             console.log(result.data, "error2");
             setLoading(false);
         }
@@ -448,8 +448,8 @@ const Myprofile = () => {
                                             required
                                             type="password"
                                             placeholder="Current Password"
-                                            name="currentPassword"
-                                            value={passwordData.currentPassword}
+                                            name="old_password"
+                                            value={passwordData.old_password}
                                             onChange={handleChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -460,8 +460,8 @@ const Myprofile = () => {
                                             required
                                             type="password"
                                             placeholder="New Password"
-                                            name="newPassword"
-                                            value={passwordData.newPassword}
+                                            name="new_password"
+                                            value={passwordData.new_password}
                                             onChange={handleChange}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -491,15 +491,14 @@ const Myprofile = () => {
                     <Accordion.Item eventKey="3">
                         <Accordion.Header><h6>KYC & Bank Details</h6></Accordion.Header>
                         <Accordion.Body>
-                            <ToastContainer />
-                            {detail && <Form noValidate validated={validated} onSubmit={isEditable ? editAccountDetails : postAccountDetails}>
+                            {<Form noValidate validated={validated} onSubmit={isEditable ? editAccountDetails : postAccountDetails}>
                                 <Row className="mb-3">
                                     <Form.Group as={Col} md="6" controlId="validationCustom01">
                                         <Form.Label>Bank Name</Form.Label>
                                         <Form.Control
                                             required
                                             type="text"
-                                            defaultValue={detail.bank_name}
+                                            defaultValue={detail?.bank_name}
                                             name='bank_name'
                                             onChange={handleDocChange}
                                         />
@@ -510,7 +509,7 @@ const Myprofile = () => {
                                         <Form.Control
                                             required
                                             type="tel"
-                                            defaultValue={detail.bank_account_no}
+                                            defaultValue={detail?.bank_account_no}
                                             name='bank_account_no'
                                             onChange={handleDocChange}
                                         />
@@ -522,7 +521,7 @@ const Myprofile = () => {
                                         <Form.Control
                                             required
                                             type='text'
-                                            defaultValue={detail.ifsc}
+                                            defaultValue={detail?.ifsc}
                                             name='ifsc'
                                             onChange={handleDocChange}
                                         />
@@ -533,7 +532,7 @@ const Myprofile = () => {
                                         <Form.Control
                                             required
                                             type="text"
-                                            defaultValue={detail.branch}
+                                            defaultValue={detail?.branch}
                                             name='branch'
                                             onChange={handleDocChange}
                                         />
