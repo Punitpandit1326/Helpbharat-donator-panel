@@ -266,7 +266,8 @@ const Myprofile = () => {
             const response = await fetch(`${donatorUrl}account`, {
                 method: 'PATCH',
                 headers: {
-                    'Authorization': `Bearer ${tokenWeb}`
+                    'Authorization': `Bearer ${tokenWeb}`,
+
                 },
                 body: formData,
             });
