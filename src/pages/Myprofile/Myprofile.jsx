@@ -173,7 +173,7 @@ const Myprofile = () => {
 
     const fetchDetails = async () => {
         try {
-            const resp = await fetch(`${donatorUrl}account}`, {
+            const resp = await fetch(`${donatorUrl}account/${userId}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${tokenWeb}`
@@ -266,8 +266,7 @@ const Myprofile = () => {
             const response = await fetch(`${donatorUrl}account`, {
                 method: 'PATCH',
                 headers: {
-                    'Authorization': `Bearer ${tokenWeb}`,
-
+                    'Authorization': `Bearer ${tokenWeb}`
                 },
                 body: formData,
             });
