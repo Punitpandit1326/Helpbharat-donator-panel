@@ -225,7 +225,7 @@ const Myprofile = () => {
             console.log("is form data loaded", formData);
 
             const resp = await fetch(`${donatorUrl}account`, {
-                method: 'post',
+                method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${tokenWeb}`
                 },
