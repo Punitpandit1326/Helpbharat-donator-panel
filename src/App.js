@@ -17,7 +17,8 @@ import Login from './pages/auth/Login';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import { useState, useContext, createContext } from 'react';
 import Cookies from 'universal-cookie';
-
+import Fundraiser from './pages/StartFundraiser/Fundraiser'
+import CreateFund from './pages/StartFundraiser/CreateFundraiser/CreateFund';
 
 const AuthContext = createContext();
 export const useAuth = () => {
@@ -44,12 +45,14 @@ function App() {
           <Route path='/' element={<Myprofile />} />
           <Route path='myprofile' element={<Myprofile />} />
           <Route path='myfundraiser' element={<Myfundraiser />} />
+          <Route path='fundraiser' element={<Fundraiser />} />
+          <Route path='fundraiser/createfund' element={<CreateFund />} />
           <Route path='mydonation' element={<MyDonation />} />
           <Route path='mycomments' element={<MyComments />} />
-          <Route path='donationtab' element={<DonationTab />} />
+          <Route path='/myfundraiser/donationtab' element={<DonationTab />} />
           <Route path='editdonationtab' element={<EditDonationTab />} />
-          <Route path='dashboard' element={<DashBoard />} />
-          <Route path='donationdb' element={<DonationDb />} />
+          <Route path='/myfundraiser/dashboard' element={<DashBoard />} />
+          <Route path='/donationdb' element={<DonationDb />} />
           <Route path='promotepage' element={<PromotePage />} />
           <Route path='mywithdraw' element={<MyWithdraw />} />
           <Route path='setting' element={<Setting />} />

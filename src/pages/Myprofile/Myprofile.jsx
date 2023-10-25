@@ -120,7 +120,6 @@ const Myprofile = () => {
     };
 
     const handleFileChange = (e) => {
-        // Set the selected file in the state
         setDetails({ ...detail, document: e.target.files[0] });
     };
 
@@ -173,12 +172,13 @@ const Myprofile = () => {
 
     const fetchDetails = async () => {
         try {
-            const resp = await fetch(`${donatorUrl}account/${userId}`, {
+            const resp = await fetch(`${donatorUrl}account?user_id=${userId}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${tokenWeb}`
                 },
             });
+
             const data = await resp.json();
 
             console.log(data, "error1");
@@ -188,6 +188,7 @@ const Myprofile = () => {
             }
 
             setDetails(data.data[0]);
+            console.log(data);
 
             if (data.data.length >= 1) {
                 console.log("yes account is available");

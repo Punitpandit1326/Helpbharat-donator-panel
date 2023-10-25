@@ -10,7 +10,7 @@
 .main-child-row {
   box-shadow: 0 4px 9px -4px rgba(0, 0, 0, 0.3);
   height: 202px;
-  width: 852px;
+  width: 80%;
   border-radius: 10px;
   border: 1px solid #E8E8E8;
   display: flex;

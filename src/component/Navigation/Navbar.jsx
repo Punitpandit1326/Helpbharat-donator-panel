@@ -44,7 +44,7 @@ const Navigation = ({ activeLink }) => {
               className="NavFont ms-auto my-lg-0 navfont"
               navbarScroll
             >
-              <Link to={'/'} className='link-nav'>Start a fundraiser</Link>
+              <Link to={'/fundraiser'} className='link-nav'>Start a fundraiser</Link>
               <Link to={'/'} className='link-nav'>Donate</Link>
               <Link to={'/'} className='link-nav'>About us</Link>
               <Link to={'/'} className='link-nav'>News</Link>

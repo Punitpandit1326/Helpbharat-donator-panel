@@ -1,0 +1,137 @@
+/* create fund css */
+.create_fund {
+    padding: 50px 0;
+}
+
+.create_fund .form .ant-select-selector {
+    height: 40px;
+}
+
+.create_fund .form .ant-select {
+    width: 100%;
+}
+
+.create_fund .mail {
+    padding: 25px 15px;
+    border: 1px solid #D9D9D9;
+    border-radius: 8px;
+    color: #000;
+    font-size: 14px;
+}
+
+.create_fund .flex-box {
+    display: flex;
+    gap: 20px;
+}
+
+.create_fund .form-group {
+    width: 100%;
+}
+
+.create_fund .rs-picker {
+    width: 100%;
+}
+
+
+/* choose fund css */
+
+.main_fund_Section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+
+    & h5 {
+        color: #000 !important;
+        font-family: Inter !important;
+        font-size: 1.3rem !important;
+        font-weight: 600 !important;
+    }
+
+    & h6 {
+        color: #464646 !important;
+        font-family: Inter !important;
+        font-size: 0.9rem !important;
+        font-weight: 600 !important;
+
+    }
+
+
+}
+
+.form-section {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 30px;
+
+    & input {
+        margin-top: 8px;
+        width: 100%;
+        height: 35px;
+        padding: 5px;
+        border: none;
+        outline: 2px solid #d9d9d9;
+        border-radius: 4px;
+    }
+
+
+}
+
+.main-container-form-section button {
+    margin: 80px 0 25px;
+    width: 80%;
+    height: 40px;
+    color: #fff;
+    background: #00A978;
+    border-radius: 4px;
+    border: none;
+}
+
+.main-container-form-section p {
+    color: #464646;
+    font-family: Inter;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.faq-section {
+    margin-top: 50px;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid #00A978;
+
+    & h5 {
+        font-size: 1rem !important;
+        font-weight: 500 !important;
+    }
+}
+
+.anchor-section {
+    padding: 5px 8px;
+    display: flex;
+
+    flex-direction: column;
+
+    & a {
+        font-family: 'Inter';
+        text-decoration: underline;
+        color: #00A978 !important;
+        padding-top: 10px;
+    }
+}
+
+.form-control,
+.form-select {
+    width: 100% !important;
+}
+
+.endSection_faq {
+    margin-top: 28px;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #d9d9d9;
+}
