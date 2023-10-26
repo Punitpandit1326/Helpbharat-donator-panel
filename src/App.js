@@ -47,9 +47,9 @@ function App() {
           <Route path='myfundraiser' element={<Myfundraiser />} />
           <Route path='fundraiser' element={<Fundraiser />} />
           <Route path='fundraiser/createfund' element={<CreateFund />} />
-          <Route path='mydonation' element={<MyDonation />} />
+          <Route path='mydonation/' element={<MyDonation />} />
           <Route path='mycomments' element={<MyComments />} />
-          <Route path='/myfundraiser/donationtab' element={<DonationTab />} />
+          <Route path='/myfundraiser/donationtab/:slug' element={<DonationTab />} />
           <Route path='editdonationtab' element={<EditDonationTab />} />
           <Route path='/myfundraiser/dashboard' element={<DashBoard />} />
           <Route path='/donationdb' element={<DonationDb />} />

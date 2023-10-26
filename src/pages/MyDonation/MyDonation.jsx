@@ -109,9 +109,9 @@ const MyDonation = () => {
                         <td>{item.amount}</td>
                         <td className='anchor text-start'>
                           {item.is_tax_relaxation ? (
-                            <a href="#" disabled>Claim Tax</a>
+                            <a href="#">Claim Tax</a>
                           ) : (
-                            <a href="#" disabled>Disabled</a>
+                            <a href="#" disabled>Claim Tax</a>
                           )}
                         </td>
                       </tr>

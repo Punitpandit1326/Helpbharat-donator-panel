@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Myfundraiser.css';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Accordion from 'react-bootstrap/Accordion';
 import Footer from '../../component/footer/Footer';
 import CustomTab from '../../component/customTabs/CustomTab'
@@ -16,9 +16,12 @@ const Myfundraiser = () => {
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
   const [users, setUsers] = useState([]);
-  const navigate = useNavigate();
-  const handleClickChnage = () =>
-    navigate('/myfundraiser/donationtab');
+  const navigate = useNavigate()
+
+  const handleClickChnage = (slug) => {
+    navigate(`/myfundraiser/donationtab/${slug}`);
+
+  }
 
   const cookie = new Cookies();
   const tokenWeb = cookie.get('token_web');
@@ -78,7 +81,7 @@ const Myfundraiser = () => {
               {users.map((item, index) =>
               (
                 <Container className='main-child'>
-                  <Row key={index} className='main-child-row' onClick={handleClickChnage} >
+                  <Row key={index} className='main-child-row' onClick={() => handleClickChnage(item.slug)} >
                     <Col lg={3} className='left-child'>
                       {item.cover_photo && item.cover_photo.length > 0 && item.cover_photo[0] && (
                         <img src={asset(item.cover_photo[0].name)} alt={item.name}

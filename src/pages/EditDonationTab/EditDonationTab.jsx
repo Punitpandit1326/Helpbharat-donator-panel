@@ -1,20 +1,29 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './EditDonationTab.css';
 import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FaPen, FaCalendarAlt } from "react-icons/fa";
 import Footer from '../../component/footer/Footer';
-
+import { donatorUrl } from '../../utils/url';
 
 
 const EditDonationTab = () => {
-    // const [showStatements, setShowStatements] = useState("");
+    const [editCampaign, setEditCampaign] = useState({});
     const [activeImage, setActiveImage] = useState("/Image/Img1.png")
     const [activeDoc, setActiveDoc] = useState("/Image/doc1.png")
     const [activeTab, setActiveTab] = useState("About")
     const [donarTab, setDonarTab] = useState(true)
     const [isFade, setIsFade] = useState(true);
+    const [currentValue, setCurrentValue] = useState(0);
+    const documtToRef = useRef();
+    const aboutToRef = useRef();
+    const updatesToRef = useRef();
+    const commentToRef = useRef();
+
+    // const fetchEditCampaign = async () => {
+    //     const response = await fetch(`${donatorUrl}campaign/64c223c239d8a5239bfe4c99`)
+    // }
 
     const handleToggleImage = (src) => {
         setIsFade(false)
@@ -22,8 +31,12 @@ const EditDonationTab = () => {
 
         setTimeout(() => {
             setIsFade(true)
-        }, [300])
+        }, [500])
     }
+
+    const handleButtonClick = (value) => {
+        setCurrentValue(value);
+    };
 
     return (
         <div>
@@ -48,54 +61,34 @@ const EditDonationTab = () => {
                             <img style={{ width: '80px' }} src="/Image/Img5.png" alt="Image" onClick={() => handleToggleImage("/Image/Img5.png")} />
                             <img style={{ width: '80px' }} src="/Image/Img3.png" alt="Image" onClick={() => handleToggleImage("/Image/Img3.png")} />
                             <img style={{ width: '80px' }} src="/Image/Img4.png" alt="Image" onClick={() => handleToggleImage("/Image/Img4.png")} />
-
-
                         </div>
 
                         <div className="Sectionleftt">
-                            <li className={`${activeTab === 'About' ? 'active-tab' : ''}`} onClick={() => setActiveTab("About")}> About</li>
-                            <li className={`${activeTab === 'Documents' ? 'active-tab' : ''}`} onClick={() => setActiveTab("Documents")}>Documents</li>
-                            <li className={`${activeTab === 'Updates' ? 'active-tab' : ''}`} onClick={() => setActiveTab("Updates")}>Updates</li>
-                            <li className={`${activeTab === 'Comments' ? 'active-tab' : ''}`} onClick={() => setActiveTab("Comments")}>Comments</li>
+                            <li className={`${activeTab === 'About' ? 'active-tab' : ''}`} onClick={() => aboutToRef.current.scrollIntoView
+                                ()}> About</li>
+                            <li className={`${activeTab === 'Documents' ? 'active-tab' : ''}`} onClick={() => documtToRef.current.scrollIntoView()}>Documents</li>
+                            <li className={`${activeTab === 'Updates' ? 'active-tab' : ''}`} onClick={() => updatesToRef.current.scrollIntoView
+                                ()}>Updates</li>
+                            <li className={`${activeTab === 'Comments' ? 'active-tab' : ''}`} onClick={() => commentToRef.current.scrollIntoView
+                                ()}>Comments</li>
                         </div>
                         <hr className='donation-underline' />
 
-                        {activeTab === "About" && <div className="paraLeft">
-                            <p>About ipsum dolor sit amet, consectetur adipiscing elit.
-                                Nunc vulputate libero et velit interdum, ac aliquet odio
-                                mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis
-                                . Ut commodo efficitur neque.</p>
+                        <div className="paraLeft" ref={aboutToRef}>
+                            <p>Hello World</p>
+                            <img src="/Image/Img5.png" alt="Image" />
+                        </div>
 
-                            <p>About ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.</p>
-                            <img src="/Image/Img5.png" alt="Image" />
-                        </div>}
-                        {activeTab === "Documents" && <div className="paraLeft">
-                            <p>Documents   .
-                                Nunc vulputate libero et velit interdum, ac aliquet odio
-                                mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis
-                                . Ut commodo efficitur neque.</p>
-                            <br />
-                            <p>Documents ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.</p>
-                            <img src="/Image/Img5.png" alt="Image" />
-                        </div>}
-                        {activeTab === "Updates" && <div className="paraLeft">
-                            <p>Updates ipsum dolor sit amet, consectetur adipiscing elit.
-                                Nunc vulputate libero et velit interdum, ac aliquet odio
-                                mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis
-                                . Ut commodo efficitur neque.</p>
-                            <br />
-                            <p>Updates ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.</p>
-                            <img src="/Image/Img5.png" alt="Image" />
-                        </div>}
-                        {activeTab === "Comments" && <div className="paraLeft">
-                            <p>Comments ipsum dolor sit amet, consectetur adipiscing elit.
-                                Nunc vulputate libero et velit interdum, ac aliquet odio
-                                mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis
-                                . Ut commodo efficitur neque.</p>
-                            <br />
-                            <p>Comments ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.</p>
-                            <img src="/Image/Img5.png" alt="Image" />
-                        </div>}
+                        <div className="paraLeft d-head mt-5" ref={updatesToRef}>
+                            <h5> Updates</h5>
+                            <p>Check Your Updates Now</p>
+                        </div>
+
+                        <div className="paraLeft d-head mt-5" ref={commentToRef}>
+                            <h5> Comment</h5>
+                            <p>Hello World</p>
+                        </div>
+
                     </Col>
 
                     {/* --------RightSection---------- */}
@@ -170,15 +163,15 @@ const EditDonationTab = () => {
                         {!donarTab && <div className="Recent-main-section">Hello Recent Section</div>}
                         <div className='btn-main'>
                             <div className="btn donate-btn donate-btn2">
-                                <button>₹500</button>
-                                <button>₹1000</button>
-                                <button>₹1500</button>
-                                <button>₹2000</button>
+                                <button onClick={() => handleButtonClick(500)}>₹500</button>
+                                <button onClick={() => handleButtonClick(1000)}>₹1000</button>
+                                <button onClick={() => handleButtonClick(1500)}>₹1500</button>
+                                <button onClick={() => handleButtonClick(2000)}>₹2000</button>
                             </div>
                         </div>
 
                         <div className="donate-form">
-                            <input type="text" placeholder='Enter Custom Amount' />
+                            <input type="text" placeholder='Enter Custom Amount' value={currentValue} />
                             <div className='i-btn-main'>
                                 <div className="i-btn">i
                                     <div className="hover-box">
@@ -207,16 +200,18 @@ const EditDonationTab = () => {
                         <h5>Document</h5>
                     </div>
                     <Col md={7} className='DocumentLeft' >
-                        <div style={{ backgroundColor: '#EBEBEB' }}>
-                            <img className='document-image-section' src={activeDoc} alt="Image" />
-                        </div>
+                        <div ref={documtToRef}>
+                            <div style={{ backgroundColor: '#EBEBEB' }}>
+                                <img className='document-image-section' src={activeDoc} alt="Image" />
+                            </div>
 
-                        <div className='Imagesleft'>
+                            <div className='Imagesleft'>
 
-                            <img style={{ width: '80px' }} src="/Image/doc1.png" alt="Image" onClick={() => setActiveDoc("/Image/doc1.png")} />
-                            <img style={{ width: '80px' }} src="/Image/adharcard2.png" alt="Image" onClick={() => setActiveDoc("/Image/adharcard2.png")} />
-                            <img style={{ width: '80px' }} src="/Image/doc3.png" alt="Image" onClick={() => setActiveDoc("/Image/doc3.png")} />
-                            <img style={{ width: '80px' }} src="/Image/pancard.jpg" alt="Image" onClick={() => setActiveDoc("/Image/pancard.jpg")} />
+                                <img style={{ width: '80px' }} src="/Image/doc1.png" alt="Image" onClick={() => setActiveDoc("/Image/doc1.png")} />
+                                <img style={{ width: '80px' }} src="/Image/adharcard2.png" alt="Image" onClick={() => setActiveDoc("/Image/adharcard2.png")} />
+                                <img style={{ width: '80px' }} src="/Image/doc3.png" alt="Image" onClick={() => setActiveDoc("/Image/doc3.png")} />
+                                <img style={{ width: '80px' }} src="/Image/pancard.jpg" alt="Image" onClick={() => setActiveDoc("/Image/pancard.jpg")} />
+                            </div>
                         </div>
                     </Col>
 
@@ -278,7 +273,7 @@ const EditDonationTab = () => {
             <div>
                 <Footer />
             </div>
-        </div>
+        </div >
     )
 }
 

@@ -36,8 +36,8 @@ const Myprofile = () => {
     const [validated, setValidated] = useState(false);
     const [passwordData, setPasswordData] = useState({
         old_password: '',
-        oldPassword: '',
         new_password: '',
+        confirm_Password: ''
     });
 
     const cookie = new Cookies();
@@ -474,7 +474,7 @@ const Myprofile = () => {
                                             required
                                             type="password"
                                             placeholder="Confirm Password"
-                                            name="confirmPassword"
+                                            name="confirm_Password"
                                             value={passwordData.confirmPassword}
                                             onChange={handleChange}
                                         />

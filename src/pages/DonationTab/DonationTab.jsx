@@ -1,19 +1,100 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './DonationTab.css'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Footer from '../../component/footer/Footer';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
+import { donatorUrl, url } from '../../utils/url';
+import Cookies from 'universal-cookie';
+import moment from 'moment/moment';
+
+
 
 const DonationTab = () => {
-    // const [showStatements, setShowStatements] = useState("");
+    const { slug } = useParams();
+    const [donationTab, setDonationTab] = useState({});
+    const [coverPhoto, setCoverPhoto] = useState("");
+    const [tabDonor, setTabDonor] = useState(null);
+    // const [recentDonor, setRecentDonor] = useState({});
+    const [documnetPhoto, setDocumnetPhoto] = useState("");
+    const [error, setError] = useState(null)
+    const [endDate, setEndDate] = useState("");
+    const [loading, setLoading] = useState(true)
     const [currentValue, setCurrentValue] = useState(0);
+    const [days, setDays] = useState("");
     const [activeImage, setActiveImage] = useState("/Image/Img1.png")
     const [activeDoc, setActiveDoc] = useState("/Image/doc1.png")
     const [activeTab, setActiveTab] = useState("About")
     const [donarTab, setDonarTab] = useState(true)
     const [isFade, setIsFade] = useState(true);
+    const aboutToRef = useRef();
+    const docToRef = useRef();
+    const updatesToRef = useRef();
+    const commentToRef = useRef();
+
+    const cookie = new Cookies();
+    const tokenWeb = cookie.get('token_web');
+
+
+    const fetchTabDonor = async (_id) => {
+        try {
+            const response = await fetch(`${url}top-Donors?fund_raiser_id_=${_id}`, {
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${tokenWeb}`
+                }
+            }
+
+            )
+            const data = await response.json();
+
+            if (!data.success) {
+                setError(data.message)
+                return
+            }
+            setTabDonor(data.data)
+        } catch (error) {
+            setError(error.message)
+        }
+    }
+
+    const fetchDonationTab = async () => {
+        try {
+            const response = await fetch(`${donatorUrl}get-Campaign-By-Slug?slug=${slug}`, {
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${tokenWeb}`
+                }
+            })
+            const data = await response.json()
+
+            if (!data.message) {
+                setError(data.message)
+                return
+            }
+            // console.log(data.data.response);
+            setDocumnetPhoto(data.data.response.documents[0].imageUrl)
+            setCoverPhoto(data.data.response.images[0].imageUrl)
+            setDonationTab(data.data.response)
+            setEndDate(data.data.response.end_date)
+            setDays(moment(data.data.response.end_date).diff(new Date(), 'days'))
+            fetchTabDonor(data.data.response._id);
+        }
+        catch (error) {
+            console.error(error)
+        }
+        finally {
+            setLoading(false);
+        }
+    }
+
+
+    useEffect(() => {
+        fetchDonationTab();
+        return () => { }
+    }, [])
+
 
     const handleToggleImage = (src) => {
         setIsFade(false)
@@ -27,236 +108,209 @@ const DonationTab = () => {
         setCurrentValue(value);
     };
 
+    if (loading) {
+        return <div>...Loading please Wait</div>
+    }
+    if (error) {
+        return (<div>...Error : {JSON.stringify(error)}</div>)
+    }
 
     return (
         <>
-            <Container className='DonationCont'>
-                <h1>Help Ashok save kids orphaned by farmer suicides. Donate Now</h1>
-                <button className='border-0'><Link to={'/editdonationtab'}><i className="fa fa-pencil pecilIcon"></i></Link></button>
-                <Row>
+            <div>
+                <Container className='DonationCont'>
+                    <h1>{donationTab?.name}</h1>
+                    <button className='border-0'><Link to={'/editdonationtab'}><i className="fa fa-pencil pecilIcon"></i></Link></button>
+                    <Row key={donationTab?.id}>
 
-                    {/* --------leftSection---------- */}
+                        {/* --------leftSection---------- */}
 
-                    <Col md={7} className='DonationLeft'>
-                        <img className={`${isFade ? 'active' : ''} main-image`} src={activeImage} alt="Image" />
+                        <Col md={7} className='DonationLeft'>
+                            <img className={`${isFade ? 'active' : ''} main-image`} src={coverPhoto} alt="Image" />
 
-                        <div className='Imagesleft'>
-                            <img style={{ width: '80px' }} src="/Image/Img1.png" alt="Image" onClick={() => handleToggleImage("/Image/Img1.png")} />
-                            <img style={{ width: '80px' }} src="/Image/Img5.png" alt="Image" onClick={() => handleToggleImage("/Image/Img5.png")} />
-                            <img style={{ width: '80px' }} src="/Image/Img3.png" alt="Image" onClick={() => handleToggleImage("/Image/Img3.png")} />
-                            <img style={{ width: '80px' }} src="/Image/Img4.png" alt="Image" onClick={() => handleToggleImage("/Image/Img4.png")} />
-                        </div>
-                        <div className='Sectionleft_main'>
-                            <div className="Sectionleftt">
-                                <li className={activeTab === "About" && 'active'} onClick={() => setActiveTab("About")}> About</li>
-                                <li className={activeTab === "Documents" && 'active'} onClick={() => setActiveTab("Documents")}>Documents</li>
-                                <li className={activeTab === "Updates" && 'active'} onClick={() => setActiveTab("Updates")}>Updates</li>
-                                <li className={activeTab === "Comments" && 'active'} onClick={() => setActiveTab("Comments")}>Comments</li>
-                            </div>
-                        </div>
-                        <hr className='donation-underline' />
-                        {activeTab === "About" && <div className="paraLeft">
-                            <p>About ipsum dolor sit amet, consectetur adipiscing elit.
-                                Nunc vulputate libero et velit interdum, ac aliquet odio
-                                mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis
-                                . Ut commodo efficitur neque.</p>
-
-                            <p>About ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.</p>
-                            <img src="/Image/Img5.png" alt="Image" />
-                        </div>}
-                        {activeTab === "Documents" && <div className="paraLeft">
-                            <p>Documents   .
-                                Nunc vulputate libero et velit interdum, ac aliquet odio
-                                mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis
-                                . Ut commodo efficitur neque.</p>
-                            <br />
-                            <p>Documents ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.</p>
-                            <img src="/Image/Img5.png" alt="Image" />
-                        </div>}
-                        {activeTab === "Updates" && <div className="paraLeft">
-                            <p>Updates ipsum dolor sit amet, consectetur adipiscing elit.
-                                Nunc vulputate libero et velit interdum, ac aliquet odio
-                                mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis
-                                . Ut commodo efficitur neque.</p>
-                            <br />
-                            <p>Updates ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.</p>
-                            <img src="/Image/Img5.png" alt="Image" />
-                        </div>}
-
-                        {activeTab === "Comments" && <div className="paraLeft">
-                            <p>Comments ipsum dolor sit amet, consectetur adipiscing elit.
-                                Nunc vulputate libero et velit interdum, ac aliquet odio
-                                mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis
-                                . Ut commodo efficitur neque.</p>
-                            <br />
-                            <p>Comments ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.</p>
-                            <img src="/Image/Img5.png" alt="Image" />
-                        </div>}
-
-                    </Col>
-
-                    {/* --------RightSection---------- */}
-
-                    <Col md={4} className='DonationRight'>
-                        <h2>Donate Now</h2>
-                        <div className='BlackBox-main'>
-                            <div className='BlackBox'><h4>G</h4></div>
-                            <p className='fraiserpara'>Fundraiser by Give</p>
-                        </div>
-
-                        <div className='PriceDeatailsLeft'>
-                            <p>₹1700 <span>Raised</span> </p>
-                            <p>₹5000</p>
-                        </div>
-                        <ProgressBar variant="success" now={30} style={{ height: '10px' }} />
-                        <div className='donation-price-paragraph'>
-                            <p>43 Supporters</p>
-                            <p>60 Days Left</p>
-                        </div>
-
-                        <div className='topdonor tr-donor'>
-                            <p className={`${donarTab && 'active'}`} onClick={() => setDonarTab(true)}>Top Donors</p>
-                            <p className={`${!donarTab && 'active'}`} onClick={() => setDonarTab(false)}>Recent Donors</p>
-
-                        </div>
-                        <hr className='dt-line' />
-
-                        {donarTab && <div className="donorInfo-main p-0 mt-3">
-
-                            <div className="donarInfo">
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", }} /> <p>Someone donated INR <strong>500</strong></p>
-                            </div>
-                            <p className='donoted-inr'>8 nov 2022</p>
-
-                            <div className="donarInfo m-0">
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                                <p>Someone donated INR <strong>500</strong> </p>
-                            </div>
-                            <p className='donoted-inr'>8 nov 2022</p>
-                            <div className="donarInfo m-0">
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                                <p>Someone donated INR <strong>500</strong> </p>
+                            <div className='Imagesleft'>
+                                {
+                                    donationTab?.images?.map((item, index) => (<img
+                                        key={index}
+                                        style={{ width: '80px' }}
+                                        src={item.imageUrl}
+                                        alt="Image"
+                                        onClick={() => handleToggleImage(item.imageUrl)} />))
+                                }
                             </div>
 
-                            <p className='donoted-inr'>8 nov 2022</p>
-                            <div className="donarInfo m-0">
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                                <p>Someone donated INR <strong>500</strong> </p>
+                            <div className='Sectionleft_main'>
+                                <div className="Sectionleftt">
+                                    <li className={activeTab === "About" && 'active'} onClick={() => aboutToRef.current.scrollIntoView()}> About</li>
+                                    <li className={activeTab === "Documents" && 'active'} onClick={() => docToRef.current.scrollIntoView()}>Documents</li>
+                                    <li className={activeTab === "Updates" && 'active'} onClick={() => updatesToRef.current.scrollIntoView()} >Updates</li>
+                                    <li className={activeTab === "Comments" && 'active'} onClick={() => commentToRef.current.scrollIntoView()}>Comments</li>
+                                </div>
+                            </div>
+                            <hr className='donation-underline' />
+                            <div className="paraLeft mb-5" ref={aboutToRef}>
+                                <p>About Section</p>
+                                <img src="/Image/Img5.png" alt="Image" />
                             </div>
 
-                            <p className='donoted-inr'>8 nov 2022</p>
-                            <div className="donarInfo m-0">
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                                <p>Someone donated INR <strong>500</strong> </p>
+                            <div className="paraLeft d-head mb-5" ref={updatesToRef}>
+                                <h5>Updates</h5>
+
+                                <p>Hello World</p>
                             </div>
-                            <p className='donoted-inr'>8 nov 2022</p>
-                        </div>
-                        }
-                        {!donarTab && <div className='recent-main'> Hello World</div>}
 
-                        <div className="donate-btn-price">
-                            <button onClick={() => handleButtonClick(500)}>₹500</button>
-                            <button onClick={() => handleButtonClick(1000)}>₹1000</button>
-                            <button onClick={() => handleButtonClick(1500)}>₹1500</button>
-                            <button onClick={() => handleButtonClick(2000)}>₹2000</button>
-                        </div>
+                            {donationTab?.comments?.map((item, index) => (<div key={index} className="paraLeft d-head mt-2" ref={commentToRef}>
+                                <h5 className='m-0'>Comment</h5>
+                                <p>{item.text}</p>
+                                {/* <span>{item.}</span> */}
+                            </div>
+                            ))
+                            }
 
-                        <div className="donate-form">
-                            <input type="text" placeholder='Enter Custom Amount' value={currentValue} />
-                            <div className='i-btn-main'>
-                                <div className="i-btn">i
-                                    <div className="hover-box">
-                                        <strong>Information</strong>
-                                        <p>Actual price may be differ based on multiple factor Click to know more</p>
+                        </Col>
+
+                        {/* --------RightSection---------- */}
+
+                        <Col md={4} className='DonationRight'>
+                            <div className='DonationRight_Main'>
+                                <h2>Donate Now</h2>
+                                <div className='BlackBox-main'>
+                                    <div className='BlackBox'><h4>G</h4></div>
+                                    <p className='fraiserpara'>Fundraiser by Give</p>
+                                </div>
+
+                                <div className='PriceDeatailsLeft'>
+                                    <p>{donationTab.amount_raised} <span>Raised</span> </p>
+                                    <p>{donationTab.goal} </p>
+                                </div>
+
+                                <ProgressBar variant="success" style={{ height: '10px' }}
+                                    now={Number(donationTab.amount_raised) / Number(donationTab.goal) * 100} />
+
+                                <div className='donation-price-paragraph'>
+                                    <p>{donationTab.supporters}</p>
+                                    {endDate ? (
+                                        <p>{days < 0 ? 0 : days} Days </p>
+                                    ) : (
+                                        <p>Loading...</p>
+                                    )}
+                                </div>
+
+                                <div className='topdonor tr-donor'>
+                                    <p className={`${donarTab && 'active'}`} onClick={() => setDonarTab(true)}>Top Donors</p>
+                                    <p className={`${!donarTab && 'active'}`} onClick={() => setDonarTab(false)}>Recent Donors</p>
+
+                                </div>
+                                <hr className='dt-line' />
+
+                                {donarTab && <div className="donorInfo-main p-0 mt-3">
+
+                                    {tabDonor?.map((item, index) => (<div key={index}>
+                                        <div className="donarInfo">
+                                            <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", }} />
+                                            <p>
+                                                {item.is_annonymous ? 'Someone' : item.user_id.name} donated INR {item.amount} <br />
+                                            </p>
+                                        </div>
+                                        <p className='donoted-inr'>{moment(item.createdAt).format("DD MMM  YYYY")}</p>
+                                    </div>
+                                    )
+                                    )}
+                                </div>}
+
+                                {!donarTab && (<div className='recent-main'> Hello World</div>)}
+                            </div>
+
+                            <div className='Documentright-main mt-5'>
+                                <div className="product-price">
+                                    <div className="product-price-child1" style={{
+                                        fontSize: '18px',
+                                        fontWeight: '600',
+                                        padding: '10px 0'
+                                    }}>
+                                        Tax Deduction
+                                        <div className="i-btn">i
+                                            <div className="hover-box">
+                                                <strong>Information</strong>
+                                                <p>Actual price may be differ based on multiple factor Click to know more</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="i-btn-para2">
-                                    <p>Min Amount ₹500.</p>
+
+                                <div className="value-btn border-0">
+                                    <button>80 G</button>
+                                    <button>501(c)(3)</button>
+                                    <button>Gift Aid</button>
                                 </div>
-                            </div>
-                        </div>
-                        <div className='dn-section'>
-                            <button className='donate-Now2'>Donate Now</button>
-                        </div>
 
-                    </Col>
-                </Row>
-            </Container>
+                                <div className='icon-main-cont'>
+                                    <h2>Share This Fundraiser</h2>
 
-            {/* ---------DocumentSection--------     */}
-
-            <Container className='DocumentSection' >
-                <div className="d-head">
-                    <h5>Document</h5>
-                </div>
-                <Row>
-                    <Col md={7} className='DocumentLeft' >
-                        <div style={{ backgroundColor: '#EBEBEB' }}>
-                            <img className='document-image-section' src={activeDoc} alt="Image" />
-                        </div>
-
-                        <div className='Imagesleft'>
-
-                            <img style={{ width: '80px' }} src="/Image/doc1.png" alt="Image" onClick={() => setActiveDoc("/Image/doc1.png")} />
-                            <img style={{ width: '80px' }} src="/Image/adharcard2.png" alt="Image" onClick={() => setActiveDoc("/Image/adharcard2.png")} />
-                            <img style={{ width: '80px' }} src="/Image/doc3.png" alt="Image" onClick={() => setActiveDoc("/Image/doc3.png")} />
-                            <img style={{ width: '80px' }} src="/Image/pancard.jpg" alt="Image" onClick={() => setActiveDoc("/Image/pancard.jpg")} />
-                        </div>
-                    </Col>
-
-                    <Col md={5} className='Documentright-main'>
-                        <div className="product-price">
-                            <div className="product-price-child1" style={{
-                                fontSize: '18px',
-                                fontWeight: '600',
-                                padding: '10px 0'
-                            }}>
-                                Tax Deduction
-                                <div className="i-btn">i
-                                    <div className="hover-box">
-                                        <strong>Information</strong>
-                                        <p>Actual price may be differ based on multiple factor Click to know more</p>
+                                    <div className="social-media-icon">
+                                        <i className="social-icon fab fa-facebook-f"></i>
+                                        <i className="social-icon fab fa-twitter"></i>
+                                        <i className="social-icon fab fa-instagram"></i>
+                                        <i className="social-icon fab fa-whatsapp"></i>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div className="value-btn border-0">
-                            <button>80 G</button>
-                            <button>501(c)(3)</button>
-                            <button>Gift Aid</button>
-                        </div>
+                                <div className="supportfund">
+                                    <h2>Supporting Fundraiser</h2>
+                                    <div className='fontAwesomeSec'>
+                                        <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
+                                        <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
+                                    </div>
 
-                        <div className='icon-main-cont'>
-                            <h2>Share This Fundraiser</h2>
+                                    <div className='fontAwesomeSec'>
+                                        <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
+                                        <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
+                                    </div>
 
-                            <div className="social-media-icon">
-                                <i className="social-icon fab fa-facebook-f"></i>
-                                <i className="social-icon fab fa-twitter"></i>
-                                <i className="social-icon fab fa-instagram"></i>
-                                <i className="social-icon fab fa-whatsapp"></i>
-                            </div>
-                        </div>
+                                </div>
 
-                        <div className="supportfund">
-                            <h2>Supporting Fundraiser</h2>
-                            <div className='fontAwesomeSec'>
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
-                                <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
                             </div>
 
-                            <div className='fontAwesomeSec'>
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
-                                <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
+
+
+
+                        </Col>
+                    </Row>
+                </Container>
+
+                {/* ---------DocumentSection--------     */}
+
+                <Container className='DocumentSection' >
+                    <Row>
+                        <Col md={7} className='DocumentLeft' >
+                            <div ref={docToRef}>
+                                <div className="d-head">
+                                    <h5>Document</h5>
+                                </div>
+
+                                <div style={{ backgroundColor: '#EBEBEB' }}>
+                                    <img className='document-image-section' src={documnetPhoto} alt="Image" />
+                                </div>
+
+                                <div className='Imagesleft'>
+
+                                    {
+                                        donationTab?.documents?.map((item, index) => (<img
+                                            key={index}
+                                            style={{ width: '80px' }}
+                                            src={item.imageUrl}
+                                            alt="Image"
+                                            onClick={() => setActiveDoc(item.imageUrl)} />))
+                                    }
+
+                                </div>
                             </div>
-                            <div className='fontAwesomeSec'>
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
-                                <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
-                            </div>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
+                        </Col>
+
+                    </Row>
+                </Container>
+
+            </div>
 
             {/* --------FooterSection----------- */}
 

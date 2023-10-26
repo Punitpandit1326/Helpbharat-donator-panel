@@ -178,8 +178,8 @@ p.fraiserpara {
 
 .tr-donor p.active {
   text-align: center;
-  padding-bottom: 10px;
-  border-bottom: 5px solid #00A978;
+  /* padding-bottom: 5px; */
+  border-bottom: 3px solid #00A978;
 }
 
 .main-image {
@@ -197,7 +197,7 @@ p.fraiserpara {
   font-size: 15px;
   font-weight: 600;
   margin-bottom: 0;
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
   cursor: pointer;
   border-bottom: 4px solid var(--main-color2);
 }
@@ -216,7 +216,7 @@ p.fraiserpara {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 25px;
+  gap: 15px;
 }
 
 .donarInfo p {
@@ -251,7 +251,7 @@ p.donoted-inr {
   font-size: 15px;
   font-weight: 500;
   border: none;
-  margin-top: 70px;
+  margin-top: 30px;
   border-radius: 5px;
   color: var(--main-color2);
   background-color: #00a978;
@@ -438,7 +438,7 @@ p.donoted-inr {
 .supportfund {
   width: 85%;
   height: auto;
-  padding: 15px;
+  padding: 10px;
   border-radius: 5px;
   border: 1px solid #d9d9d9;
   margin-top: 30px;
@@ -449,12 +449,11 @@ p.donoted-inr {
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-left: 25px;
 }
 
 .fontAwesomeSec p {
   font-family: Poppins;
-  font-size: 1.12rem;
+  font-size: 0.9rem;
   font-weight: 500;
 }
 
