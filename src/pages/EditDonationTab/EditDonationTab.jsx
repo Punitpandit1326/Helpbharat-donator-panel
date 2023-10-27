@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './EditDonationTab.css';
 import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,24 +6,62 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FaPen, FaCalendarAlt } from "react-icons/fa";
 import Footer from '../../component/footer/Footer';
 import { donatorUrl } from '../../utils/url';
+import { useParams } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const EditDonationTab = () => {
+    const [error, setError] = useState(null);
+    const [donationTab, setDonationTab] = useState({});
     const [editCampaign, setEditCampaign] = useState({});
-    const [activeImage, setActiveImage] = useState("/Image/Img1.png")
-    const [activeDoc, setActiveDoc] = useState("/Image/doc1.png")
-    const [activeTab, setActiveTab] = useState("About")
-    const [donarTab, setDonarTab] = useState(true)
+    const [activeImage, setActiveImage] = useState("/Image/Img1.png");
+    const [activeDoc, setActiveDoc] = useState("/Image/doc1.png");
+    const [activeTab, setActiveTab] = useState("About");
+    const [donarTab, setDonarTab] = useState(true);
     const [isFade, setIsFade] = useState(true);
     const [currentValue, setCurrentValue] = useState(0);
     const documtToRef = useRef();
     const aboutToRef = useRef();
     const updatesToRef = useRef();
     const commentToRef = useRef();
+    const { slug } = useParams();
+    const cookie = new Cookies();
+    const tokenWeb = cookie.get('token_web');
+    const [detail, setDetail] = useState({
+        name: '',
+        description: '',
+        goal: '',
+    })
 
-    // const fetchEditCampaign = async () => {
-    //     const response = await fetch(`${donatorUrl}campaign/64c223c239d8a5239bfe4c99`)
-    // }
+    const fetchEditCampaign = async () => {
+        const toastId = toast.loading('Please wait...');
+        try {
+            const response = await fetch(`${donatorUrl}campaign?slug=${slug}`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${tokenWeb}`
+                }
+            });
+            const data = await response.json();
+
+            if (!data.success) {
+                setError(data.message)
+                toast.update(toastId, data.response.message)
+            }
+            console.log(response.data, "error2");
+            toast.dismiss();
+        }
+        catch (error) {
+            setError(error.message || 'An error occurred');
+            toast.dismiss(); // Hide the loading toast
+            toast.error(error.message, { autoClose: 2000 });
+        }
+        finally {
+            setLoading(false)
+        }
+    }
 
     const handleToggleImage = (src) => {
         setIsFade(false)
@@ -38,6 +76,33 @@ const EditDonationTab = () => {
         setCurrentValue(value);
     };
 
+    const fetchDonationTab = async () => {
+        try {
+            const response = await fetch(`${donatorUrl}get-Campaign-By-Slug?slug=${slug}`, {
+                headers: {
+                    'Content-type': 'application/jsonl',
+                    'Authorization': `Bearer ${tokenWeb}`
+                }
+            })
+            const data = await response.json()
+            if (!data.success) {
+                setError(data.message)
+                return
+            }
+            setDonationTab(data.data.response)
+        }
+        catch (error) {
+            console.error(error)
+        }
+        finally {
+            setLoading(false);
+        }
+    }
+    useEffect(() => {
+        fetchDonationTab()
+        return () => { }
+    }, [])
+
     return (
         <div>
             <div className="bottomNav">
@@ -47,7 +112,8 @@ const EditDonationTab = () => {
             </div>
 
             <Container className='DonationCont2'>
-                <h2>Help Ashok save kids orphaned by farmer suicides. Donate Now <FaPen className='pencilIcon' /></h2>
+                <FaPen className='pencilIcon' />
+                <input type="text" placeholder='Help Ashok save kids orphaned by farmer suicides. Donate Now' value={donationTab?.name} />
                 <Row>
 
                     {/* --------leftSection---------- */}
@@ -72,10 +138,11 @@ const EditDonationTab = () => {
                             <li className={`${activeTab === 'Comments' ? 'active-tab' : ''}`} onClick={() => commentToRef.current.scrollIntoView
                                 ()}>Comments</li>
                         </div>
-                        <hr className='donation-underline' />
+                        <hr className='donation-underline bg-dark' />
 
                         <div className="paraLeft" ref={aboutToRef}>
-                            <p>Hello World</p>
+                            <textarea rows={4} type="text" placeholder='Hello You are active now' />
+
                             <img src="/Image/Img5.png" alt="Image" />
                         </div>
 
@@ -93,99 +160,111 @@ const EditDonationTab = () => {
 
                     {/* --------RightSection---------- */}
 
-                    <Col md={4} className='DonationRight2'>
-                        <h1>Donate Now</h1>
-                        <div className='Blackbox2-main'>
-                            <div className='green-box'>
-                                <i className="far fa-image"></i>
+                    <Col md={5}>
+                        <div className='DonationRight2' >
+                            <h1>Donate Now</h1>
+
+                            <div className='PriceDeatailsLeft'>
+                                <p>{donationTab.amount_raised} <span>Raised</span> </p>
+                                <input type="text" id='fund-input' />
                             </div>
-                            <p>Fundraiser by</p>
-                            <input type="text" id='fund-input0' />
+                            <br />
+
+                            <ProgressBar variant="success" now={30} style={{ height: '10px' }} />
+
+                            <div className='PriceDeatailsLeft'>
+                                <p>43 Supporters</p>
+                                <p className='d-lefts'><FaCalendarAlt /> 60 Days Left</p>
+                            </div>
+
+                            <div className='topdonor2'>
+                                <p className={`${donarTab && 'active'}`} onClick={() => setDonarTab(true)}>Top Donors</p>
+                                <p className={`${!donarTab && 'active'}`} onClick={() => setDonarTab(false)}>Recent Donors</p>
+
+                            </div>
+                            <hr style={{ margin: '0', width: '100%' }} />
+
+                            {donarTab && <div className="donorInfo-main p-0 mt-3">
+                                <div>
+                                    <div className="donarInfo">
+                                        <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
+                                        <p>Someone donated INR <strong>500</strong> </p>
+
+                                    </div>
+                                    <p className='donoted-inr'>8 nov 2022</p>
+
+                                </div>
+
+
+                            </div>}
+
+                            {!donarTab && <div className="Recent-main-section">
+                                <div>
+                                    <div className="donarInfo">
+                                        <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
+                                        <p>Someone donated INR <strong>500</strong> </p>
+
+                                    </div>
+                                    <p className='donoted-inr'>8 nov 2022</p>
+
+                                </div>
+                            </div>}
+
+
+                        </div>
+                        <div>
                         </div>
 
-                        <div className='PriceDeatailsLeft'>
-                            <p>₹1700 <span>Raised</span> </p>
-                            <input type="text" id='fund-input' />
-                        </div>
-                        <br />
 
-                        <ProgressBar variant="success" now={30} style={{ height: '10px' }} />
-
-                        <div className='PriceDeatailsLeft'>
-                            <p>43 Supporters</p>
-                            <p className='d-lefts'><FaCalendarAlt /> 60 Days Left</p>
-                        </div>
-
-                        <div className='topdonor2'>
-                            <p className={`${donarTab && 'active'}`} onClick={() => setDonarTab(true)}>Top Donors</p>
-                            <p className={`${!donarTab && 'active'}`} onClick={() => setDonarTab(false)}>Recent Donors</p>
-
-                        </div>
-                        <hr style={{ margin: '0', width: '100%' }} />
-
-                        {donarTab && <div className="donorInfo-main p-0 mt-3">
-
-                            <div className="donarInfo">
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                                <p>Someone donated INR <strong>500</strong> </p>
-
-                            </div>
-                            <p className='donoted-inr'>8 nov 2022</p>
-
-                            <div className="donarInfo m-0">
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                                <p>Someone donated INR <strong>500</strong> </p>
-
-                            </div>
-                            <p className='donoted-inr'>8 nov 2022</p>
-
-                            <div className="donarInfo m-0">
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                                <p>Someone donated INR <strong>500</strong> </p>
-
-                            </div>
-                            <p className='donoted-inr'>8 nov 2022</p>
-
-                            <div className="donarInfo m-0">
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                                <p>Someone donated INR <strong>500</strong> </p>
-
-                            </div>
-                            <p className='donoted-inr'>8 nov 2022</p>
-                            <div className="donarInfo m-0">
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                                <p>Someone donated INR <strong>500</strong> </p>
-
-                            </div>
-                            <p className='donoted-inr'>8 nov 2022</p>
-                        </div>}
-
-                        {!donarTab && <div className="Recent-main-section">Hello Recent Section</div>}
-                        <div className='btn-main'>
-                            <div className="btn donate-btn donate-btn2">
-                                <button onClick={() => handleButtonClick(500)}>₹500</button>
-                                <button onClick={() => handleButtonClick(1000)}>₹1000</button>
-                                <button onClick={() => handleButtonClick(1500)}>₹1500</button>
-                                <button onClick={() => handleButtonClick(2000)}>₹2000</button>
-                            </div>
-                        </div>
-
-                        <div className="donate-form">
-                            <input type="text" placeholder='Enter Custom Amount' value={currentValue} />
-                            <div className='i-btn-main'>
-                                <div className="i-btn">i
-                                    <div className="hover-box">
-                                        <strong>Information</strong>
-                                        <p>Actual price may be differ based on multiple factor Click to know more</p>
+                        <div className='Documentright-main2'>
+                            <div className="product-price">
+                                <div className="product-price-child1" style={{
+                                    fontSize: '16px',
+                                    fontWeight: '600',
+                                    padding: '10px, 0'
+                                }}>
+                                    Tax Deduction
+                                    <div className="i-btn" style={{ marginLeft: '10px' }}>i
+                                        <div className="hover-box">
+                                            <strong>Information</strong>
+                                            <p>Actual price may be differ based on multiple factor Click to know more</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="i-btn-para2">
-                                    <p>Min Amount ₹500.</p>
+                            </div>
+
+                            <div className="btn donate-btn another-btn border-0">
+                                <button>80 G</button>
+                                <button>501(c)(3)</button>
+                                <button>Gift Aid</button>
+                            </div>
+
+                            <div className='icon-main-cont'>
+                                <h2>Share This Fundraiser</h2>
+
+                                <div className="social-media-icon">
+                                    <i className="social-icon fab fa-facebook-f"></i>
+                                    <i className="social-icon fab fa-twitter"></i>
+                                    <i className="social-icon fab fa-instagram"></i>
+                                    <i className="social-icon fab fa-whatsapp"></i>
                                 </div>
                             </div>
-                        </div>
-                        <div className="dn-section">
-                            <button className='donate-Now'>Donate Now</button>
+
+                            <div className="supportfund supportfund2">
+                                <h2>Supporting Fundraiser</h2>
+                                <div className='fontAwesomeSec'>
+                                    <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
+                                    <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
+                                </div>
+                                <div className='fontAwesomeSec'>
+                                    <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
+                                    <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
+                                </div>
+                                <div className='fontAwesomeSec'>
+                                    <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
+                                    <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
+                                </div>
+                            </div>
                         </div>
                     </Col>
                 </Row>
@@ -215,56 +294,6 @@ const EditDonationTab = () => {
                         </div>
                     </Col>
 
-                    <Col md={5} className='Documentright-main2'>
-                        <div className="product-price">
-                            <div className="product-price-child1" style={{
-                                fontSize: '16px',
-                                fontWeight: '600',
-                                padding: '10px, 0'
-                            }}>
-                                Tax Deduction
-                                <div className="i-btn" style={{ marginLeft: '10px' }}>i
-                                    <div className="hover-box">
-                                        <strong>Information</strong>
-                                        <p>Actual price may be differ based on multiple factor Click to know more</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="btn donate-btn another-btn border-0">
-                            <button>80 G</button>
-                            <button>501(c)(3)</button>
-                            <button>Gift Aid</button>
-                        </div>
-
-                        <div className='icon-main-cont'>
-                            <h2>Share This Fundraiser</h2>
-
-                            <div className="social-media-icon">
-                                <i className="social-icon fab fa-facebook-f"></i>
-                                <i className="social-icon fab fa-twitter"></i>
-                                <i className="social-icon fab fa-instagram"></i>
-                                <i className="social-icon fab fa-whatsapp"></i>
-                            </div>
-                        </div>
-
-                        <div className="supportfund supportfund2">
-                            <h2>Supporting Fundraiser</h2>
-                            <div className='fontAwesomeSec'>
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
-                                <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
-                            </div>
-                            <div className='fontAwesomeSec'>
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
-                                <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
-                            </div>
-                            <div className='fontAwesomeSec'>
-                                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
-                                <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
-                            </div>
-                        </div>
-                    </Col>
                 </Row>
             </Container>
 
@@ -273,7 +302,7 @@ const EditDonationTab = () => {
             <div>
                 <Footer />
             </div>
-        </div >
+        </div>
     )
 }
 

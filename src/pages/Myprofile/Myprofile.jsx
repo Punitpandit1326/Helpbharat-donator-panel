@@ -271,8 +271,10 @@ const Myprofile = () => {
                 },
                 body: formData,
             });
+
             const data = await response.json();
             console.log(data, "api was calling");
+
             if (!data.success) {
                 console.log("response error", response.message);
                 setError(response.message);

@@ -16,7 +16,7 @@ const DonationTab = () => {
     const [donationTab, setDonationTab] = useState({});
     const [coverPhoto, setCoverPhoto] = useState("");
     const [tabDonor, setTabDonor] = useState(null);
-    // const [recentDonor, setRecentDonor] = useState({});
+    const [recentDonor, setRecentDonor] = useState(null);
     const [documnetPhoto, setDocumnetPhoto] = useState("");
     const [error, setError] = useState(null)
     const [endDate, setEndDate] = useState("");
@@ -32,6 +32,7 @@ const DonationTab = () => {
     const docToRef = useRef();
     const updatesToRef = useRef();
     const commentToRef = useRef();
+
 
     const cookie = new Cookies();
     const tokenWeb = cookie.get('token_web');
@@ -59,6 +60,28 @@ const DonationTab = () => {
         }
     }
 
+    const fetchRecentDonor = async (_id) => {
+        try {
+            const response = await fetch(`${url}recent-Donors?fund_raiser_id_=${_id}`, {
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${tokenWeb}`
+                }
+            }
+
+            )
+            const data = await response.json();
+
+            if (!data.success) {
+                setError(data.message)
+                return
+            }
+            setRecentDonor(data.data)
+        } catch (error) {
+            setError(error.message)
+        }
+    }
+
     const fetchDonationTab = async () => {
         try {
             const response = await fetch(`${donatorUrl}get-Campaign-By-Slug?slug=${slug}`, {
@@ -79,7 +102,8 @@ const DonationTab = () => {
             setDonationTab(data.data.response)
             setEndDate(data.data.response.end_date)
             setDays(moment(data.data.response.end_date).diff(new Date(), 'days'))
-            fetchTabDonor(data.data.response._id);
+            fetchTabDonor(data.data.response._id)
+            fetchRecentDonor(data.data.response._id)
         }
         catch (error) {
             console.error(error)
@@ -104,6 +128,7 @@ const DonationTab = () => {
             setIsFade(true)
         }, [300])
     };
+
     const handleButtonClick = (value) => {
         setCurrentValue(value);
     };
@@ -120,7 +145,7 @@ const DonationTab = () => {
             <div>
                 <Container className='DonationCont'>
                     <h1>{donationTab?.name}</h1>
-                    <button className='border-0'><Link to={'/editdonationtab'}><i className="fa fa-pencil pecilIcon"></i></Link></button>
+                    <button className='border-0'><Link to={'/editdonationtab/:slug'}><i className="fa fa-pencil pecilIcon"></i></Link></button>
                     <Row key={donationTab?.id}>
 
                         {/* --------leftSection---------- */}
@@ -171,7 +196,7 @@ const DonationTab = () => {
 
                         {/* --------RightSection---------- */}
 
-                        <Col md={4} className='DonationRight'>
+                        <Col md={5}>
                             <div className='DonationRight_Main'>
                                 <h2>Donate Now</h2>
                                 <div className='BlackBox-main'>
@@ -201,6 +226,7 @@ const DonationTab = () => {
                                     <p className={`${!donarTab && 'active'}`} onClick={() => setDonarTab(false)}>Recent Donors</p>
 
                                 </div>
+
                                 <hr className='dt-line' />
 
                                 {donarTab && <div className="donorInfo-main p-0 mt-3">
@@ -218,10 +244,25 @@ const DonationTab = () => {
                                     )}
                                 </div>}
 
-                                {!donarTab && (<div className='recent-main'> Hello World</div>)}
+                                {!donarTab && (<div className='recent-main'>
+
+                                    {recentDonor?.map((item, index) => (<div key={index}>
+                                        <div className="donarInfo">
+                                            <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", }} />
+                                            <p>
+                                                {item.is_annonymous ? 'Someone' : item.user_id.name} donated INR {item.amount} <br />
+                                            </p>
+                                        </div>
+                                        <p className='donoted-inr'>{moment(item.createdAt).format("DD MMM  YYYY")}</p>
+                                    </div>))}
+
+
+                                </div>
+                                )}
+
                             </div>
 
-                            <div className='Documentright-main mt-5'>
+                            <div className='documentright-main'>
                                 <div className="product-price">
                                     <div className="product-price-child1" style={{
                                         fontSize: '18px',
@@ -270,10 +311,6 @@ const DonationTab = () => {
                                 </div>
 
                             </div>
-
-
-
-
                         </Col>
                     </Row>
                 </Container>

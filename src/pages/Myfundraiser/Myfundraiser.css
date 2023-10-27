@@ -59,27 +59,27 @@
   justify-content: space-between;
   align-items: center;
   width: 80%;
-}
 
-.raised-section h4 {
-  font-family: Inter;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--main-color);
-}
+  & h4 {
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--main-color);
+  }
 
-.raised-section h3 {
-  font-family: Inter;
-  font-size: 12px;
-  font-weight: 400;
-  color: black;
-}
+  & h3 {
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    color: black;
+  }
 
-.raised-section span {
-  font-family: Inter;
-  font-size: 12px;
-  font-weight: 400;
-  color: black;
+  & span {
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    color: black;
+  }
 }
 
 .progress-bar-1 {

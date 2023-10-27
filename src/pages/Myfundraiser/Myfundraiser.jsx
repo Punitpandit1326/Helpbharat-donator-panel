@@ -20,8 +20,10 @@ const Myfundraiser = () => {
 
   const handleClickChnage = (slug) => {
     navigate(`/myfundraiser/donationtab/${slug}`);
-
   }
+  const handleEditClick = (slug) => {
+    navigate(`/editdonationtab/${slug}`);
+  };
 
   const cookie = new Cookies();
   const tokenWeb = cookie.get('token_web');
@@ -80,8 +82,8 @@ const Myfundraiser = () => {
             <Accordion.Body>
               {users.map((item, index) =>
               (
-                <Container className='main-child'>
-                  <Row key={index} className='main-child-row' onClick={() => handleClickChnage(item.slug)} >
+                <Container key={index} className='main-child'>
+                  <Row className='main-child-row' onClick={() => handleClickChnage(item.slug)} >
                     <Col lg={3} className='left-child'>
                       {item.cover_photo && item.cover_photo.length > 0 && item.cover_photo[0] && (
                         <img src={asset(item.cover_photo[0].name)} alt={item.name}
@@ -102,7 +104,7 @@ const Myfundraiser = () => {
 
                   <div className='btn-view'>
                     <button className='bg-white text-success' onClick={() => navigate("/myfundraiser/dashboard")} style={{ border: '1px solid #00A978' }}>View Dashboard</button>
-                    <button onClick={() => navigate("/editdonationtab")}>Edit Fundraiser</button>
+                    <button onClick={() => handleEditClick(item.slug)}>Edit Fundraiser</button>
                   </div>
 
                 </Container>))}
