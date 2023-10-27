@@ -13,9 +13,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const EditDonationTab = () => {
+    const [coverPhoto, setCoverPhoto] = useState("");
+    const [document, setDocument] = useState("");
     const [error, setError] = useState(null);
     const [donationTab, setDonationTab] = useState({});
     const [editCampaign, setEditCampaign] = useState({});
+    const [supporters, setSupporters] = useState(null)
     const [activeImage, setActiveImage] = useState("/Image/Img1.png");
     const [activeDoc, setActiveDoc] = useState("/Image/doc1.png");
     const [activeTab, setActiveTab] = useState("About");
@@ -35,14 +38,15 @@ const EditDonationTab = () => {
         goal: '',
     })
 
-    const fetchEditCampaign = async () => {
+    const updateCampaign = async () => {
         const toastId = toast.loading('Please wait...');
         try {
             const response = await fetch(`${donatorUrl}campaign?slug=${slug}`, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${tokenWeb}`
-                }
+                },
+                body: JSON.stringify(detail)
             });
             const data = await response.json();
 
@@ -58,10 +62,12 @@ const EditDonationTab = () => {
             toast.dismiss(); // Hide the loading toast
             toast.error(error.message, { autoClose: 2000 });
         }
-        finally {
-            setLoading(false)
-        }
     }
+
+    const handleInputChange = (event, name) => {
+        setDetail({ ...detail, [event.target.name]: event.target.value });
+    };
+
 
     const handleToggleImage = (src) => {
         setIsFade(false)
@@ -72,9 +78,9 @@ const EditDonationTab = () => {
         }, [500])
     }
 
-    const handleButtonClick = (value) => {
-        setCurrentValue(value);
-    };
+    // const handleButtonClick = (value) => {
+    //     setCurrentValue(value);
+    // };
 
     const fetchDonationTab = async () => {
         try {
@@ -89,19 +95,31 @@ const EditDonationTab = () => {
                 setError(data.message)
                 return
             }
+            setSupporters(data.data)
             setDonationTab(data.data.response)
+
+            setDetail(() => {
+                const { name, description, goal } = data.data.response
+                return {
+                    name,
+                    description,
+                    goal
+                }
+            })
+            setCoverPhoto(data.data.response.images[0].imageUrl)
+            setDocument(data.data.response.documents[0].imageUrl)
         }
         catch (error) {
             console.error(error)
         }
-        finally {
-            setLoading(false);
-        }
     }
+
     useEffect(() => {
         fetchDonationTab()
         return () => { }
     }, [])
+
+
 
     return (
         <div>
@@ -113,20 +131,23 @@ const EditDonationTab = () => {
 
             <Container className='DonationCont2'>
                 <FaPen className='pencilIcon' />
-                <input type="text" placeholder='Help Ashok save kids orphaned by farmer suicides. Donate Now' value={donationTab?.name} />
+                <input type="text" placeholder='' name='name' onInput={handleInputChange} onChange={updateCampaign} value={detail?.name} />
                 <Row>
 
                     {/* --------leftSection---------- */}
 
                     <Col md={7} className='DonationLeft DonationLeft2'>
-                        <img className={`${isFade ? 'active' : ''} main-image`} src={activeImage} alt="Image" />
+                        <img className={`${isFade ? 'active' : ''} main-image`} src={coverPhoto} alt="Image" />
 
                         <div className='Imagesleft'>
-
-                            <img style={{ width: '80px' }} src="/Image/Img1.png" alt="Image" onClick={() => handleToggleImage("/Image/Img1.png")} />
-                            <img style={{ width: '80px' }} src="/Image/Img5.png" alt="Image" onClick={() => handleToggleImage("/Image/Img5.png")} />
-                            <img style={{ width: '80px' }} src="/Image/Img3.png" alt="Image" onClick={() => handleToggleImage("/Image/Img3.png")} />
-                            <img style={{ width: '80px' }} src="/Image/Img4.png" alt="Image" onClick={() => handleToggleImage("/Image/Img4.png")} />
+                            {
+                                donationTab?.images?.map((item, index) => (<img
+                                    key={index}
+                                    style={{ width: '80px' }}
+                                    src={item.imageUrl}
+                                    alt="Image"
+                                    onClick={() => handleToggleImage(item.imageUrl)} />))
+                            }
                         </div>
 
                         <div className="Sectionleftt">
@@ -141,7 +162,9 @@ const EditDonationTab = () => {
                         <hr className='donation-underline bg-dark' />
 
                         <div className="paraLeft" ref={aboutToRef}>
-                            <textarea rows={4} type="text" placeholder='Hello You are active now' />
+                            <textarea onInput={handleInputChange} onChange={updateCampaign} name='description' rows={4} type="text" placeholder='Hello You are active now'>
+                                {detail.description}
+                            </textarea>
 
                             <img src="/Image/Img5.png" alt="Image" />
                         </div>
@@ -166,14 +189,15 @@ const EditDonationTab = () => {
 
                             <div className='PriceDeatailsLeft'>
                                 <p>{donationTab.amount_raised} <span>Raised</span> </p>
-                                <input type="text" id='fund-input' />
+                                <input type="text" id='fund-input' value={detail.goal} name='goal' onInput={handleInputChange} onChange={updateCampaign} />
                             </div>
                             <br />
 
-                            <ProgressBar variant="success" now={30} style={{ height: '10px' }} />
+                            <ProgressBar variant="success" style={{ height: '10px' }}
+                                now={Number(donationTab.amount_raised) / Number(donationTab.goal) * 100} />
 
                             <div className='PriceDeatailsLeft'>
-                                <p>43 Supporters</p>
+                                <p>{supporters?.supporters} Supporters</p>
                                 <p className='d-lefts'><FaCalendarAlt /> 60 Days Left</p>
                             </div>
 
@@ -187,7 +211,7 @@ const EditDonationTab = () => {
                             {donarTab && <div className="donorInfo-main p-0 mt-3">
                                 <div>
                                     <div className="donarInfo">
-                                        <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
+                                        <FontAwesomeIcon icon={faUserCircle} size="2x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
                                         <p>Someone donated INR <strong>500</strong> </p>
 
                                     </div>
@@ -256,14 +280,6 @@ const EditDonationTab = () => {
                                     <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
                                     <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
                                 </div>
-                                <div className='fontAwesomeSec'>
-                                    <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
-                                    <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
-                                </div>
-                                <div className='fontAwesomeSec'>
-                                    <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", marginTop: '10px', marginLeft: 'px' }} />
-                                    <p>I am raising funds for the education of a 3 year old girl. There's no family support. Your small donation can make the little girl's future better.</p>
-                                </div>
                             </div>
                         </div>
                     </Col>
@@ -281,15 +297,18 @@ const EditDonationTab = () => {
                     <Col md={7} className='DocumentLeft' >
                         <div ref={documtToRef}>
                             <div style={{ backgroundColor: '#EBEBEB' }}>
-                                <img className='document-image-section' src={activeDoc} alt="Image" />
+                                <img className='document-image-section' src={document} alt="Image" />
                             </div>
 
                             <div className='Imagesleft'>
-
-                                <img style={{ width: '80px' }} src="/Image/doc1.png" alt="Image" onClick={() => setActiveDoc("/Image/doc1.png")} />
-                                <img style={{ width: '80px' }} src="/Image/adharcard2.png" alt="Image" onClick={() => setActiveDoc("/Image/adharcard2.png")} />
-                                <img style={{ width: '80px' }} src="/Image/doc3.png" alt="Image" onClick={() => setActiveDoc("/Image/doc3.png")} />
-                                <img style={{ width: '80px' }} src="/Image/pancard.jpg" alt="Image" onClick={() => setActiveDoc("/Image/pancard.jpg")} />
+                                {
+                                    donationTab?.documents?.map((item, index) => (<img
+                                        key={index}
+                                        style={{ width: '80px' }}
+                                        src={item.imageUrl}
+                                        alt="Image"
+                                        onClick={() => setActiveDoc(item.imageUrl)} />))
+                                }
                             </div>
                         </div>
                     </Col>

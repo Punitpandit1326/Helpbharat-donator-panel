@@ -145,7 +145,7 @@ const DonationTab = () => {
             <div>
                 <Container className='DonationCont'>
                     <h1>{donationTab?.name}</h1>
-                    <button className='border-0'><Link to={'/editdonationtab/:slug'}><i className="fa fa-pencil pecilIcon"></i></Link></button>
+                    <button className='border-0'><Link to={`/editdonationtab/${slug}`}><i className="fa fa-pencil pecilIcon"></i></Link></button>
                     <Row key={donationTab?.id}>
 
                         {/* --------leftSection---------- */}
