@@ -103,7 +103,7 @@ const Myfundraiser = () => {
                   </Row>
 
                   <div className='btn-view'>
-                    <button className='bg-white text-success' onClick={() => navigate("/myfundraiser/dashboard")} style={{ border: '1px solid #00A978' }}>View Dashboard</button>
+                    <button className='bg-white text-success' onClick={() => navigate(`/myfundraiser/dashboard/${item._id}`)} style={{ border: '1px solid #00A978' }}>View Dashboard</button>
                     <button onClick={() => handleEditClick(item.slug)}>Edit Fundraiser</button>
                   </div>
 

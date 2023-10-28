@@ -1,34 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './MyWithdraw.css'
 import { Container, Row, Col, Table } from 'react-bootstrap';
-import { FaPencilAlt } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import Footer from '../../component/footer/Footer';
+import NavSection from '../../component/NavSection/NavSection';
+import { donatorUrl } from '../../utils/url';
+import Cookies from 'universal-cookie';
+
 
 const MyWithdraw = () => {
+    const [payment, setPayment] = useState([]);
+    const cookie = new Cookies();
+    const tokenWeb = cookie.get('token_web');
+
+    const fetchPaymentData = async () => {
+        const response = await fetch(`${donatorUrl}get-All-Payment-Withdrawls`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${tokenWeb}`
+            }
+        })
+    }
+
     return (
         <div>
-            <Container>
-                <Row className='heading-nav mb-3'>
-                    <Col lg={9} md={9}>
-                        <div className="dashboard">
-                            <div className="listDash">
-                                <Link className='linkItem2' to={'/dashBoard'}><li>Dashboard</li></Link>
-                                <Link className='linkItem2' to={'/donationdb'}> <li>Donation</li></Link>
-                                <Link className='linkItem2' to={'/promotePage'}> <li>Promotions</li></Link>
-                                <Link className='linkItem2 active' to={'/withdraw'}> <li>My Withdrawals</li></Link>
-                                <Link className='linkItem2' to={'/setting'}><li>Settings</li></Link>
-                            </div>
-                        </div>
-                    </Col>
 
-                    {<Col lg={3} md={3}>
-                        <div className="edit-fund text-end">
-                            <button>Edit Fundraiser <FaPencilAlt /></button>
-                        </div>
-                    </Col>}
-                </Row>
-            </Container>
+            <NavSection />
 
             {/* ---------HeroSection----------- */}
 

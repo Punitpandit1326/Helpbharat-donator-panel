@@ -4,32 +4,14 @@ import { Link } from 'react-router-dom';
 import { FaPencilAlt, } from 'react-icons/fa';
 import Footer from '../../component/footer/Footer';
 import { Container, Row, Col } from 'react-bootstrap';
+import NavSection from '../../component/NavSection/NavSection';
 
 const Setting = () => {
     return (
         <>
             {/* -------TopHeaderSection---------- */}
 
-            <Container>
-                <Row>
-                    <Col lg={9} md={9}>
-                        <div className="dashboard">
-                            <div className="listDash ms-n5">
-                                <Link className='linkItem2' to={'/dashBoard'}><li>Dashboard</li></Link>
-                                <Link className='linkItem2' to={'/donationdb'}> <li>Donation</li></Link>
-                                <Link className='linkItem2' to={'/promotePage'}> <li>Promotions</li></Link>
-                                <Link className='linkItem2' to={'/mywithdraw'}> <li>My Withdraw</li></Link>
-                                <Link className='linkItem2 active' to={'/setting'}><li>Settings</li></Link>
-                            </div>
-                        </div>
-                    </Col>
-                    <Col lg={3} md={3}>
-                        <div className="edit-fund text-end">
-                            <button>Edit Fundraiser <FaPencilAlt /></button>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
+            <NavSection />
 
             {/* -----------SettingHeroSection-------------- */}
 

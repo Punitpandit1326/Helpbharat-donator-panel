@@ -8,62 +8,83 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { MdOutlinePhotoSizeSelectActual } from "react-icons/md";
 import { TbFileText, TbBrandTelegram } from "react-icons/tb";
 import Footer from '../../component/footer/Footer';
-import { Link, } from 'react-router-dom';
-
-
+import { Link, useParams, } from 'react-router-dom';
+import { donatorUrl } from '../../utils/url';
+import Cookies from 'universal-cookie';
+import { toast } from 'react-toastify';
+import NavSection from '../../component/NavSection/NavSection';
 
 
 const DashBoard = () => {
   const [donarTab, setDonarTab] = useState(true);
+  const [dashboard, setDashboard] = useState({});
+  const { _id } = useParams();
 
+  const cookie = new Cookies();
+  const tokenWeb = cookie.get('token_web');
+
+
+  const fetchDashboard = async () => {
+    const toastID = toast.loading('Please wait...')
+    const response = await fetch(`${donatorUrl}get-campaign-data?fund_raiser_id=${_id}`, {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${tokenWeb}`
+      }
+    })
+    const data = await response.json();
+    if (!data.success) {
+      toast.update(toastID, {
+        render: data.message.message,
+        type: 'error',
+        autoClose: 1500,
+        isLoading: false
+      })
+      return
+    }
+
+    toast.update(toastID, {
+      render: data.message.message,
+      type: 'success',
+      autoClose: 1500,
+      isLoading: false
+    })
+    setDashboard(data.data)
+  }
+
+  useEffect(() => {
+    fetchDashboard()
+    return () => toast.dismiss()
+  }, [])
 
   return (
     <>
       {/* -------TopHeaderSection---------- */}
 
-      <Container className='donation-head'>
-        <Row className='heading-nav mb-3'>
-          <Col lg={9} md={9}>
-            <div className="dashboard">
-              <div className="listDash">
-                <Link className='linkItem2 active' to={'/dashboard'}><li>Dashboard</li></Link>
-                <Link className='linkItem2' to={'/donationdb'}> <li>Donation</li></Link>
-                <Link className='linkItem2' to={'/promotePage'}> <li>Promotions</li></Link>
-                <Link className='linkItem2' to={'/mywithdraw'}> <li>My Withdrawals</li></Link>
-                <Link className='linkItem2' to={'/setting'}><li>Settings</li></Link>
-              </div>
-            </div>
-          </Col>
-
-          {<Col lg={3} md={3}>
-            <div className="edit-fund text-end">
-              <button>Edit Fundraiser <FaPencilAlt /></button>
-            </div>
-          </Col>}
-        </Row>
-      </Container>
+      <NavSection />
 
       {/* ---------HeroSection----------- */}
 
       <Container>
         <Row className='HeadHeroSection'>
+
           <Col md={12} xl={4} sm={12} className='HeroSectionBox'>
             <p>Total Donors</p>
             <div className="wallet-sec">
-              <p style={{ color: '#00a978' }}> 15</p>
+              <p style={{ color: '#00a978' }}> ₹ {dashboard.donorsResponse}</p>
             </div>
           </Col>
           <Col md={12} xl={4} sm={12} className='HeroSectionBox'>
             <p>Amount raised today</p>
             <div className="wallet-sec">
-              <p style={{ color: '#00a978' }}>₹ 1700</p>
+              <p style={{ color: '#00a978' }}> ₹ {dashboard.amount_raised}</p>
             </div>
 
           </Col>
           <Col md={12} xl={4} sm={12} className='HeroSectionBox'>
             <p>Total amount raised</p>
             <div className="wallet-sec">
-              <p style={{ color: '#00a978' }}>₹ 2400</p>
+              <p style={{ color: '#00a978' }}>₹ {dashboard.totalAmountRaisedToday}</p>
 
             </div>
           </Col>
@@ -79,8 +100,8 @@ const DashBoard = () => {
               <Col md={12} xl={12} className='GoalSection'>
                 <div className='GoalSectionleft'>
                   <p>Current Goal Status</p>
-                  <h5>₹2400</h5>
-                  <h6>raised on a goal of ₹ 1,500</h6>
+                  <h5>{dashboard.totalAmountRaisedToday}</h5>
+                  <h6>raised on a goal of ₹ {dashboard.goal}</h6>
                 </div>
                 <div class="ui-widgets">
                   <div class="ui-values">35%</div>
@@ -144,26 +165,6 @@ const DashBoard = () => {
               <div className="donarInfo-para">
                 <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
                 <p>Someone donated INR <span>500</span> </p>
-              </div>
-              <p className='donoted-para'>8 nov 2022</p>
-              <div className="donarInfo-para m-0">
-                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                <p>Someone donated INR <span>500</span> </p>
-
-              </div>
-              <p className='donoted-para'>8 nov 2022</p>
-
-              <div className="donarInfo-para m-0">
-                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                <p>Someone donated INR <span>500</span> </p>
-
-              </div>
-              <p className='donoted-para'>8 nov 2022</p>
-
-              <div className="donarInfo-para m-0">
-                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                <p>Someone donated INR <span>500</span> </p>
-
               </div>
               <p className='donoted-para'>8 nov 2022</p>
               <div className="donarInfo-para m-0">

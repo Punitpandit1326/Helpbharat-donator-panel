@@ -6,8 +6,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import { Container, Form, Row, Col, Button } from 'react-bootstrap';
 import { donatorUrl } from '../../utils/url';
 import Cookies from 'universal-cookie';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 
 const Myprofile = () => {
@@ -47,6 +46,7 @@ const Myprofile = () => {
 
     const fetchUser = async () => {
 
+        const toastID = toast.loading('Please wait...')
         const response = await fetch(`${donatorUrl}user`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -57,16 +57,27 @@ const Myprofile = () => {
 
         if (!data.success) {
             setError(data.message)
+            toast.update(toastID, {
+                render: data.message,
+                type: 'error',
+                autoClose: 1500,
+                isLoading: false
+            })
             return
         }
+        toast.update(toastID, {
+            render: data.message,
+            type: 'success',
+            autoClose: 1500,
+            isLoading: false
+        })
+
         setUser(data.data);
-        setLoading(false);
-        toast.dismiss();
     }
 
     useEffect(() => {
         fetchUser();
-        return () => { };
+        return () => toast.dismiss();
     }, []);
 
     const handleSubmit = (event) => {
@@ -318,7 +329,6 @@ const Myprofile = () => {
                             }}>
                             <h6>Personal Details</h6></Accordion.Header>
                         <Accordion.Body>
-                            <ToastContainer />
                             {user && <Form noValidate validated={validated} onSubmit={fetchEditUsers}>
                                 <Row className="mb-3">
                                     <Form.Group as={Col} md="6" controlId="validationCustom01">

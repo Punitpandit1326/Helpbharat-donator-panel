@@ -1,19 +1,64 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './DonationDb.css';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
-import { FaCalendar, FaDownload } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
+import { FaDownload } from "react-icons/fa";
 import Footer from '../../component/footer/Footer';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Container, Table, Row, Col } from 'react-bootstrap';
+import { Container, Table } from 'react-bootstrap';
 import { FaPencilAlt, FaRegCalendar, FaSortAmountDown, FaLocationArrow, FaPlus } from 'react-icons/fa';
+import Cookies from 'universal-cookie';
+import { donatorUrl } from '../../utils/url';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import NavSection from '../../component/NavSection/NavSection';
+import Pagination from '../../component/Pagination/Pagination';
+import moment from 'moment/moment';
 
 const DonationDb = () => {
+  const [total, setTotal] = useState(1);
+  const [page, setPage] = useState(1)
   const [selectedDate, setSelectedDate] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [donation, setDonation] = useState([]);
+  const { _id } = useParams()
+  const cookie = new Cookies();
+  const tokenWeb = cookie.get('token_web');
 
-  const navigate = useNavigate();
+
+  const fetchDonationData = async () => {
+    const toastID = toast.loading('Please wait...')
+    const response = await fetch(`${donatorUrl}campaign-donations?_id=${_id}&limit=5&page=${page}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${tokenWeb}`
+      }
+    })
+    const data = await response.json();
+    if (!data.success) {
+      toast.update(toastID, {
+        render: data.message.message,
+        type: 'error',
+        autoClose: 1500,
+        isLoading: false
+      })
+      return
+    }
+    toast.update(toastID, {
+      render: data.message.message,
+      type: 'success',
+      autoClose: 1500,
+      isLoading: false
+    })
+    // console.log(data.data.docs, "data show");
+    setDonation(data.data.docs)
+    setTotal(data.data.total);
+  }
+
+  useEffect(() => {
+    fetchDonationData()
+    return () => toast.dismiss()
+  }, [page])
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -26,28 +71,7 @@ const DonationDb = () => {
 
   return (
     <>
-      {/* -------TopHeaderSection---------- */}
-
-      <Container>
-        <Row>
-          <Col lg={9} md={9}>
-            <div className="dashboard">
-              <div className="listDash">
-                <Link className='linkItem2' to={'/dashBoard'}><li>Dashboard</li></Link>
-                <Link className='linkItem2 active' to={'/donationdb'}> <li >Donation</li></Link>
-                <Link className='linkItem2' to={'/promotePage'}> <li>Promotions</li></Link>
-                <Link className='linkItem2' to={'/mywithdraw'}> <li>My withdraw</li></Link>
-                <Link className='linkItem2' to={'/setting'}><li>Settings</li></Link>
-              </div>
-            </div>
-          </Col>
-          <Col lg={3} md={3}>
-            <div className="edit-fund text-end">
-              <button>Edit Fundraiser <FaPencilAlt /></button>
-            </div>
-          </Col>
-        </Row>
-      </Container>
+      <NavSection />
 
       {/* -----------DonationHeroSection--------- */}
 
@@ -87,24 +111,16 @@ const DonationDb = () => {
                 <th>Donation Amount</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Nishant</td>
-                <td>20/8/2022</td>
-                <td>₹ 400</td>
-              </tr>
-              <tr>
-                <td>Ankur</td>
-                <td>20/8/2022</td>
-                <td>₹ 200</td>
-              </tr>
-              <tr>
-                <td>Mithun</td>
-                <td>20/8/2022</td>
-                <td>₹ 600</td>
-              </tr>
-            </tbody>
+            {
+              donation?.map((item, index) => (<tbody key={index}>
+                <tr>
+                  <td>{item.user_id.name}</td>
+                  <td>{moment(item.createdAt).format("DD MMM  YYYY")}</td>
+                  <td>₹ 400</td>
+                </tr>
+              </tbody>))}
           </Table>
+          <Pagination total={total} page={page} pageSetter={setPage} />
         </Container>
         <div className="right_BtN">
           <button>Send Thanks <FaLocationArrow /></button>

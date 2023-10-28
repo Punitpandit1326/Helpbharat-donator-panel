@@ -41,7 +41,7 @@ const EditDonationTab = () => {
     const updateCampaign = async () => {
         const toastId = toast.loading('Please wait...');
         try {
-            const response = await fetch(`${donatorUrl}campaign?slug=${slug}`, {
+            const response = await fetch(`${donatorUrl}campaign/${slug}`, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${tokenWeb}`
@@ -211,11 +211,11 @@ const EditDonationTab = () => {
                             {donarTab && <div className="donorInfo-main p-0 mt-3">
                                 <div>
                                     <div className="donarInfo">
-                                        <FontAwesomeIcon icon={faUserCircle} size="2x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
+                                        <FontAwesomeIcon className='mt-2' icon={faUserCircle} size="2x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
                                         <p>Someone donated INR <strong>500</strong> </p>
 
                                     </div>
-                                    <p className='donoted-inr'>8 nov 2022</p>
+                                    <p className='donoted-inr-2'>8 nov 2022</p>
 
                                 </div>
 

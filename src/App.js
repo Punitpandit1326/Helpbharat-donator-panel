@@ -20,6 +20,9 @@ import Cookies from 'universal-cookie';
 import Fundraiser from './pages/StartFundraiser/Fundraiser'
 import CreateFund from './pages/StartFundraiser/CreateFundraiser/CreateFund';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const AuthContext = createContext();
 export const useAuth = () => {
   return useContext(AuthContext)
@@ -41,6 +44,7 @@ function App() {
     <AuthContext.Provider value={{ loggedIn, login, logout }}>
       {<BrowserRouter>
         <Navigation />
+        <ToastContainer />
         <Routes>
           <Route path='/' element={<Myprofile />} />
           <Route path='myprofile' element={<Myprofile />} />
@@ -51,11 +55,11 @@ function App() {
           <Route path='mycomments' element={<MyComments />} />
           <Route path='/myfundraiser/donationtab/:slug' element={<DonationTab />} />
           <Route path='editdonationtab/:slug' element={<EditDonationTab />} />
-          <Route path='/myfundraiser/dashboard' element={<DashBoard />} />
-          <Route path='/donationdb' element={<DonationDb />} />
-          <Route path='promotepage' element={<PromotePage />} />
-          <Route path='mywithdraw' element={<MyWithdraw />} />
-          <Route path='setting' element={<Setting />} />
+          <Route path='/myfundraiser/dashboard/:_id' element={<DashBoard />} />
+          <Route path='/donationdb/:_id' element={<DonationDb />} />
+          <Route path='promotepage/:_id' element={<PromotePage />} />
+          <Route path='mywithdraw/:_id' element={<MyWithdraw />} />
+          <Route path='setting/:_id' element={<Setting />} />
           <Route path='/login' element={<Login />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>

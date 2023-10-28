@@ -8,7 +8,7 @@ import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
 import { donatorUrl, url } from '../../utils/url';
 import Cookies from 'universal-cookie';
 import moment from 'moment/moment';
-
+import { toast } from 'react-toastify';
 
 
 const DonationTab = () => {
@@ -17,10 +17,9 @@ const DonationTab = () => {
     const [coverPhoto, setCoverPhoto] = useState("");
     const [tabDonor, setTabDonor] = useState(null);
     const [recentDonor, setRecentDonor] = useState(null);
-    const [documnetPhoto, setDocumnetPhoto] = useState("");
     const [error, setError] = useState(null)
+    const [documnetPhoto, setDocumnetPhoto] = useState("");
     const [endDate, setEndDate] = useState("");
-    const [loading, setLoading] = useState(true)
     const [currentValue, setCurrentValue] = useState(0);
     const [days, setDays] = useState("");
     const [activeImage, setActiveImage] = useState("/Image/Img1.png")
@@ -40,7 +39,7 @@ const DonationTab = () => {
 
     const fetchTabDonor = async (_id) => {
         try {
-            const response = await fetch(`${url}top-Donors?fund_raiser_id_=${_id}`, {
+            const response = await fetch(`${url}top-Donors?fund_raiser_id=${_id}`, {
                 headers: {
                     'content-type': 'application/json',
                     'Authorization': `Bearer ${tokenWeb}`
@@ -62,7 +61,7 @@ const DonationTab = () => {
 
     const fetchRecentDonor = async (_id) => {
         try {
-            const response = await fetch(`${url}recent-Donors?fund_raiser_id_=${_id}`, {
+            const response = await fetch(`${url}recent-Donors?fund_raiser_id=${_id}`, {
                 headers: {
                     'content-type': 'application/json',
                     'Authorization': `Bearer ${tokenWeb}`
@@ -83,40 +82,42 @@ const DonationTab = () => {
     }
 
     const fetchDonationTab = async () => {
-        try {
-            const response = await fetch(`${donatorUrl}get-Campaign-By-Slug?slug=${slug}`, {
-                headers: {
-                    'content-type': 'application/json',
-                    'Authorization': `Bearer ${tokenWeb}`
-                }
-            })
-            const data = await response.json()
-
-            if (!data.message) {
-                setError(data.message)
-                return
+        const toastID = toast.loading('Please wait...')
+        const response = await fetch(`${donatorUrl}get-Campaign-By-Slug?slug=${slug}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${tokenWeb}`
             }
-            // console.log(data.data.response);
-            setDocumnetPhoto(data.data.response.documents[0].imageUrl)
-            setCoverPhoto(data.data.response.images[0].imageUrl)
-            setDonationTab(data.data.response)
-            setEndDate(data.data.response.end_date)
-            setDays(moment(data.data.response.end_date).diff(new Date(), 'days'))
-            fetchTabDonor(data.data.response._id)
-            fetchRecentDonor(data.data.response._id)
-        }
-        catch (error) {
-            console.error(error)
-        }
-        finally {
-            setLoading(false);
-        }
-    }
+        })
+        const data = await response.json()
 
+        if (!data.success) {
+            toast.update(toastID, {
+                render: data.message.message,
+                type: 'error',
+                autoClose: 1500,
+                isLoading: false
+            })
+            return
+        }
+        toast.update(toastID, {
+            render: data.message.message,
+            type: 'success',
+            autoClose: 1500,
+            isLoading: false
+        })
+        setDocumnetPhoto(data.data.response.documents[0].imageUrl)
+        setCoverPhoto(data.data.response.images[0].imageUrl)
+        setDonationTab(data.data.response)
+        setEndDate(data.data.response.end_date)
+        setDays(moment(data.data.response.end_date).diff(new Date(), 'days'))
+        fetchTabDonor(data.data.response._id)
+        fetchRecentDonor(data.data.response._id)
+    }
 
     useEffect(() => {
         fetchDonationTab();
-        return () => { }
+        return () => toast.dismiss()
     }, [])
 
 
@@ -133,12 +134,6 @@ const DonationTab = () => {
         setCurrentValue(value);
     };
 
-    if (loading) {
-        return <div>...Loading please Wait</div>
-    }
-    if (error) {
-        return (<div>...Error : {JSON.stringify(error)}</div>)
-    }
 
     return (
         <>

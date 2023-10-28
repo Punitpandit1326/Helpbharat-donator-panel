@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Container, Table, Row, Col } from 'react-bootstrap';
 import { FaPencilAlt, FaDownload, FaRegCalendar, FaSortAmountDown, FaPlus } from 'react-icons/fa';
 import Footer from '../../component/footer/Footer';
+import NavSection from '../../component/NavSection/NavSection';
 
 const PromotePage = () => {
     const [selectedDate, setSelectedDate] = useState(null);
@@ -26,26 +27,8 @@ const PromotePage = () => {
         <>
             {/* -------TopHeaderSection---------- */}
 
-            <Container>
-                <Row>
-                    <Col lg={9} md={9}>
-                        <div className="dashboard">
-                            <div className="listDash">
-                                <Link className='linkItem2' to={'/dashBoard'}><li>Dashboard</li></Link>
-                                <Link className='linkItem2' to={'/donationdb'}> <li>Donation</li></Link>
-                                <Link className='linkItem2 active' to={'/promotePage'}> <li>Promotions</li></Link>
-                                <Link className='linkItem2' to={'/mywithdraw'}> <li>My Withdraw</li></Link>
-                                <Link className='linkItem2' to={'/setting'}><li>Settings</li></Link>
-                            </div>
-                        </div>
-                    </Col>
-                    <Col lg={3} md={3}>
-                        <div className="edit-fund text-end">
-                            <button>Edit Fundraiser <FaPencilAlt /></button>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
+            <NavSection />
+
 
             {/* -----------PromoteHeroSection-------------- */}
 

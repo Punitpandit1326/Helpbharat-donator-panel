@@ -96,9 +96,7 @@ const MyDonation = () => {
                         <th scope="col">Tax Exemption</th>
                       </tr>
                     </thead>
-                    {usersDonation.map((item, index) =>
-
-                    (<tbody key={item.id}>
+                    {usersDonation.map((item, index) => (<tbody key={item.id}>
                       <tr>
                         <th>
                           <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />

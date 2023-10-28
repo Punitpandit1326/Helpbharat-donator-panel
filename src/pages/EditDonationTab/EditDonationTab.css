@@ -218,7 +218,7 @@ input[type="text"]#fund-input0 {
   justify-content: flex-start;
   align-items: center;
   gap: 15px;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .donarInfo p {
@@ -228,10 +228,10 @@ input[type="text"]#fund-input0 {
   margin: 0;
 }
 
-.p.donoted-inr {
-  margin-top: -11px !important;
-  padding-left: 47px !important;
-  font-size: 0.8rem !important;
+p.donoted-inr-2 {
+  margin-top: -11px;
+  padding-left: 47px;
+  font-size: 0.8rem;
 }
 
 /* --------ButtonSection-------- */
