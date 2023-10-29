@@ -50,7 +50,7 @@ const Myprofile = () => {
         const response = await fetch(`${donatorUrl}user`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${tokenWeb}`
+                Authorization: `Bearer ${tokenWeb}`
             }
         });
         const data = await response.json();
@@ -58,7 +58,7 @@ const Myprofile = () => {
         if (!data.success) {
             setError(data.message)
             toast.update(toastID, {
-                render: data.message,
+                render: data.message.message,
                 type: 'error',
                 autoClose: 1500,
                 isLoading: false
@@ -66,7 +66,7 @@ const Myprofile = () => {
             return
         }
         toast.update(toastID, {
-            render: data.message,
+            render: data.message.message,
             type: 'success',
             autoClose: 1500,
             isLoading: false
@@ -92,37 +92,46 @@ const Myprofile = () => {
 
     const handleChangePassword = async (e) => {
         e.preventDefault();
-
-        if (passwordData.new_password !== passwordData.confirmPassword) {
+        const toastID = toast.loading('Please wait...')
+        if (passwordData.new_password !== passwordData.confirm_Password) {
             alert('New password and confirm password do not match.');
             return;
         }
 
         console.log(authUser);
 
-        try {
-            const response = await fetch(`${donatorUrl}change-password`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${tokenWeb}`,
-                },
-                body: JSON.stringify({
-                    old_password: passwordData.old_password,
-                    new_password: passwordData.new_password,
-                    email: authUser.email
-                }),
-            });
+        const response = await fetch(`${donatorUrl}change-password`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${tokenWeb}`,
+            },
+            body: JSON.stringify({
+                old_password: passwordData.old_password,
+                new_password: passwordData.new_password,
+                email: authUser.email
+            }),
+        });
 
-            if (!response.success) {
-                throw new Error('Password change failed');
-            }
+        const data = await response.json();
 
-            const data = await response.json();
-            console.log(data);
-        } catch (error) {
-            console.error(error);
+        if (!data.success) {
+            toast.update(toastID, {
+                render: data.message.message,
+                type: 'error',
+                autoClose: 1500,
+                isLoading: false
+            })
+            return
         }
+
+        toast.update(toastID, {
+            render: data.message.message,
+            type: 'success',
+            autoClose: 1500,
+            isLoading: false
+        })
+
     };
 
     const handleChange = (e) => {
@@ -136,7 +145,7 @@ const Myprofile = () => {
 
     // ---------Edit-Users-Api----------
 
-    const fetchEditUsers = async (e) => {
+    const updateEditUsers = async (e) => {
         e.preventDefault();
         try {
             toast.info('Please wait...', { autoClose: false });
@@ -145,14 +154,16 @@ const Myprofile = () => {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${tokenWeb}`
+                    Authorization: `Bearer ${tokenWeb}`
                 },
                 body: JSON.stringify(user),
 
             });
 
             const data = await res.json();
+
             console.log(data, "api was calling");
+
             if (!data.success) {
                 toast.dismiss();
                 toast.error('Error: ' + data.response.message, { autoClose: 5000 });
@@ -222,92 +233,91 @@ const Myprofile = () => {
     const postAccountDetails = async (e) => {
         e.preventDefault();
         console.log("form is submitting");
+        const toastID = toast.loading('Please wait...')
 
-        try {
-
-            const formData = new FormData();
-            // formData.append('user_id', userId);
-            formData.append('document', detail.document);
-            formData.append('branch', detail.branch);
-            formData.append('ifsc', detail.ifsc);
-            formData.append('bank_account_no', detail.bank_account_no);
-            formData.append('bank_name', detail.bank_name);
+        const formData = new FormData();
+        formData.append('document', detail.document);
+        formData.append('branch', detail.branch);
+        formData.append('ifsc', detail.ifsc);
+        formData.append('bank_account_no', detail.bank_account_no);
+        formData.append('bank_name', detail.bank_name);
 
 
-            console.log("is form data loaded", formData);
+        console.log("is form data loaded", formData);
 
-            const resp = await fetch(`${donatorUrl}account`, {
-                method: 'PATCH',
-                headers: {
-                    'Authorization': `Bearer ${tokenWeb}`
-                },
-                body: formData
-            });
-            const result = await resp.json();
+        const resp = await fetch(`${donatorUrl}account`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `Bearer ${tokenWeb}`
+            },
+            body: formData
+        });
+        const result = await resp.json();
 
-            if (!result.success) {
-                console.log("response error", result.message);
-                setError(result.message);
-            }
-            setDetails(result.data);
-            console.log(result.data, "error2");
-            setLoading(false);
+        if (!data.success) {
+            toast.update(toastID, {
+                render: data.message.message,
+                type: 'error',
+                autoClose: 1500,
+                isLoading: false
+            })
+            return
         }
+        toast.update(toastID, {
+            render: data.message.message,
+            type: 'success',
+            autoClose: 1500,
+            isLoading: false
+        })
+        setDetails(result.data);
 
-        catch (error) {
-            console.log("catch error", error);
-            setError(error.message)
-            setLoading(false)
-        }
-    };
+    }
 
     const editAccountDetails = async (e) => {
         e.preventDefault();
         const toastId = toast.loading('Please wait...');
-        try {
 
-            const formData = new FormData();
-            formData.append('user_id', userId);
-            formData.append('document', detail.document);
-            formData.append('branch', detail.branch);
-            formData.append('ifsc', detail.ifsc);
-            formData.append('bank_account_no', detail.bank_account_no);
-            formData.append('bank_name', detail.bank_name);
+        const formData = new FormData();
+        formData.append('user_id', userId);
+        formData.append('document', detail.document);
+        formData.append('branch', detail.branch);
+        formData.append('ifsc', detail.ifsc);
+        formData.append('bank_account_no', detail.bank_account_no);
+        formData.append('bank_name', detail.bank_name);
 
 
-            const response = await fetch(`${donatorUrl}account`, {
-                method: 'PATCH',
-                headers: {
-                    'Authorization': `Bearer ${tokenWeb}`
-                },
-                body: formData,
-            });
+        const response = await fetch(`${donatorUrl}account`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${tokenWeb}`
+            },
+            body: formData,
+        });
 
-            const data = await response.json();
-            console.log(data, "api was calling");
+        const data = await response.json();
+        console.log(data, "api was calling");
 
-            if (!data.success) {
-                console.log("response error", response.message);
-                setError(response.message);
-                toast.update(toastId, data.response.message)
-            }
-            console.log(response.data, "error2");
-            setLoading(false);
-            toast.dismiss();
+        if (!data.success) {
+            toast.update(toastId, {
+                render: data.message.message,
+                type: 'error',
+                autoClose: 1500,
+                isLoading: false
+            })
+            return
         }
-        catch (error) {
-            setError(error.message || 'An error occurred');
-            setLoading(false);
-            toast.dismiss(); // Hide the loading toast
-            toast.error(error.message, { autoClose: 2000 });
-        }
+        toast.update(toastId, {
+            render: data.message.message,
+            type: 'success',
+            autoClose: 1500,
+            isLoading: false
+        })
+        toast.dismiss();
     }
 
     useEffect(() => {
         fetchDetails();
-        return () => {
-
-        };
+        return () => toast.dismiss()
     }, [])
 
     return (
@@ -329,7 +339,7 @@ const Myprofile = () => {
                             }}>
                             <h6>Personal Details</h6></Accordion.Header>
                         <Accordion.Body>
-                            {user && <Form noValidate validated={validated} onSubmit={fetchEditUsers}>
+                            {user && <Form noValidate validated={validated} onSubmit={updateEditUsers}>
                                 <Row className="mb-3">
                                     <Form.Group as={Col} md="6" controlId="validationCustom01">
                                         <Form.Label>Name</Form.Label>
@@ -575,7 +585,6 @@ const Myprofile = () => {
             <div>
                 <Footer />
             </div>
-
 
         </div>
 

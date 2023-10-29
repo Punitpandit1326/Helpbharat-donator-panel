@@ -9,9 +9,10 @@ import { donatorUrl } from '../../utils/url';
 import Cookies from 'universal-cookie';
 import Pagination from '../../component/Pagination/Pagination';
 import asset from '../../utils/asset';
+import { toast } from 'react-toastify';
 
 const Myfundraiser = () => {
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState(1);
   const [page, setPage] = useState(1)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -28,46 +29,44 @@ const Myfundraiser = () => {
   const cookie = new Cookies();
   const tokenWeb = cookie.get('token_web');
 
-
   const fetchUsers = async () => {
 
-    try {
-      const response = await fetch(`${donatorUrl}get-campaigns-by-user?limit=1&page=${page}`, {
-        headers: {
-          'Content-Type': 'applicaton/json',
-          'Authorization': `Bearer ${tokenWeb}`
-        }
-      }
-      )
-      const data = await response.json();
+    const toastID = toast.loading('Please wait...')
 
-      if (!data.success) {
-        setError(data.message)
-        return
+    const response = await fetch(`${donatorUrl}get-campaigns-by-user?limit=12&page=${page}`, {
+      headers: {
+        'Content-Type': 'applicaton/json',
+        Authorization: `Bearer ${tokenWeb}`
       }
-      setUsers(data.data.response);
-      setTotal(data.data.total);
+    }
+    )
+    const data = await response.json();
 
+    if (!data.success) {
+      toast.update(toastID, {
+        render: data.message.message,
+        type: 'error',
+        autoClose: 1500,
+        isLoading: false
+      })
+      return
     }
-    catch (error) {
-      console.error(error)
-    }
-    finally {
-      setLoading(false);
-    }
-  };
+
+    toast.update(toastID, {
+      render: data.message.message,
+      type: 'success',
+      autoClose: 1500,
+      isLoading: false
+    })
+    setUsers(data.data.response);
+    setTotal(data.data.total);
+
+  }
 
   useEffect(() => {
     fetchUsers()
+    return () => toast.dismiss()
   }, [page])
-
-
-  if (loading) {
-    return <div>...Loading please Wait</div>
-  }
-  if (error) {
-    return (<div>...Error : {error}</div>)
-  }
 
   return (
     <div style={{ backgroundColor: '#F5F5F5' }}>

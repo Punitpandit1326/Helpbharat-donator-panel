@@ -2,12 +2,78 @@ import './fund.css';
 import { useNavigate } from 'react-router-dom';
 import { Col, Container, Form, Row } from 'react-bootstrap';
 import Footer from '../../component/footer/Footer';
+import { useEffect, useState } from 'react';
+import Cookies from 'universal-cookie';
+import { donatorUrl } from '../../utils/url';
+import { toast } from 'react-toastify';
 
 const ChooseFund = () => {
+
+    const [campaign, setCampaign] = useState({
+        campaign_name: '',
+        benefeciary_name: '',
+        end_date: '',
+        mobiile_number: '',
+        relation_with_beneficiary_name: '',
+        medical_condition: ''
+
+
+    });
+    const cookie = new Cookies();
+    const tokenWeb = cookie.get('token_web');
     const navigate = useNavigate();
 
     const handleNavigation = () => {
         navigate('/fundraiser/createfund');
+    };
+
+    const fetchCampaignData = async (e) => {
+        e.preventDefault();
+
+        const toastID = toast.loading('Please wait...')
+
+        const formData = new FormData();
+        formData.append('campaign_name', campaign.campaign_name);
+        formData.append('benefeciary_name', campaign.benefeciary_name);
+        formData.append('end_date', campaign.end_date);
+
+        const response = await fetch(`${donatorUrl}campaign`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${tokenWeb}`
+            },
+            body: formData
+        })
+        const data = await response.json();
+
+        if (!data.success) {
+            toast.update(toastID, {
+                render: data.message.message,
+                type: 'error',
+                autoClose: 1500,
+                isLoading: false
+            })
+            return
+        }
+        toast.update(toastID, {
+            render: data.message.message,
+            type: 'success',
+            autoClose: 1500,
+            isLoading: false
+        })
+        // console.log(data.data.docs, "data show");
+        setCampaign(data.data);
+    }
+
+    useEffect(() => {
+        fetchCampaignData()
+        return () => toast.dismiss()
+    }, [])
+
+    const handleFormUpdate = (e, name) => {
+        const { value } = e.target;
+        setCampaign({ ...campaign, [name]: value });
     };
 
 
@@ -23,26 +89,29 @@ const ChooseFund = () => {
             <Container className='main-container-form-section'>
                 <Row>
                     <Col md={7}>
-                        <Form>
+                        <Form onSubmit={fetchCampaignData}>
                             <h6 className='text-success mt-5'>Enter Details</h6>
                             <p>If required, you can update the information later</p>
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Mobile number of fundraiser</Form.Label>
-                                <Form.Control type="tel" />
+                                <Form.Control type="tel"
+                                    value={campaign.name} // Set the value here
+                                    onChange={handleFormUpdate}
+                                />
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formBasicPassword">
                                 <Form.Label>Patient's full name</Form.Label>
-                                <Form.Control type="text" />
+                                <Form.Control type="text"
+                                    value={campaign.name}
+                                    onChange={handleFormUpdate}
+                                />
                             </Form.Group>
 
                             <Form.Group className="mb-3">
                                 <Form.Label>Relation</Form.Label>
-                                <Form.Select>
-                                    <option>mother</option>
-                                    <option>father</option>
-                                    <option>spouse</option>
-                                    <option>other</option>
+                                <Form.Select onChange={handleFormUpdate}>
+                                    <option value={campaign.relation_with_beneficiary_name}></option>
                                 </Form.Select>
                             </Form.Group>
 
@@ -55,25 +124,30 @@ const ChooseFund = () => {
 
                             <Form.Group className="mb-3" controlId="formMedical">
                                 <Form.Label>Ailment/Medical condition*</Form.Label>
-                                <Form.Control type="text" />
+                                <Form.Control type="text"
+                                    value={campaign.medical_condition}
+                                    onChange={handleFormUpdate} />
                             </Form.Group>
 
+                            <div className='form-section mb-3'>
+                                <div>
+                                    <label htmlFor="fundsRequired">Funds required</label>
+                                    <br />
+                                    <input id='fundsRequired' type="text" value={campaign.funds} onChange={handleFormUpdate} />
+                                </div>
+                                <br />
+                                <div>
+                                    <label >End date for fundraiser</label>
+                                    <br />
+                                    <input type="date" value={campaign.end_date} onChange={handleFormUpdate} />
+                                </div>
+                            </div>
+
+                            <p className='text-dark'>Funds shall only be transferred to relevant Beneficiary bank account</p>
+                            <button type='submit' onClick={handleNavigation}>Create</button>
+
                         </Form>
-                        <div className='form-section mb-3'>
-                            <div>
-                                <label htmlFor="fundsRequired">Funds required</label>
-                                <br />
-                                <input id='fundsRequired' type="text" value='₹ ' />
-                            </div>
-                            <br />
-                            <div>
-                                <label >End date for fundraiser</label>
-                                <br />
-                                <input type="date" placeholder='₹ ' />
-                            </div>
-                        </div>
-                        <p className='text-dark'>Funds shall only be transferred to relevant Beneficiary bank account</p>
-                        <button onClick={handleNavigation}>Create</button>
+
                     </Col>
                     <Col md={4}>
                         <div className='faq-section'>

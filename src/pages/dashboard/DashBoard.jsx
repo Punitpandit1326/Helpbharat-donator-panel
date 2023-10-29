@@ -25,14 +25,17 @@ const DashBoard = () => {
 
 
   const fetchDashboard = async () => {
+
     const toastID = toast.loading('Please wait...')
+
     const response = await fetch(`${donatorUrl}get-campaign-data?fund_raiser_id=${_id}`, {
       headers: {
-        'content-type': 'application/json',
-        'Authorization': `Bearer ${tokenWeb}`
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${tokenWeb}`
       }
     })
     const data = await response.json();
+
     if (!data.success) {
       toast.update(toastID, {
         render: data.message.message,

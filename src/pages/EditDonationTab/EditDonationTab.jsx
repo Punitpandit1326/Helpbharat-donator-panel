@@ -5,14 +5,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FaPen, FaCalendarAlt } from "react-icons/fa";
 import Footer from '../../component/footer/Footer';
-import { donatorUrl } from '../../utils/url';
+import { donatorUrl, url } from '../../utils/url';
 import { useParams } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import moment from 'moment';
 
 
 const EditDonationTab = () => {
+    const [tabDonor, setTabDonor] = useState(null);
+    const [recentDonor, setRecentDonor] = useState(null);
     const [coverPhoto, setCoverPhoto] = useState("");
     const [document, setDocument] = useState("");
     const [error, setError] = useState(null);
@@ -78,16 +81,58 @@ const EditDonationTab = () => {
         }, [500])
     }
 
-    // const handleButtonClick = (value) => {
-    //     setCurrentValue(value);
-    // };
+    //    ---------topDonor----Api------------
+    const fetchTabDonor = async (_id) => {
+        try {
+            const response = await fetch(`${url}top-Donors?fund_raiser_id=${_id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${tokenWeb}`
+                }
+            }
+
+            )
+            const data = await response.json();
+
+            if (!data.success) {
+                setError(data.message)
+                return
+            }
+            setTabDonor(data.data)
+        } catch (error) {
+            setError(error.message)
+        }
+    }
+
+    // ---------RecentDonor----Api------------
+    const fetchRecentDonor = async (_id) => {
+        try {
+            const response = await fetch(`${url}recent-Donors?fund_raiser_id=${_id}`, {
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${tokenWeb}`
+                }
+            }
+
+            )
+            const data = await response.json();
+
+            if (!data.success) {
+                setError(data.message)
+                return
+            }
+            setRecentDonor(data.data)
+        } catch (error) {
+            setError(error.message)
+        }
+    }
 
     const fetchDonationTab = async () => {
         try {
             const response = await fetch(`${donatorUrl}get-Campaign-By-Slug?slug=${slug}`, {
                 headers: {
                     'Content-type': 'application/jsonl',
-                    'Authorization': `Bearer ${tokenWeb}`
+                    Authorization: `Bearer ${tokenWeb}`
                 }
             })
             const data = await response.json()
@@ -97,6 +142,8 @@ const EditDonationTab = () => {
             }
             setSupporters(data.data)
             setDonationTab(data.data.response)
+            fetchTabDonor(data.data.response._id)
+            fetchRecentDonor(data.data.response._id)
 
             setDetail(() => {
                 const { name, description, goal } = data.data.response
@@ -108,6 +155,7 @@ const EditDonationTab = () => {
             })
             setCoverPhoto(data.data.response.images[0].imageUrl)
             setDocument(data.data.response.documents[0].imageUrl)
+
         }
         catch (error) {
             console.error(error)
@@ -209,31 +257,35 @@ const EditDonationTab = () => {
                             <hr style={{ margin: '0', width: '100%' }} />
 
                             {donarTab && <div className="donorInfo-main p-0 mt-3">
-                                <div>
+
+                                {tabDonor?.map((item, index) => (<div key={index}>
                                     <div className="donarInfo">
-                                        <FontAwesomeIcon className='mt-2' icon={faUserCircle} size="2x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                                        <p>Someone donated INR <strong>500</strong> </p>
-
+                                        <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", }} />
+                                        <p>
+                                            {item.is_annonymous ? 'Someone' : item.user_id.name} donated INR {item.amount} <br />
+                                        </p>
                                     </div>
-                                    <p className='donoted-inr-2'>8 nov 2022</p>
-
+                                    <p className='donoted-inr'>{moment(item.createdAt).format("DD MMM  YYYY")}</p>
                                 </div>
-
-
+                                )
+                                )}
                             </div>}
 
-                            {!donarTab && <div className="Recent-main-section">
-                                <div>
+                            {!donarTab && (<div className='recent-main'>
+
+                                {recentDonor?.map((item, index) => (<div key={index}>
                                     <div className="donarInfo">
-                                        <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                                        <p>Someone donated INR <strong>500</strong> </p>
-
+                                        <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", }} />
+                                        <p>
+                                            {item.is_annonymous ? 'Someone' : item.user_id.name} donated INR {item.amount} <br />
+                                        </p>
                                     </div>
-                                    <p className='donoted-inr'>8 nov 2022</p>
+                                    <p className='donoted-inr'>{moment(item.createdAt).format("DD MMM  YYYY")}</p>
+                                </div>))}
 
-                                </div>
-                            </div>}
 
+                            </div>
+                            )}
 
                         </div>
                         <div>

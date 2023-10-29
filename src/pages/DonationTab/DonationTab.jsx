@@ -41,8 +41,8 @@ const DonationTab = () => {
         try {
             const response = await fetch(`${url}top-Donors?fund_raiser_id=${_id}`, {
                 headers: {
-                    'content-type': 'application/json',
-                    'Authorization': `Bearer ${tokenWeb}`
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${tokenWeb}`
                 }
             }
 
