@@ -86,12 +86,13 @@
 }
 
 .upload {
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: Center;
     align-items: center;
     height: 150px;
-    width: 80%;
+    width: 100%;
     background: #EAFFF9;
     border: 1px dashed #00A978;
 

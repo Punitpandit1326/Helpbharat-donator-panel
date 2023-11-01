@@ -9,13 +9,17 @@ import { MdOutlinePhotoSizeSelectActual } from "react-icons/md";
 import { TbFileText, TbBrandTelegram } from "react-icons/tb";
 import Footer from '../../component/footer/Footer';
 import { Link, useParams, } from 'react-router-dom';
-import { donatorUrl } from '../../utils/url';
+import { donatorUrl, url } from '../../utils/url';
 import Cookies from 'universal-cookie';
 import { toast } from 'react-toastify';
 import NavSection from '../../component/NavSection/NavSection';
+import moment from 'moment/moment';
 
 
 const DashBoard = () => {
+  const [recentDonor, setRecentDonor] = useState(null);
+  const [tabDonor, setTabDonor] = useState(null);
+  const [error, setError] = useState(null)
   const [donarTab, setDonarTab] = useState(true);
   const [dashboard, setDashboard] = useState({});
   const { _id } = useParams();
@@ -23,6 +27,53 @@ const DashBoard = () => {
   const cookie = new Cookies();
   const tokenWeb = cookie.get('token_web');
 
+  // -------------TopDonor-Api---------
+
+  const fetchTabDonor = async (_id) => {
+    try {
+      const response = await fetch(`${url}top-Donors?fund_raiser_id=${_id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${tokenWeb}`
+        }
+      }
+
+      )
+      const data = await response.json();
+
+      if (!data.success) {
+        setError(data.message)
+        return
+      }
+      setTabDonor(data.data)
+    } catch (error) {
+      setError(error.message)
+    }
+  }
+
+  // ------------RecentDonor-Api------------
+
+  const fetchRecentDonor = async (_id) => {
+    try {
+      const response = await fetch(`${url}recent-Donors?fund_raiser_id=${_id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${tokenWeb}`
+        }
+      }
+
+      )
+      const data = await response.json();
+
+      if (!data.success) {
+        setError(data.message)
+        return
+      }
+      setRecentDonor(data.data)
+    } catch (error) {
+      setError(error.message)
+    }
+  }
 
   const fetchDashboard = async () => {
 
@@ -53,10 +104,32 @@ const DashBoard = () => {
       isLoading: false
     })
     setDashboard(data.data)
+    fetchRecentDonor(_id)
+    fetchTabDonor(_id)
+
+
   }
+
+  function calculateCompletionPercentage(dashboard) {
+    if (dashboard.goal === 0) {
+      return 0;
+    }
+    return Math.floor((dashboard.totalAmountRaisedToday / dashboard.goal) * 100);
+  }
+
+  function getCompletionStatus(dashboard) {
+    const completionPercentage = calculateCompletionPercentage(dashboard);
+    if (completionPercentage < 100) {
+      return "Incomplete";
+    } else {
+      return "Complete";
+    }
+  }
+
 
   useEffect(() => {
     fetchDashboard()
+
     return () => toast.dismiss()
   }, [])
 
@@ -106,9 +179,9 @@ const DashBoard = () => {
                   <h5>{dashboard.totalAmountRaisedToday}</h5>
                   <h6>raised on a goal of ₹ {dashboard.goal}</h6>
                 </div>
-                <div class="ui-widgets">
-                  <div class="ui-values">35%</div>
-                  <div class="ui-labels">Complete</div>
+                <div className="ui-widgets">
+                  <div className="ui-values">{calculateCompletionPercentage(dashboard)}%</div>
+                  <div className="ui-labels">{getCompletionStatus(dashboard)}</div>
                 </div>
 
 
@@ -124,36 +197,27 @@ const DashBoard = () => {
                   </div>
                   <a href='#'>Update</a>
                 </div>
+
                 <div className='Updatepara'>
                   <div className='penIcon'><MdOutlinePhotoSizeSelectActual className='icon-item' />
                   </div>
                   <div>
-                    <p>Post an update</p>
-                    <h6>Your donors care about your cause, let them know<br />
-                      what’s happening.</h6>
+                    <p>Upload photos</p>
+                    <h6>Good pictures increase donations by 5x! Upload at least 3 images.</h6>
                   </div>
                   <a href='#'>Update</a>
                 </div>
+
                 <div className='Updatepara'>
                   <div className='penIcon'><TbFileText className='icon-item' />
                   </div>
                   <div>
-                    <p>Post an update</p>
-                    <h6>Your donors care about your cause, let them know<br />
-                      what’s happening.</h6>
+                    <p>Share your fundraiser</p>
+                    <h6>The farther and faster you share the more funds you receive.</h6>
                   </div>
                   <a href='#'>Update</a>
                 </div>
-                <div className='Updatepara'>
-                  <div className='penIcon'><TbBrandTelegram className='icon-item' />
-                  </div>
-                  <div>
-                    <p>Post an update</p>
-                    <h6>Your donors care about your cause, let them know<br />
-                      what’s happening.</h6>
-                  </div>
-                  <a href='#'>Update</a>
-                </div>
+
               </Col>
             </Row>
           </Col>
@@ -164,23 +228,37 @@ const DashBoard = () => {
               <li className={`${!donarTab && 'active'}`} onClick={() => setDonarTab(false)}> Recent Donors </li>
             </div>
 
-            {donarTab && <div className="donorInfo-main">
-              <div className="donarInfo-para">
-                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                <p>Someone donated INR <span>500</span> </p>
-              </div>
-              <p className='donoted-para'>8 nov 2022</p>
-              <div className="donarInfo-para m-0">
-                <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa" }} />
-                <p>Someone donated INR <span>500</span> </p>
+            {donarTab && <div className="donorInfo-main p-0 mt-3">
 
+              {tabDonor?.map((item, index) => (<div key={index}>
+                <div className="donarInfo">
+                  <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", }} />
+                  <p>
+                    {item.is_annonymous ? 'Someone' : item.user_id.name} donated INR {item.amount} <br />
+                  </p>
+                </div>
+                <p className='donoted-inr'>{moment(item.createdAt).format("DD MMM  YYYY")}</p>
               </div>
-              <p className='donoted-para'>8 nov 2022</p>
+              )
+              )}
             </div>}
 
-            {!donarTab && <div className="recent-main">
-              <h6>Hello World</h6>
-            </div>}
+            {!donarTab && (<div className='recent-main'>
+
+              {recentDonor?.map((item, index) => (<div key={index}>
+                <div className="donarInfo">
+                  <FontAwesomeIcon icon={faUserCircle} size="3x" style={{ "--fa-primary-color": "#F3E8FF", "--fa-secondary-color": "#f5f7fa", }} />
+                  <p>
+                    {item.is_annonymous ? 'Someone' : item.user_id.name} donated INR {item.amount} <br />
+                  </p>
+                </div>
+                <p className='donoted-inr'>{moment(item.createdAt).format("DD MMM  YYYY")}</p>
+              </div>))}
+
+
+            </div>
+            )}
+
           </Col>
         </Row>
       </Container>

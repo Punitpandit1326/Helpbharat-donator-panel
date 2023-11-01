@@ -4,48 +4,48 @@ import { Col, Container, Form, Row } from 'react-bootstrap';
 import Footer from '../../component/footer/Footer';
 import { useEffect, useState } from 'react';
 import Cookies from 'universal-cookie';
-import { donatorUrl } from '../../utils/url';
 import { toast } from 'react-toastify';
+import { donatorUrl } from '../../utils/url';
+
 
 const ChooseFund = () => {
-
     const [campaign, setCampaign] = useState({
         campaign_name: '',
         benefeciary_name: '',
         end_date: '',
         mobiile_number: '',
         relation_with_beneficiary_name: '',
-        medical_condition: ''
-
-
+        medical_condition: '',
+        funds: '',
+        category_id: ''
     });
+
     const cookie = new Cookies();
     const tokenWeb = cookie.get('token_web');
     const navigate = useNavigate();
 
-    const handleNavigation = () => {
-        navigate('/fundraiser/createfund');
-    };
-
     const fetchCampaignData = async (e) => {
         e.preventDefault();
-
         const toastID = toast.loading('Please wait...')
 
         const formData = new FormData();
         formData.append('campaign_name', campaign.campaign_name);
         formData.append('benefeciary_name', campaign.benefeciary_name);
         formData.append('end_date', campaign.end_date);
+        formData.append('funds', campaign.funds)
+        formData.append('medical_condition', campaign.medical_condition);
+        formData.append('relation_with_beneficiary_name', campaign.relation_with_beneficiary_name);
 
         const response = await fetch(`${donatorUrl}campaign`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 Authorization: `Bearer ${tokenWeb}`
             },
             body: formData
         })
         const data = await response.json();
+
+        console.log(data);
 
         if (!data.success) {
             toast.update(toastID, {
@@ -62,17 +62,16 @@ const ChooseFund = () => {
             autoClose: 1500,
             isLoading: false
         })
-        // console.log(data.data.docs, "data show");
-        setCampaign(data.data);
+        navigate(`/fundraiser/createfund/${slug}`);
     }
 
     useEffect(() => {
-        fetchCampaignData()
+        // fetchCampaignData()
         return () => toast.dismiss()
     }, [])
 
-    const handleFormUpdate = (e, name) => {
-        const { value } = e.target;
+    const handleFormUpdate = (e) => {
+        const { value, name } = e.target;
         setCampaign({ ...campaign, [name]: value });
     };
 
@@ -86,46 +85,63 @@ const ChooseFund = () => {
                 </h5>
                 <h6>Please fill the required details below to setup your fundraiser</h6>
             </div>
+
             <Container className='main-container-form-section'>
                 <Row>
                     <Col md={7}>
-                        <Form onSubmit={fetchCampaignData}>
+                        <Form onSubmit={(e) => fetchCampaignData(e)}>
                             <h6 className='text-success mt-5'>Enter Details</h6>
                             <p>If required, you can update the information later</p>
+
+                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Label>Campaign Name</Form.Label>
+                                <Form.Control type="tel"
+                                    defaultValue={campaign.campaign_name} // Set the value here
+                                    onChange={handleFormUpdate}
+                                    name='campaign_name'
+                                />
+                            </Form.Group>
+
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Mobile number of fundraiser</Form.Label>
                                 <Form.Control type="tel"
-                                    value={campaign.name} // Set the value here
+                                    defaultValue={campaign.mobiile_number} // Set the value here
                                     onChange={handleFormUpdate}
+                                    name='mobiile_number'
                                 />
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formBasicPassword">
                                 <Form.Label>Patient's full name</Form.Label>
                                 <Form.Control type="text"
-                                    value={campaign.name}
+                                    name='benefeciary_name'
+                                    defaultValue={campaign.benefeciary_benefeciary_name}
                                     onChange={handleFormUpdate}
                                 />
                             </Form.Group>
 
                             <Form.Group className="mb-3">
                                 <Form.Label>Relation</Form.Label>
-                                <Form.Select onChange={handleFormUpdate}>
-                                    <option value={campaign.relation_with_beneficiary_name}></option>
+                                <Form.Select name='relation_with_beneficiary_name' onChange={handleFormUpdate}>
+                                    <option defaultValue={campaign.relation_with_beneficiary_name}>Spouse</option>
+                                    <option defaultValue={campaign.relation_with_beneficiary_name}>Father</option>
+                                    <option defaultValue={campaign.relation_with_beneficiary_name}>Daughter</option>
+                                    <option defaultValue={campaign.relation_with_beneficiary_name}>Other</option>
                                 </Form.Select>
                             </Form.Group>
 
                             <Form.Group className="mb-3">
-                                <Form.Label>Categories</Form.Label>
+                                <Form.Label name="category_id" onChange={handleFormUpdate}>Categories</Form.Label>
                                 <Form.Select>
-                                    <option>other</option>
+                                    <option defaultValue={campaign.categories}>other</option>
                                 </Form.Select>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formMedical">
                                 <Form.Label>Ailment/Medical condition*</Form.Label>
                                 <Form.Control type="text"
-                                    value={campaign.medical_condition}
+                                    name='medical_condition'
+                                    defaultValue={campaign.medical_condition}
                                     onChange={handleFormUpdate} />
                             </Form.Group>
 
@@ -133,19 +149,26 @@ const ChooseFund = () => {
                                 <div>
                                     <label htmlFor="fundsRequired">Funds required</label>
                                     <br />
-                                    <input id='fundsRequired' type="text" value={campaign.funds} onChange={handleFormUpdate} />
+                                    <input id='fundsRequired' type="text" name='funds' value={campaign.funds} onChange={handleFormUpdate} />
                                 </div>
                                 <br />
                                 <div>
-                                    <label >End date for fundraiser</label>
-                                    <br />
-                                    <input type="date" value={campaign.end_date} onChange={handleFormUpdate} />
+                                    <Form.Group>
+                                        <Form.Label>End Date:</Form.Label>
+                                        <Form.Control
+                                            type="date"
+                                            name="end_date"
+                                            value={campaign.end_date}
+                                            onChange={handleFormUpdate}
+                                        />
+                                    </Form.Group>
+
+
                                 </div>
                             </div>
 
                             <p className='text-dark'>Funds shall only be transferred to relevant Beneficiary bank account</p>
-                            <button type='submit' onClick={handleNavigation}>Create</button>
-
+                            <button type='submit'>Create</button>
                         </Form>
 
                     </Col>

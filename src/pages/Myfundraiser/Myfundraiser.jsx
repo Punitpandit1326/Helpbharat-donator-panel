@@ -97,7 +97,7 @@ const Myfundraiser = () => {
                         <h4>{item.amount_raised}<span>Raised</span></h4>
                         <h3>Goal <span style={{ fontSize: '15px', fontWeight: '600', color: '#00A978' }}>{item.goal} </span></h3>
                       </div>
-                      <ProgressBar variant="success" now={40} className='progress-bar-1' />
+                      <ProgressBar variant="success" now={Number(item.amount_raised) / Number(item.goal) * 100} className='progress-bar-1' />
                     </Col>
                   </Row>
 
@@ -109,29 +109,6 @@ const Myfundraiser = () => {
                 </Container>))}
 
               <Pagination total={total} page={page} pageSetter={setPage} />
-
-              {/* --------Conatiner-2-Section----------- */}
-
-              {/* <Container className='main-child mt-5'>
-                <Row className='main-child-row-2'>
-                  <Col lg={3} className='left-child'>
-                    <img src="/Image/Child.png" alt="" />
-                  </Col>
-                  <Col lg={9} className='Right-child'>
-                    <h6>Help Ashok save kids orphaned by farmer suicides. Donate Now</h6>
-                    <p>Time stood still for 12-year-old Shrikant when he got the news that his father, a debt-ridden farmer from Beed, had taken his own life.<a href="#" className='text-success text-decoration-underline'>More</a> </p>
-                    <div className="raised-section">
-                      <h4>₹1700 <span>Raised</span></h4>
-                      <h3>Goal <span style={{ fontSize: '15px', fontWeight: '600', color: '#00A978' }}>₹5000</span></h3>
-                    </div>
-                    <ProgressBar variant="success" now={60} className='progress-bar-1' />
-                  </Col>
-                </Row>
-                <div className='btn-view'>
-                  <button className='bg-white text-success' style={{ border: '1px solid #00A978' }} onClick={() => navigate("/donationtab")}>View Dashboard</button>
-                  <button onClick={() => navigate("/editdonationtab")}>Edit Fundraiser</button>
-                </div>
-              </Container> */}
 
             </Accordion.Body>
           </Accordion.Item>

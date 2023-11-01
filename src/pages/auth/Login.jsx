@@ -9,6 +9,7 @@ import { useAuth } from '../../App';
 import { toast } from 'react-toastify';
 
 
+
 const Login = () => {
     const navigate = useNavigate();
     const [error, setError] = useState(null)
@@ -22,44 +23,39 @@ const Login = () => {
 
     const hanldeSubmit = async (e) => {
         e.preventDefault();
-        const toastID = toast.loading('Please wait...')
+        try {
+            toast.info('Please wait...', { autoClose: false });
+            const response = await fetch(`${url}signin`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userLogin),
+            });
+            const data = await response.json();
+            console.log(data);
 
-        const response = await fetch(`${url}signin`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userLogin),
-        });
-        const data = await response.json();
-        console.log(data);
-
-        if (!data.success) {
-            toast.update(toastID, {
-                render: data.message.message,
-                type: 'error',
-                autoClose: 1500,
-                isLoading: false
-            })
-            return
+            if (!data.response.success) {
+                console.log(data);
+                toast.dismiss();
+                toast.error('Error: ' + data.response.message, { autoClose: 5000 });
+                return
+            }
+            const token = data.response.data.access_token;
+            console.log(data.response.data.access_token, 'data');
+            const cookie = new Cookies();
+            const user = data.response.data.user;
+            cookie.set('token_web', token)
+            cookie.set('user', user)
+            login();
+            navigate("/");
+            toast.dismiss();
         }
-
-        toast.update(toastID, {
-            render: data.message.message,
-            type: 'success',
-            autoClose: 1500,
-            isLoading: false
-        })
-
-        const token = data.response.data.access_token;
-        console.log(data.response.data.access_token, 'data');
-        const cookie = new Cookies();
-        const user = data.response.data.user;
-        cookie.set('token_web', token)
-        cookie.set('user', user)
-        login();
-        navigate("/");
-        toast.dismiss();
+        catch (error) {
+            console.log('api error throw', error);
+            toast.dismiss(); // Hide the loading toast
+            toast.error('An error occurred. Please try again later.', { autoClose: 5000 });
+        }
     }
 
     useEffect(() => {
