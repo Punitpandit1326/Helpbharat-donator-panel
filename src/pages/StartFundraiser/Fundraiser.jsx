@@ -1,5 +1,5 @@
 import './fund.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Col, Container, Form, Row } from 'react-bootstrap';
 import Footer from '../../component/footer/Footer';
 import { useEffect, useState } from 'react';
@@ -57,12 +57,14 @@ const ChooseFund = () => {
             return
         }
         toast.update(toastID, {
-            render: data.message.message,
+            render: data.message,
             type: 'success',
             autoClose: 1500,
             isLoading: false
         })
-        navigate(`/fundraiser/createfund/${slug}`);
+
+        navigate(`/fundraiser/createfund/${data.data.campaignResponse.slug}`);
+        console.log(`/fundraiser/createfund/${data.data.campaignResponse.slug}`);
     }
 
     useEffect(() => {
@@ -74,7 +76,6 @@ const ChooseFund = () => {
         const { value, name } = e.target;
         setCampaign({ ...campaign, [name]: value });
     };
-
 
     return (
 

@@ -11,6 +11,8 @@ import { useParams } from 'react-router-dom';
 
 const CreateFund = () => {
     const photoInputRef = useRef(null);
+    const imageRef = useRef();
+    const docRef = useRef();
     const documentInputRef = useRef(null);
     const { slug } = useParams();
     const [uploadData, setUploadData] = useState({
@@ -22,7 +24,7 @@ const CreateFund = () => {
     const cookie = new Cookies();
     const tokenWeb = cookie.get('token-web')
 
-    const handlePhotoClick = () => {
+    const handlePhotoClick = (e) => {
         photoInputRef.current.click();
     };
 
@@ -35,8 +37,8 @@ const CreateFund = () => {
 
         const formData = new FormData();
         formData.append('description', uploadData.description);
-        formData.append('image', uploadData.image);
-        formData.append('docs', uploadData.docs);
+        formData.append('images', uploadData.image);
+        formData.append('documents', uploadData.docs);
 
         const toastID = toast.loading('please Waat...')
         const response = await fetch(`${donatorUrl}campaign/${slug}`, {
@@ -47,6 +49,7 @@ const CreateFund = () => {
             body: formData,
         });
         const data = await response.json();
+
         if (!data.success) {
             toast.update(toastID, {
                 render: data.message.message,
@@ -66,12 +69,36 @@ const CreateFund = () => {
     };
 
     const handleFileChange = (event) => {
-        const { name, files } = event.target;
-        // You can update the corresponding property in uploadData with the selected file
-        setUploadData({
-            ...uploadData,
-            [name]: files[0],
-        });
+        const { name, files, value } = event.target;
+
+        if (files) {
+            if (name == 'images') {
+                console.log(name);
+                console.log(URL.createObjectURL(files[0]));
+                imageRef.current.src = URL.createObjectURL(files[0])
+            }
+            setUploadData({
+                ...uploadData,
+                [name]: files[0],
+            });
+
+            if (name == 'docs') {
+                console.log(name);
+                console.log(URL.createObjectURL(files[0]));
+                const fileURL = URL.createObjectURL(files[0]);
+                docRef.current.href = fileURL;
+            }
+            setUploadData({
+                ...uploadData,
+                [name]: files[0],
+            });
+        }
+        else {
+            setUploadData({
+                ...uploadData,
+                [name]: value,
+            });
+        }
     };
 
     return (
@@ -89,7 +116,7 @@ const CreateFund = () => {
                         <Form onSubmit={handleSubmit}>
                             <h6 className='text-success mt-5'>Description</h6>
                             <p>If required, you can update the information later</p>
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Group className="mb-3" controlId="formBasicDesc">
                                 <Form.Control type="text"
                                     as="textarea"
                                     cols={10}
@@ -103,7 +130,7 @@ const CreateFund = () => {
                             <h6 className='text-success mt-5'>Upload Photos </h6>
                             <p>If required, you can update the information later</p>
 
-                            <Form.Group className="mb-2 upload" controlId="formBasicEmail" onClick={handlePhotoClick}>
+                            <Form.Group className="mb-2 upload" controlId="formBasicImage" onClick={handlePhotoClick}>
                                 <AiOutlineCloud size={26} className='text-success' />
                                 <p>Upload Photos In Jpeg And Png Only</p>
                                 <input
@@ -111,14 +138,25 @@ const CreateFund = () => {
                                     ref={photoInputRef}
                                     style={{ display: 'none' }}
                                     accept=".jpeg, .jpg, .png"
-                                    name="image"
+                                    name="images"
                                     onChange={handleFileChange}
                                 />
+
+                                <div>
+                                    <img
+                                        src={''}
+                                        alt="Thumb"
+                                        ref={imageRef}
+                                        width='100px'
+                                        height='100px'
+                                    />
+                                </div>
                             </Form.Group>
 
                             <div>
                                 <h6 className='text-success mt-5'>Upload Document</h6>
                                 <p>Upload Documents In Pdf’s Only</p>
+
                                 <Form.Group className="mb-2 upload" controlId="formBasicEmail" onClick={handleDocumentClick}>
                                     <AiOutlineCloud size={26} className='text-success' />
                                     <p>Upload Documents In Pdf’s Only</p>
@@ -131,6 +169,10 @@ const CreateFund = () => {
                                         onChange={handleFileChange}
                                     />
                                 </Form.Group>
+
+                                <div className='btn_section_fund'>
+                                    <a ref={docRef} target="_blank" rel="noopener noreferrer">Preview</a>
+                                </div>
                             </div>
 
                             <button type='submit'>Create</button>

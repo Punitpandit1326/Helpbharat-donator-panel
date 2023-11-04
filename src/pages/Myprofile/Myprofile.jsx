@@ -66,7 +66,7 @@ const Myprofile = () => {
             return
         }
         toast.update(toastID, {
-            render: data.message.message,
+            render: data.message,
             type: 'success',
             autoClose: 1500,
             isLoading: false
@@ -126,7 +126,7 @@ const Myprofile = () => {
         }
 
         toast.update(toastID, {
-            render: data.message.message,
+            render: data.message,
             type: 'success',
             autoClose: 1500,
             isLoading: false

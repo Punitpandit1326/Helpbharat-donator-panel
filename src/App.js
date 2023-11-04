@@ -50,7 +50,7 @@ function App() {
           <Route path='myprofile' element={<Myprofile />} />
           <Route path='myfundraiser' element={<Myfundraiser />} />
           <Route path='fundraiser' element={<Fundraiser />} />
-          <Route path='fundraiser/createfund/:slug' element={<CreateFund />} />
+          <Route path='/fundraiser/createfund/:slug' element={<CreateFund />} />
           <Route path='mydonation/' element={<MyDonation />} />
           <Route path='mycomments' element={<MyComments />} />
           <Route path='/myfundraiser/donationtab/:slug' element={<DonationTab />} />

@@ -42,11 +42,11 @@ const PromotePage = () => {
                 <span>Invite via social media by clicking on the options below</span>
 
                 <div className="social-media-icon">
-                    <i className="socialIcon fab fa-facebook-f"></i>
-                    <i className="socialIcon fab fa-twitter"></i>
-                    <i className="socialIcon fab fa-whatsapp"></i>
+                    <i className="socialIcon fab fa-facebook-f"> <a href="https://www.facebook.com"></a> </i>
+                    <i className="socialIcon fab fa-twitter"> <a href="https://www.twitter.com"></a> </i>
+                    <i className="socialIcon fab fa-whatsapp"> <a href="https://www.whatsapp.com"></a> </i>
                 </div>
-                <div className="allboxes">
+                {/* <div className="allboxes">
 
                     <div className="stats-box">
                         <div className="Facebook-stats">
@@ -126,7 +126,7 @@ const PromotePage = () => {
                         </div>
 
                     </div>
-                </div>
+                </div> */}
                 <div className='promotepage-main-section'>
                     <div className="promotepage-btn">
                         {selectedDate ? (

@@ -66,7 +66,7 @@ const Setting = () => {
                 <Row>
                     <Col className='mt-3'>
                         <h6 >  Post an Update</h6>
-                        <div className='update_section'></div>
+                        <textarea className='update_section' name="message" id="" cols="30" rows="10"></textarea>
                     </Col>
                 </Row>
 

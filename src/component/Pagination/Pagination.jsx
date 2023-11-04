@@ -18,9 +18,9 @@ const Pagination = (props) => {
     const prevPage = () => props.pageSetter(props.page !== 1 ? props.page - 1 : props.page)
     return (
         <div className='btn_pagination d-flex column-gap-2 aign-items-center justify-content-center my-3'>
-            <button disabled={props.page === 1} className='pagination_my_btn' onClick={prevPage}>prev</button>
+            <button disabled={props.page === 1} className='pagination_my_btn' onClick={prevPage}> &lt; </button>
             <span>{props.page}</span>
-            <button disabled={props.page === noOfPages} className='pagination_my_btn' onClick={nextPage}>next</button>
+            <button disabled={props.page === noOfPages} className='pagination_my_btn' onClick={nextPage}> &gt; </button>
         </div>
     )
 }

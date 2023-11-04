@@ -3,12 +3,12 @@
 }
 
 .socialIcon {
-  width: 45px;
-  height: 45px;
-  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
   font-weight: 500;
-  padding-top: 13px;
-  margin: 10px 13px;
+  padding-top: 10px;
+  margin: 10px;
   text-align: center;
   border-radius: 4px;
   color: var(--main-color2);
@@ -16,7 +16,7 @@
 }
 
 .socialIcon:first-child {
-  margin: 10px 0;
+  margin: 10px 0 0;
 }
 
 .allboxes {
@@ -78,7 +78,7 @@
   display: flex;
   justify-content: flex-start;
   gap: 10px;
-  margin: 40px 5px;
+  margin: 40px 0;
 }
 
 .promotepage-btn button {
@@ -96,7 +96,8 @@
 }
 
 .addContbtn button {
-  width: 217px;
+  width: auto;
+  white-space: nowrap;
   height: 54px;
   font-family: Inter;
   font-size: 15px;

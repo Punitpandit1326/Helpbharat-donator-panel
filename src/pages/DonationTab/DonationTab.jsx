@@ -130,9 +130,9 @@ const DonationTab = () => {
         }, [300])
     };
 
-    const handleButtonClick = (value) => {
-        setCurrentValue(value);
-    };
+    // const handleButtonClick = (value) => {
+    //     setCurrentValue(value);
+    // };
 
 
     return (

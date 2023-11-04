@@ -6,14 +6,16 @@ import { FaPen } from "react-icons/fa";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { MdOutlinePhotoSizeSelectActual } from "react-icons/md";
-import { TbFileText, TbBrandTelegram } from "react-icons/tb";
+import { TbFileText } from "react-icons/tb";
 import Footer from '../../component/footer/Footer';
-import { Link, useParams, } from 'react-router-dom';
+import { useParams, } from 'react-router-dom';
 import { donatorUrl, url } from '../../utils/url';
 import Cookies from 'universal-cookie';
 import { toast } from 'react-toastify';
 import NavSection from '../../component/NavSection/NavSection';
 import moment from 'moment/moment';
+import Progress from '../../component/Progress/Progress';
+
 
 
 const DashBoard = () => {
@@ -179,8 +181,9 @@ const DashBoard = () => {
                   <h5>{dashboard.totalAmountRaisedToday}</h5>
                   <h6>raised on a goal of ₹ {dashboard.goal}</h6>
                 </div>
+
                 <div className="ui-widgets">
-                  <div className="ui-values">{calculateCompletionPercentage(dashboard)}%</div>
+                  <Progress strokeWidth={8} percentage={calculateCompletionPercentage(dashboard)} />
                   <div className="ui-labels">{getCompletionStatus(dashboard)}</div>
                 </div>
 
@@ -190,7 +193,7 @@ const DashBoard = () => {
                 <div className='Updatepara'>
                   <div className='penIcon'><FaPen className='icon-item' />
                   </div>
-                  <div>
+                  <div className='updatePostSection'>
                     <p>Post an update</p>
                     <h6>Your donors care about your cause, let them know<br />
                       what’s happening.</h6>
@@ -208,14 +211,14 @@ const DashBoard = () => {
                   <a href='#'>Update</a>
                 </div>
 
-                <div className='Updatepara'>
+                <div className='Updatepara mb-0'>
                   <div className='penIcon'><TbFileText className='icon-item' />
                   </div>
                   <div>
                     <p>Share your fundraiser</p>
                     <h6>The farther and faster you share the more funds you receive.</h6>
                   </div>
-                  <a href='#'>Update</a>
+                  <a href='#'>Share</a>
                 </div>
 
               </Col>

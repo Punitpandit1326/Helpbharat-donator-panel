@@ -22,15 +22,15 @@ const Navigation = ({ activeLink }) => {
     <>
       <div className="top-strip">
         <div className="left">
-          <a href='javascript:void(0)' className='top-strip-connect'><i class="fas fa-phone"></i> <span>+1-206-156 2849</span></a>
-          <a href='javascript:void(0)' className='top-strip-connect'><i class="fas fa-envelope"></i> <span>info@helpbharat.com</span></a>
+          <a href='#' className='top-strip-connect'><i className="fas fa-phone"></i> <span>+1-206-156 2849</span></a>
+          <a href='#' className='top-strip-connect'><i className="fas fa-envelope"></i> <span>info@helpbharat.com</span></a>
         </div>
         <div className="right ms-5">
           <ul>
-            <a href=""><i class="fab fa-twitter"></i></a>
-            <a href=""><i class="fab fa-instagram"></i></a>
-            <a href=""><i class="fab fa-facebook-f"></i></a>
-            <a href=""><i class="fab fa-youtube"></i></a>
+            <a href="#"><i className="fab fa-twitter"></i></a>
+            <a href="#"><i className="fab fa-instagram"></i></a>
+            <a href="#"><i className="fab fa-facebook-f"></i></a>
+            <a href="#"><i className="fab fa-youtube"></i></a>
           </ul>
         </div>
       </div>

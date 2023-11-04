@@ -1,11 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './MyComments.css';
 import CustomTab from '../../component/customTabs/CustomTab'
 import { Accordion, Container, Row, Col } from 'react-bootstrap';
 import Footer from '../../component/footer/Footer';
+import Cookies from 'universal-cookie';
+import { donatorUrl } from '../../utils/url';
+import { toast } from 'react-toastify';
 
 
 const MyComments = () => {
+  const [comments, setComments] = useState([]);
+
+  const cookie = new Cookies();
+  const tokenWeb = cookie.get('token_web');
+  const authUser = cookie.get('user');
+  const userId = authUser?._id;
+
+
+  const fetchUserComments = async () => {
+    const toastID = toast.loading('Please Wait')
+    const response = await fetch(`${donatorUrl}get-User-Comments?user_id=${userId}&limit=10&offset=0`, {
+      headers: {
+        'Content_Type': 'application/json',
+        Authorization: `Bearer ${tokenWeb}`
+      }
+    })
+    const data = await response.json();
+    if (!data.success) {
+      toast.update(toastID, {
+        render: data.message.message,
+        type: 'error',
+        autoClose: 1500,
+        isLoading: false
+      })
+      return
+    }
+    toast.update(toastID, {
+      render: data.message,
+      type: 'success',
+      autoClose: 1500,
+      isLoading: false
+    })
+    setComments(data.data)
+  }
+
+  useEffect(() => {
+    fetchUserComments()
+  }, [])
   return (
     <>
       <CustomTab activeLink={"mycomments"} />
@@ -15,25 +56,24 @@ const MyComments = () => {
 
       <Container>
         <Accordion defaultActiveKey="0">
-          <Accordion.Item eventKey="0">
-            <Accordion.Header> <h6 className='text-decoration-underline text-success'>Plant Tree, Save Earth & Lives Secure the Future</h6></Accordion.Header>
-            <Accordion.Body>
-              <Row>
-                <Col xl={12}>
-                  <div className='commentSection'>
-                    <div className='Comment-Header'>
-                      <img src="/Image/Client.png" alt="Client" />
-                      <span>Aman Choudhary</span>
-                      <p>Wow, what an incredible fundraiser! I'm deeply moved by the cause you're supporting and the passion you've shown in organizing this event. It's heartening to see people coming together to make a positive impact and bring about real change.  I wholeheartedly support your efforts and will contribute to help reach the fundraising goal.</p>
+          {
+            comments.map((item, index) => (<Accordion.Item className='mb-2' eventKey="0" key={index}>
+              <Accordion.Header> <h6 className='text-decoration-underline text-success'>{item.description}</h6></Accordion.Header>
+              <Accordion.Body>
+                <Row>
+                  <Col xl={12}>
+                    <div className='commentSection'>
+                      <div className='Comment-Header'>
+                        <img src="/Image/Client.png" alt="Client" />
+                        <span>{item.benefeciary_name}</span>
+                        <p>{item.comments}</p>
+                      </div>
                     </div>
-                    <div className='Comment-footer'>
-                      <p>Reply</p>
-                      <p>Send Thanks</p>
-                    </div>
-                  </div>
-                </Col>
+                  </Col>
 
-                <Col xl={12}>
+
+
+                  {/* <Col xl={12}>
                   <div className='commentSection mt-2'>
                     <div className='Comment-Header'>
                       <img src="/Image/Client2.png" alt="Client2" />
@@ -45,17 +85,11 @@ const MyComments = () => {
                       <p>Send Thanks</p>
                     </div>
                   </div>
-                </Col>
-              </Row>
-            </Accordion.Body>
-          </Accordion.Item>
-          <br />
-          <Accordion.Item eventKey="1">
-            <Accordion.Header> <h6 className='text-decoration-underline text-success'>Plant Tree, Save Earth & Lives Secure the Future</h6></Accordion.Header>
-            <Accordion.Body>
-              <h5 className='d-flex justify-content-center my-5'>No Comments Yet</h5>
-            </Accordion.Body>
-          </Accordion.Item>
+                </Col> */}
+                </Row>
+              </Accordion.Body>
+            </Accordion.Item>))
+          }
         </Accordion>
       </Container>
 
