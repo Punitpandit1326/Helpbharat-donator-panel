@@ -1,40 +1,50 @@
 import React, { useState } from 'react';
 import './Setting.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaPencilAlt, } from 'react-icons/fa';
 import Footer from '../../component/footer/Footer';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import { donatorUrl } from '../../utils/url';
 import NavSection from '../../component/NavSection/NavSection';
 import Cookies from 'universal-cookie';
+import { AiOutlineCloud } from 'react-icons/ai';
+import { toast } from 'react-toastify';
+
 
 const Setting = () => {
     const [deleted, setDeleted] = useState(false);
     const { _id } = useParams();
-
+    const navigate = useNavigate()
     const cookie = new Cookies();
     const tokenWeb = cookie.get('token_web');
 
     const deleteCampaign = async () => {
-        try {
-            const response = await fetch(`${donatorUrl}delete-Campaign/${_id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${tokenWeb}`
+        const toastID = toast.loading('please Wait')
+        const response = await fetch(`${donatorUrl}delete-Campaign/${_id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${tokenWeb}`
 
-                }
-            })
-            if (response.status === 204) {
-                // 204 means the resource was successfully deleted
-                setDeleted(true);
-            } else {
-                // Handle other status codes, e.g., resource not found (404) or unauthorized (401).
-                console.error('Failed to delete campaign');
             }
-        } catch (error) {
-            console.error('Error:', error);
+        })
+        if (response.status === 204) {
+            toast.update(toastID, {
+                render: response.message.message,
+                type: 'error',
+                autoClose: 1500,
+                isLoading: false
+            })
+            return
         }
+        toast.update(toastID, {
+            render: response.message,
+            type: 'success',
+            autoClose: 1500,
+            isLoading: false
+        })
+        setDeleted(true);
+        navigate('/myfundraiser')
     }
 
     return (
@@ -64,10 +74,53 @@ const Setting = () => {
                 {/* ---------EndSection--------- */}
 
                 <Row>
-                    <Col className='mt-3'>
-                        <h6 >  Post an Update</h6>
-                        <textarea className='update_section' name="message" id="" cols="30" rows="10"></textarea>
-                    </Col>
+                    <Form>
+                        <Form.Group className="mt-3" controlId="formBasicDesc">
+                            <h6>Post an Update</h6>
+                            <Form.Control type="text"
+                                as="textarea"
+                                cols={10}
+                                rows={5}
+                                name="description"
+                            />
+                            <div className='post_btn'>
+
+                                <button>Post</button>
+                            </div>
+
+                        </Form.Group>
+
+                        <Form.Group className="mt-3 upload" controlId="formBasicImage">
+                            <h6>Upload Photos</h6>
+                            <AiOutlineCloud size={26} className='text-success' />
+                            <p>Upload Photos In Jpeg And Png Only</p>
+                            <input
+                                type="file"
+                                // ref={photoInputRef}
+                                style={{ display: 'none' }}
+                                accept=".jpeg, .jpg, .png"
+                                name="images"
+                            />
+                            {/* <div>
+                                <img
+                                    src={''}
+                                    alt="Thumb"
+                                    // ref={imageRef}
+                                    width='100px'
+                                    height='100px'
+                                    onError={({ currentTarget }) => {
+                                        currentTarget.src = "/image/placeholder.png";
+                                    }}
+                                />
+                            </div> */}
+                        </Form.Group>
+                        <div className='post_btn'>
+
+                            <button>Upload</button>
+                        </div>
+
+                    </Form>
+
                 </Row>
 
                 <div className="endSection">

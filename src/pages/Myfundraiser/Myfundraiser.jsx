@@ -4,12 +4,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import Accordion from 'react-bootstrap/Accordion';
 import Footer from '../../component/footer/Footer';
 import CustomTab from '../../component/customTabs/CustomTab'
-import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
+import { Container, Row, Col, ProgressBar, Badge } from 'react-bootstrap';
 import { donatorUrl } from '../../utils/url';
 import Cookies from 'universal-cookie';
 import Pagination from '../../component/Pagination/Pagination';
 import asset from '../../utils/asset';
 import { toast } from 'react-toastify';
+
 
 const Myfundraiser = () => {
   const [total, setTotal] = useState(1);
@@ -83,14 +84,15 @@ const Myfundraiser = () => {
               (
                 <Container key={index} className='main-child'>
                   <Row className='main-child-row' onClick={() => handleClickChnage(item.slug)} >
+
                     <Col lg={3} className='left-child'>
-                      {item.cover_photo && item.cover_photo.length > 0 && item.cover_photo[0] && (
-                        <img src={asset(item.cover_photo[0].name)} alt={item.name}
-                          onError={({ currentTarget }) => {
-                            currentTarget.src = "/image/placeholder.png";
-                          }} />)}
+                      <img src={asset(item?.cover_photo[0]?.name)} alt={item.name}
+                        onError={({ currentTarget }) => {
+                          currentTarget.src = "/image/placeholder.png";
+                        }} />
                     </Col>
                     <Col lg={9} className='Right-child'>
+                      <div className='d-flex justify-content-end'> {!item.is_active && <Badge bg="danger">Closed</Badge>}</div>
                       <h6>{item.name}</h6>
                       <p>{item.description}  &nbsp; <a href="#" className='text-success text-decoration-underline'>More</a> </p>
                       <div className="raised-section">

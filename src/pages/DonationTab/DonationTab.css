@@ -117,8 +117,6 @@ i.pecilIcon {
   }
 }
 
-
-
 .BlackBox-main {
   display: flex;
   justify-content: flex-start;
@@ -132,14 +130,14 @@ i.pecilIcon {
   border-radius: 5px;
   background-color: #000;
 
-}
+  & h4 {
+    font-size: 30px;
+    text-align: center;
+    padding-top: 6px;
+    font-weight: 700;
+    color: var(--main-color2);
+  }
 
-.BlackBox h4 {
-  font-size: 30px;
-  text-align: center;
-  padding-top: 6px;
-  font-weight: 700;
-  color: var(--main-color2);
 }
 
 p.fraiserpara {
@@ -219,14 +217,16 @@ p.fraiserpara {
   justify-content: flex-start;
   align-items: center;
   gap: 15px;
+
+  & p {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: -10px;
+  }
 }
 
-.donarInfo p {
-  font-family: Poppins;
-  font-size: 16px;
-  font-weight: 400;
-  margin-top: -10px;
-}
+
 
 p.donoted-inr {
   margin-top: -18px;
@@ -457,6 +457,23 @@ p.donoted-inr {
   font-family: Poppins;
   font-size: 0.9rem;
   font-weight: 500;
+}
+
+.btn_section_fund {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 40px;
+  color: #fff;
+  background: #00A978;
+  cursor: pointer;
+
+  & a {
+    font-family: Inter;
+
+    text-align: center;
+  }
 }
 
 /* ------media_Queries-------- */

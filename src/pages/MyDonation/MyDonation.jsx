@@ -33,7 +33,7 @@ const MyDonation = () => {
       const response = await fetch(`${donatorUrl}donations-By-User?user_id=${userId}&limit=1&page=${page}`, {
         headers: {
           'Content-Type': 'applicaton/json',
-          'Authorization': `Bearer ${tokenWeb}`
+          Authorization: `Bearer ${tokenWeb}`
         }
       }
       )
@@ -82,12 +82,12 @@ const MyDonation = () => {
             <Accordion.Body>
               <div className="row w-100 m-0">
 
-                <div div className="col-12 table-section" >
+                <div className="col-12 table-section" >
                   <table responsive="sm" className="table">
                     <thead className='pb-5'>
                       <tr>
                         <th>
-                          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                          <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
                         </th>
                         <th scope="col">Fundraiser Name</th>
                         <th scope="col">Donation Date</th>
@@ -96,14 +96,14 @@ const MyDonation = () => {
                         <th scope="col">Tax Exemption</th>
                       </tr>
                     </thead>
-                    {usersDonation.map((item, index) => (<tbody key={item.id}>
+                    {usersDonation.map((item, index) => (<tbody key={index}>
                       <tr>
                         <th>
-                          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                          <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
                         </th>
-                        <td>{item.campaign[0].name}</td>
+                        <td>{item?.campaign[0]?.name}</td>
                         <td >{formattedDate}</td>
-                        <td>{item.category[0].name}</td>
+                        <td>{item?.category[0]?.name}</td>
                         <td>{item.amount}</td>
                         <td className='anchor text-start'>
                           {item.is_tax_relaxation ? (

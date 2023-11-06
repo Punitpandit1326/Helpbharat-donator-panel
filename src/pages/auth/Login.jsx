@@ -106,9 +106,9 @@ const Login = () => {
                                     </div>
 
                                     <button className="start" type="submit">Get Started</button>
-                                    <Link to="/signup" className="account">Dont't Have Any Account Yet </Link>
+                                    {/* <Link to="/signup" className="account">Dont't Have Any Account Yet </Link>
 
-                                    <p className='agree pt-2'>By continuing, you are agreeing to the<Link> Terms and Conditions</Link> and<Link> Privacy Policy.</Link></p>
+                                    <p className='agree pt-2'>By continuing, you are agreeing to the<Link> Terms and Conditions</Link> and<Link> Privacy Policy.</Link></p> */}
                                 </Tab>
 
                             </Tabs>

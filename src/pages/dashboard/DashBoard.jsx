@@ -116,7 +116,7 @@ const DashBoard = () => {
     if (dashboard.goal === 0) {
       return 0;
     }
-    return Math.floor((dashboard.totalAmountRaisedToday / dashboard.goal) * 100);
+    return Math.floor((dashboard.amount_raised / dashboard.goal) * 100);
   }
 
   function getCompletionStatus(dashboard) {
@@ -155,14 +155,14 @@ const DashBoard = () => {
           <Col md={12} xl={4} sm={12} className='HeroSectionBox'>
             <p>Amount raised today</p>
             <div className="wallet-sec">
-              <p style={{ color: '#00a978' }}> ₹ {dashboard.amount_raised}</p>
+              <p style={{ color: '#00a978' }}> ₹ {dashboard.totalAmountRaisedToday}</p>
             </div>
 
           </Col>
           <Col md={12} xl={4} sm={12} className='HeroSectionBox'>
             <p>Total amount raised</p>
             <div className="wallet-sec">
-              <p style={{ color: '#00a978' }}>₹ {dashboard.totalAmountRaisedToday}</p>
+              <p style={{ color: '#00a978' }}>₹ {dashboard.amount_raised}</p>
 
             </div>
           </Col>
@@ -178,7 +178,7 @@ const DashBoard = () => {
               <Col md={12} xl={12} className='GoalSection'>
                 <div className='GoalSectionleft'>
                   <p>Current Goal Status</p>
-                  <h5>{dashboard.totalAmountRaisedToday}</h5>
+                  <h5>{dashboard.amount_raised}</h5>
                   <h6>raised on a goal of ₹ {dashboard.goal}</h6>
                 </div>
 

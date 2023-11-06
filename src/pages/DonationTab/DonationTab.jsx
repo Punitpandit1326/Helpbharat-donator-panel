@@ -18,7 +18,6 @@ const DonationTab = () => {
     const [tabDonor, setTabDonor] = useState(null);
     const [recentDonor, setRecentDonor] = useState(null);
     const [error, setError] = useState(null)
-    const [documnetPhoto, setDocumnetPhoto] = useState("");
     const [endDate, setEndDate] = useState("");
     const [currentValue, setCurrentValue] = useState(0);
     const [days, setDays] = useState("");
@@ -106,8 +105,7 @@ const DonationTab = () => {
             autoClose: 1500,
             isLoading: false
         })
-        setDocumnetPhoto(data.data.response.documents[0].imageUrl)
-        setCoverPhoto(data.data.response.images[0].imageUrl)
+        setCoverPhoto(data.data.response.cover_photo[0] ? data.data.response.cover_photo[0].imageUrl : null)
         setDonationTab(data.data.response)
         setEndDate(data.data.response.end_date)
         setDays(moment(data.data.response.end_date).diff(new Date(), 'days'))
@@ -146,7 +144,9 @@ const DonationTab = () => {
                         {/* --------leftSection---------- */}
 
                         <Col md={7} className='DonationLeft'>
-                            <img className={`${isFade ? 'active' : ''} main-image`} src={coverPhoto} alt="Image" />
+                            <img className={`${isFade ? 'active' : ''} main-image`} src={coverPhoto} alt="Image" onError={({ currentTarget }) => {
+                                currentTarget.src = "/image/placeholder.png";
+                            }} />
 
                             <div className='Imagesleft'>
                                 {
@@ -155,7 +155,11 @@ const DonationTab = () => {
                                         style={{ width: '80px' }}
                                         src={item.imageUrl}
                                         alt="Image"
-                                        onClick={() => handleToggleImage(item.imageUrl)} />))
+                                        onClick={() => handleToggleImage(item.imageUrl)}
+                                        onError={({ currentTarget }) => {
+                                            currentTarget.src = "/image/placeholder.png";
+                                        }}
+                                    />))
                                 }
                             </div>
 
@@ -170,7 +174,10 @@ const DonationTab = () => {
                             <hr className='donation-underline' />
                             <div className="paraLeft mb-5" ref={aboutToRef}>
                                 <p>About Section</p>
-                                <img src="/Image/Img5.png" alt="Image" />
+                                <img src="/Image/Img5.png" alt="Image"
+                                    onError={({ currentTarget }) => {
+                                        currentTarget.src = "/image/placeholder.png";
+                                    }} />
                             </div>
 
                             <div className="paraLeft d-head mb-5" ref={updatesToRef}>
@@ -317,24 +324,16 @@ const DonationTab = () => {
                         <Col md={7} className='DocumentLeft' >
                             <div ref={docToRef}>
                                 <div className="d-head">
-                                    <h5>Document</h5>
+                                    <h5>Documents</h5>
                                 </div>
 
                                 <div style={{ backgroundColor: '#EBEBEB' }}>
-                                    <img className='document-image-section' src={documnetPhoto} alt="Image" />
-                                </div>
-
-                                <div className='Imagesleft'>
-
                                     {
-                                        donationTab?.documents?.map((item, index) => (<img
-                                            key={index}
-                                            style={{ width: '80px' }}
-                                            src={item.imageUrl}
-                                            alt="Image"
-                                            onClick={() => setActiveDoc(item.imageUrl)} />))
-                                    }
-
+                                        donationTab?.documents?.map((item, index) => (
+                                            <div className='btn_section_fund'>
+                                                <a href={item.imageUrl} target="_blank" rel="noopener noreferrer">Preview</a>
+                                            </div>
+                                        ))}
                                 </div>
                             </div>
                         </Col>

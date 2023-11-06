@@ -41,7 +41,7 @@ const MyComments = () => {
       autoClose: 1500,
       isLoading: false
     })
-    setComments(data.data)
+    setComments(data.data.comments)
   }
 
   useEffect(() => {
@@ -57,16 +57,16 @@ const MyComments = () => {
       <Container>
         <Accordion defaultActiveKey="0">
           {
-            comments.map((item, index) => (<Accordion.Item className='mb-2' eventKey="0" key={index}>
-              <Accordion.Header> <h6 className='text-decoration-underline text-success'>{item.description}</h6></Accordion.Header>
+            comments?.map((item, index) => (<Accordion.Item className='mb-2' eventKey="0" key={index}>
+              <Accordion.Header> <h6 className='text-decoration-underline text-success'>{item?.description}</h6></Accordion.Header>
               <Accordion.Body>
                 <Row>
                   <Col xl={12}>
                     <div className='commentSection'>
                       <div className='Comment-Header'>
                         <img src="/Image/Client.png" alt="Client" />
-                        <span>{item.benefeciary_name}</span>
-                        <p>{item.comments}</p>
+                        <span>{item?.name}</span>
+                        <p>{item?.comments}</p>
                       </div>
                     </div>
                   </Col>

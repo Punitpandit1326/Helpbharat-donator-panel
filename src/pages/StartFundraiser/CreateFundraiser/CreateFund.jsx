@@ -6,10 +6,11 @@ import { Col, Container, Form, Row } from 'react-bootstrap';
 import { donatorUrl } from '../../../utils/url';
 import Cookies from 'universal-cookie';
 import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 const CreateFund = () => {
+    const navigate = useNavigate()
     const photoInputRef = useRef(null);
     const imageRef = useRef();
     const docRef = useRef();
@@ -17,12 +18,12 @@ const CreateFund = () => {
     const { slug } = useParams();
     const [uploadData, setUploadData] = useState({
         description: '',
-        image: '',
+        coverPhoto: '',
         docs: '',
     })
 
     const cookie = new Cookies();
-    const tokenWeb = cookie.get('token-web')
+    const tokenWeb = cookie.get('token_web')
 
     const handlePhotoClick = (e) => {
         photoInputRef.current.click();
@@ -37,10 +38,10 @@ const CreateFund = () => {
 
         const formData = new FormData();
         formData.append('description', uploadData.description);
-        formData.append('images', uploadData.image);
-        formData.append('documents', uploadData.docs);
+        formData.append('cover_photo', uploadData.coverPhoto);
+        formData.append('documents[]', uploadData.docs);
 
-        const toastID = toast.loading('please Waat...')
+        const toastID = toast.loading('please Wait...')
         const response = await fetch(`${donatorUrl}campaign/${slug}`, {
             method: 'PATCH',
             headers: {
@@ -65,16 +66,16 @@ const CreateFund = () => {
             autoClose: 1500,
             isLoading: false
         })
-
+        navigate('/myfundraiser')
     };
 
     const handleFileChange = (event) => {
         const { name, files, value } = event.target;
 
         if (files) {
-            if (name == 'images') {
-                console.log(name);
-                console.log(URL.createObjectURL(files[0]));
+            if (name === 'coverPhoto') {
+                // console.log(name);
+                // console.log(URL.createObjectURL(files[0]));
                 imageRef.current.src = URL.createObjectURL(files[0])
             }
             setUploadData({
@@ -82,9 +83,9 @@ const CreateFund = () => {
                 [name]: files[0],
             });
 
-            if (name == 'docs') {
-                console.log(name);
-                console.log(URL.createObjectURL(files[0]));
+            if (name === 'docs') {
+                // console.log(name);
+                // console.log(URL.createObjectURL(files[0]));
                 const fileURL = URL.createObjectURL(files[0]);
                 docRef.current.href = fileURL;
             }
@@ -138,7 +139,7 @@ const CreateFund = () => {
                                     ref={photoInputRef}
                                     style={{ display: 'none' }}
                                     accept=".jpeg, .jpg, .png"
-                                    name="images"
+                                    name="coverPhoto"
                                     onChange={handleFileChange}
                                 />
 

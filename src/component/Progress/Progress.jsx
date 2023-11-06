@@ -9,8 +9,9 @@ const Progress = ({ strokeWidth, percentage }) => {
     `;
 
     const diameter = Math.PI * 2 * radius;
+
     const progressStyle = {
-        stroke: '#007dbc',
+        stroke: '#00A978',
         strokeLinecap: 'round',
         strokeDasharray: `${diameter}px ${diameter}px`,
         strokeDashoffset: `${((100 - percentage) / 100 * diameter)}px`,
@@ -47,8 +48,8 @@ const Progress = ({ strokeWidth, percentage }) => {
                     x={50}
                     y={50}
                     style={{
-                        fill: '##00A978;',
-                        fontSize: '24px',
+                        fill: '#00A978;',
+                        fontSize: '20px',
                         dominantBaseline: 'central',
                         textAnchor: 'middle',
                     }}

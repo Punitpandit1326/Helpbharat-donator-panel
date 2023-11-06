@@ -13,10 +13,10 @@ const ChooseFund = () => {
         campaign_name: '',
         benefeciary_name: '',
         end_date: '',
-        mobiile_number: '',
+        mobile_number: '',
         relation_with_beneficiary_name: '',
         medical_condition: '',
-        funds: '',
+        goal: '',
         category_id: ''
     });
 
@@ -32,7 +32,8 @@ const ChooseFund = () => {
         formData.append('campaign_name', campaign.campaign_name);
         formData.append('benefeciary_name', campaign.benefeciary_name);
         formData.append('end_date', campaign.end_date);
-        formData.append('funds', campaign.funds)
+        formData.append('goal', campaign.goal)
+        formData.append('mobile_number', campaign.mobile_number)
         formData.append('medical_condition', campaign.medical_condition);
         formData.append('relation_with_beneficiary_name', campaign.relation_with_beneficiary_name);
 
@@ -68,7 +69,6 @@ const ChooseFund = () => {
     }
 
     useEffect(() => {
-        // fetchCampaignData()
         return () => toast.dismiss()
     }, [])
 
@@ -106,9 +106,9 @@ const ChooseFund = () => {
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Mobile number of fundraiser</Form.Label>
                                 <Form.Control type="tel"
-                                    defaultValue={campaign.mobiile_number} // Set the value here
+                                    defaultValue={campaign.mobile_number} // Set the value here
                                     onChange={handleFormUpdate}
-                                    name='mobiile_number'
+                                    name='mobile_number'
                                 />
                             </Form.Group>
 
@@ -150,7 +150,7 @@ const ChooseFund = () => {
                                 <div>
                                     <label htmlFor="fundsRequired">Funds required</label>
                                     <br />
-                                    <input id='fundsRequired' type="text" name='funds' value={campaign.funds} onChange={handleFormUpdate} />
+                                    <input id='fundsRequired' type="text" name='goal' value={campaign.goal} onChange={handleFormUpdate} />
                                 </div>
                                 <br />
                                 <div>
