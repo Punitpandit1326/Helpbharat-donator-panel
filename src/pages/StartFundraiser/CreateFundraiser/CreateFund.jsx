@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 
 const CreateFund = () => {
+    const [selectedImage, setSelectedImage] = useState(null);
     const navigate = useNavigate()
     const photoInputRef = useRef(null);
     const imageRef = useRef();
@@ -42,6 +43,7 @@ const CreateFund = () => {
         formData.append('documents[]', uploadData.docs);
 
         const toastID = toast.loading('please Wait...')
+
         const response = await fetch(`${donatorUrl}campaign/${slug}`, {
             method: 'PATCH',
             headers: {
@@ -74,9 +76,11 @@ const CreateFund = () => {
 
         if (files) {
             if (name === 'coverPhoto') {
-                // console.log(name);
-                // console.log(URL.createObjectURL(files[0]));
-                imageRef.current.src = URL.createObjectURL(files[0])
+                const fileURL = URL.createObjectURL(files[0]);
+                if (imageRef.current) {
+                    imageRef.current.src = fileURL;
+                }
+                setSelectedImage(fileURL);
             }
             setUploadData({
                 ...uploadData,
@@ -84,8 +88,6 @@ const CreateFund = () => {
             });
 
             if (name === 'docs') {
-                // console.log(name);
-                // console.log(URL.createObjectURL(files[0]));
                 const fileURL = URL.createObjectURL(files[0]);
                 docRef.current.href = fileURL;
             }
@@ -130,28 +132,29 @@ const CreateFund = () => {
 
                             <h6 className='text-success mt-5'>Upload Photos </h6>
                             <p>If required, you can update the information later</p>
-
                             <Form.Group className="mb-2 upload" controlId="formBasicImage" onClick={handlePhotoClick}>
-                                <AiOutlineCloud size={26} className='text-success' />
-                                <p>Upload Photos In Jpeg And Png Only</p>
-                                <input
-                                    type="file"
-                                    ref={photoInputRef}
-                                    style={{ display: 'none' }}
-                                    accept=".jpeg, .jpg, .png"
-                                    name="coverPhoto"
-                                    onChange={handleFileChange}
-                                />
-
-                                <div>
+                                {selectedImage ? (
                                     <img
-                                        src={''}
+                                        src={selectedImage}
                                         alt="Thumb"
                                         ref={imageRef}
                                         width='100px'
                                         height='100px'
                                     />
-                                </div>
+                                ) : (
+                                    <>
+                                        <AiOutlineCloud size={26} className='text-success' />
+                                        <p>Upload Photos In Jpeg And Png Only</p>
+                                        <input
+                                            type="file"
+                                            ref={photoInputRef}
+                                            style={{ display: 'none' }}
+                                            accept=".jpeg, .jpg, .png"
+                                            name="coverPhoto"
+                                            onChange={handleFileChange}
+                                        />
+                                    </>
+                                )}
                             </Form.Group>
 
                             <div>

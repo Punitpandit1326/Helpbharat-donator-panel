@@ -127,6 +127,36 @@
   }
 }
 
+.img_section {
+  display: flex;
+  gap: 10px;
+  position: relative;
+  margin: 10px 0 0;
+
+  & img {
+    height: 50px;
+    width: 60px;
+  }
+}
+
+.image-preview-container {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: var(--main-color2);
+  cursor: pointer;
+  border: none;
+  background-color: #e51c1c;
+
+}
+
+
+
+
 /* -------MediaQuery--------- */
 
 @media screen and (max-width: 568px) {

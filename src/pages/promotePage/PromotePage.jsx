@@ -41,10 +41,10 @@ const PromotePage = () => {
                 </div>
                 <span>Invite via social media by clicking on the options below</span>
 
-                <div className="social-media-icon">
-                    <i className="socialIcon fab fa-facebook-f"> <a href="https://www.facebook.com"></a> </i>
-                    <i className="socialIcon fab fa-twitter"> <a href="https://www.twitter.com"></a> </i>
-                    <i className="socialIcon fab fa-whatsapp"> <a href="https://www.whatsapp.com"></a> </i>
+                <div className="social-media-icon ">
+                    <a href="https://www.facebook.com">    <i className="socialIcon fab fa-facebook-f"></i></a>
+                    <a href="https://www.twitter.com"> <i className="socialIcon fab fa-twitter"></i></a>
+                    <a href="https://www.whatsapp.com">  <i className="socialIcon fab fa-whatsapp"> </i></a>
                 </div>
                 {/* <div className="allboxes">
 
@@ -128,7 +128,7 @@ const PromotePage = () => {
                     </div>
                 </div> */}
                 <div className='promotepage-main-section'>
-                    <div className="promotepage-btn">
+                    {/* <div className="promotepage-btn">
                         {selectedDate ? (
                             <button onClick={handleClick}>{selectedDate.toDateString()}</button>
                         ) : (
@@ -141,7 +141,7 @@ const PromotePage = () => {
                                 onChange={handleDateChange} inline />
                         )}
                         <button><FaSortAmountDown /> Sort Range </button>
-                    </div>
+                    </div> */}
                     <div className="addContbtn">
                         <button>Add New Contact <FaPlus /></button>
                     </div>

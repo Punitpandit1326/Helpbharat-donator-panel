@@ -8,7 +8,7 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { MdOutlinePhotoSizeSelectActual } from "react-icons/md";
 import { TbFileText } from "react-icons/tb";
 import Footer from '../../component/footer/Footer';
-import { useParams, } from 'react-router-dom';
+import { useNavigate, useParams, } from 'react-router-dom';
 import { donatorUrl, url } from '../../utils/url';
 import Cookies from 'universal-cookie';
 import { toast } from 'react-toastify';
@@ -16,15 +16,14 @@ import NavSection from '../../component/NavSection/NavSection';
 import moment from 'moment/moment';
 import Progress from '../../component/Progress/Progress';
 
-
-
 const DashBoard = () => {
   const [recentDonor, setRecentDonor] = useState(null);
   const [tabDonor, setTabDonor] = useState(null);
   const [error, setError] = useState(null)
   const [donarTab, setDonarTab] = useState(true);
   const [dashboard, setDashboard] = useState({});
-  const { _id } = useParams();
+  const { _id, slug } = useParams();
+  const navigate = useNavigate();
 
   const cookie = new Cookies();
   const tokenWeb = cookie.get('token_web');
@@ -128,12 +127,19 @@ const DashBoard = () => {
     }
   }
 
-
   useEffect(() => {
     fetchDashboard()
 
     return () => toast.dismiss()
   }, [])
+
+
+  // ------------Navigate-Section------------
+
+  const gotoUpdate = () => {
+    navigate(`/setting/${_id}`)
+  }
+
 
   return (
     <>
@@ -198,7 +204,7 @@ const DashBoard = () => {
                     <h6>Your donors care about your cause, let them know<br />
                       what’s happening.</h6>
                   </div>
-                  <a href='#'>Update</a>
+                  <a href='#' onClick={gotoUpdate}>Update</a>
                 </div>
 
                 <div className='Updatepara'>
@@ -208,7 +214,7 @@ const DashBoard = () => {
                     <p>Upload photos</p>
                     <h6>Good pictures increase donations by 5x! Upload at least 3 images.</h6>
                   </div>
-                  <a href='#'>Update</a>
+                  <a href='#' onClick={gotoUpdate}>Update</a>
                 </div>
 
                 <div className='Updatepara mb-0'>

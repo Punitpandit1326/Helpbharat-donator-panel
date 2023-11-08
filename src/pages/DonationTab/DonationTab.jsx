@@ -9,20 +9,22 @@ import { donatorUrl, url } from '../../utils/url';
 import Cookies from 'universal-cookie';
 import moment from 'moment/moment';
 import { toast } from 'react-toastify';
-
+import { AiOutlineDownload } from "react-icons/ai";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 
 const DonationTab = () => {
     const { slug } = useParams();
-    const [donationTab, setDonationTab] = useState({});
+    const [donationTab, setDonationTab] = useState([]);
     const [coverPhoto, setCoverPhoto] = useState("");
     const [tabDonor, setTabDonor] = useState(null);
     const [recentDonor, setRecentDonor] = useState(null);
     const [error, setError] = useState(null)
     const [endDate, setEndDate] = useState("");
-    const [currentValue, setCurrentValue] = useState(0);
     const [days, setDays] = useState("");
     const [activeImage, setActiveImage] = useState("/Image/Img1.png")
-    const [activeDoc, setActiveDoc] = useState("/Image/doc1.png")
+    const [activeIndex, setActiveIndex] = useState(0);
+    // const [activeDoc, setActiveDoc] = useState("/Image/doc1.png")
     const [activeTab, setActiveTab] = useState("About")
     const [donarTab, setDonarTab] = useState(true)
     const [isFade, setIsFade] = useState(true);
@@ -128,9 +130,15 @@ const DonationTab = () => {
         }, [300])
     };
 
-    // const handleButtonClick = (value) => {
-    //     setCurrentValue(value);
-    // };
+    const handleSelect = (selectedIndex) => {
+        setActiveIndex(selectedIndex);
+    };
+
+    const itemsToShow = 1;
+    // ----------For_Date----------------
+
+    const createdAt = "2023-10-25T05:48:09.437Z";
+    const formattedDate = moment(createdAt).format("DD/MM/YYYY");
 
 
     return (
@@ -149,18 +157,29 @@ const DonationTab = () => {
                             }} />
 
                             <div className='Imagesleft'>
-                                {
-                                    donationTab?.images?.map((item, index) => (<img
-                                        key={index}
-                                        style={{ width: '80px' }}
-                                        src={item.imageUrl}
-                                        alt="Image"
-                                        onClick={() => handleToggleImage(item.imageUrl)}
-                                        onError={({ currentTarget }) => {
-                                            currentTarget.src = "/image/placeholder.png";
-                                        }}
-                                    />))
-                                }
+
+                                <Swiper
+                                    spaceBetween={50}
+                                    slidesPerView={3}
+                                    navigation={{
+                                        nextEl: '.swiper-button-next',
+                                        prevEl: '.swiper-button-prev',
+                                    }}
+                                >
+                                    {donationTab?.images?.map((item, index) => (
+                                        <SwiperSlide key={index}>
+                                            <img
+                                                style={{ width: '80px' }}
+                                                src={item.imageUrl}
+                                                alt="Image"
+                                                onClick={() => handleToggleImage(item.imageUrl)}
+                                                onError={({ currentTarget }) => {
+                                                    currentTarget.src = "/image/placeholder.png";
+                                                }}
+                                            />
+                                        </SwiperSlide>
+                                    ))}
+                                </Swiper>
                             </div>
 
                             <div className='Sectionleft_main'>
@@ -172,7 +191,9 @@ const DonationTab = () => {
                                 </div>
                             </div>
                             <hr className='donation-underline' />
+
                             <div className="paraLeft mb-5" ref={aboutToRef}>
+
                                 <p>About Section</p>
                                 <img src="/Image/Img5.png" alt="Image"
                                     onError={({ currentTarget }) => {
@@ -183,16 +204,26 @@ const DonationTab = () => {
                             <div className="paraLeft d-head mb-5" ref={updatesToRef}>
                                 <h5>Updates</h5>
 
-                                <p>Hello World</p>
+                                {
+                                    donationTab?.logs?.map((item, index) => (<div key={index}>
+                                        <span>Date: {formattedDate}</span>
+                                        <p>{item.text}</p>
+                                    </div>))
+                                }
                             </div>
 
-                            {donationTab?.comments?.map((item, index) => (<div key={index} className="paraLeft d-head mt-2" ref={commentToRef}>
+                            <div className="paraLeft d-head mt-2" ref={commentToRef}>
                                 <h5 className='m-0'>Comment</h5>
-                                <p>{item.text}</p>
-                                {/* <span>{item.}</span> */}
+
+                                {
+                                    donationTab?.comments?.map((item, index) => (<div key={index}>
+                                        <span>Date: {formattedDate}</span>
+                                        <p>{item.text}</p>
+                                    </div>))
+
+                                }
                             </div>
-                            ))
-                            }
+
 
                         </Col>
 
@@ -327,12 +358,16 @@ const DonationTab = () => {
                                     <h5>Documents</h5>
                                 </div>
 
-                                <div style={{ backgroundColor: '#EBEBEB' }}>
+                                <div>
                                     {
                                         donationTab?.documents?.map((item, index) => (
-                                            <div className='btn_section_fund'>
-                                                <a href={item.imageUrl} target="_blank" rel="noopener noreferrer">Preview</a>
+                                            <div key={index} className='document-preview'>
+                                                <AiOutlineDownload size={22} />
+                                                <a href={item.imageUrl} target="_blank" rel="noopener noreferrer">
+                                                    <span>Download</span>
+                                                </a>
                                             </div>
+
                                         ))}
                                 </div>
                             </div>
@@ -341,13 +376,13 @@ const DonationTab = () => {
                     </Row>
                 </Container>
 
-            </div>
+            </div >
 
             {/* --------FooterSection----------- */}
 
-            <div>
+            <div div >
                 <Footer />
-            </div>
+            </div >
         </>
     )
 }

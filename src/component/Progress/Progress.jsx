@@ -48,7 +48,7 @@ const Progress = ({ strokeWidth, percentage }) => {
                     x={50}
                     y={50}
                     style={{
-                        fill: '#00A978;',
+                        fill: '#00A978',
                         fontSize: '20px',
                         dominantBaseline: 'central',
                         textAnchor: 'middle',

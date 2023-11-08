@@ -11,7 +11,7 @@ import Cookies from 'universal-cookie';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment';
-
+import { AiOutlineDownload } from "react-icons/ai";
 
 const EditDonationTab = () => {
     const [tabDonor, setTabDonor] = useState(null);
@@ -28,7 +28,7 @@ const EditDonationTab = () => {
     const [donarTab, setDonarTab] = useState(true);
     const [isFade, setIsFade] = useState(true);
     const [currentValue, setCurrentValue] = useState(0);
-    const documtToRef = useRef();
+    const docToRef = useRef();
     const aboutToRef = useRef();
     const updatesToRef = useRef();
     const commentToRef = useRef();
@@ -40,16 +40,22 @@ const EditDonationTab = () => {
         description: '',
         goal: '',
     })
-
     const updateCampaign = async () => {
         const toastId = toast.loading('Please wait...');
+
+        const formdata = new FormData();
+
+        formdata.append('name', detail.name);
+        formdata.append('description', detail.description);
+        formdata.append('goal', detail.goal);
         try {
             const response = await fetch(`${donatorUrl}campaign/${slug}`, {
                 method: 'PATCH',
                 headers: {
-                    'Authorization': `Bearer ${tokenWeb}`
+
+                    Authorization: `Bearer ${tokenWeb}`
                 },
-                body: JSON.stringify(detail)
+                body: formdata
             });
             const data = await response.json();
 
@@ -105,6 +111,7 @@ const EditDonationTab = () => {
     }
 
     // ---------RecentDonor----Api------------
+
     const fetchRecentDonor = async (_id) => {
         try {
             const response = await fetch(`${url}recent-Donors?fund_raiser_id=${_id}`, {
@@ -153,8 +160,7 @@ const EditDonationTab = () => {
                     goal
                 }
             })
-            setCoverPhoto(data.data.response.images[0].imageUrl)
-            setDocument(data.data.response.documents[0].imageUrl)
+            setCoverPhoto(data.data.response.cover_photo[0] ? data.data.response.cover_photo[0].imageUrl : null)
 
         }
         catch (error) {
@@ -162,12 +168,61 @@ const EditDonationTab = () => {
         }
     }
 
+    // ---------------Delete-Post----------
+
+    const deletePost = async (id) => {
+
+        const toastID = toast.loading('please wait')
+
+        const deletePost = {
+            delete_logs: [id]
+        }
+
+        const response = await fetch(`${donatorUrl}post-Update-Campaign/${donationTab._id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${tokenWeb}`
+            },
+            body: JSON.stringify(deletePost)
+        });
+        const data = await response.json();
+
+        if (!data.success) {
+            toast.update(toastID, {
+                render: data.message.message,
+                type: 'error',
+                autoClose: 1500,
+                isLoading: false
+            })
+            return
+        }
+
+        setDonationTab((prev) => {
+            return { ...prev, logs: data.data.logs }
+        })
+
+        toast.update(toastID, {
+            render: data.message,
+            type: 'success',
+            autoClose: 1500,
+            isLoading: false
+        })
+
+    }
+
+
     useEffect(() => {
         fetchDonationTab()
         return () => { }
     }, [])
 
+    // --------For_date--------------
 
+    const createdAt = "2023-10-25T05:48:09.437Z";
+    const formattedDate = moment(createdAt).format("DD/MM/YYYY");
+
+    // console.log(formattedDate);
 
     return (
         <div>
@@ -179,13 +234,16 @@ const EditDonationTab = () => {
 
             <Container className='DonationCont2'>
                 <FaPen className='pencilIcon' />
-                <input type="text" placeholder='' name='name' onInput={handleInputChange} onChange={updateCampaign} value={detail?.name} />
+
+                <input type="text" placeholder='' name='name' onInput={handleInputChange} onBlur={updateCampaign} value={detail?.name} />
                 <Row>
 
                     {/* --------leftSection---------- */}
 
                     <Col md={7} className='DonationLeft DonationLeft2'>
-                        <img className={`${isFade ? 'active' : ''} main-image`} src={coverPhoto} alt="Image" />
+                        <img className={`${isFade ? 'active' : ''} main - image`} src={coverPhoto} alt="Image" onError={({ currentTarget }) => {
+                            currentTarget.src = "/image/placeholder.png";
+                        }} />
 
                         <div className='Imagesleft'>
                             {
@@ -194,17 +252,20 @@ const EditDonationTab = () => {
                                     style={{ width: '80px' }}
                                     src={item.imageUrl}
                                     alt="Image"
-                                    onClick={() => handleToggleImage(item.imageUrl)} />))
+                                    onClick={() => handleToggleImage(item.imageUrl)}
+                                    onError={({ currentTarget }) => {
+                                        currentTarget.src = "/image/placeholder.png";
+                                    }} />))
                             }
                         </div>
 
                         <div className="Sectionleftt">
-                            <li className={`${activeTab === 'About' ? 'active-tab' : ''}`} onClick={() => aboutToRef.current.scrollIntoView
+                            <li className={`${activeTab === 'About' ? 'active-tab' : ''} `} onClick={() => aboutToRef.current.scrollIntoView
                                 ()}> About</li>
-                            <li className={`${activeTab === 'Documents' ? 'active-tab' : ''}`} onClick={() => documtToRef.current.scrollIntoView()}>Documents</li>
-                            <li className={`${activeTab === 'Updates' ? 'active-tab' : ''}`} onClick={() => updatesToRef.current.scrollIntoView
+                            <li className={`${activeTab === 'Documents' ? 'active-tab' : ''} `} onClick={() => docToRef.current.scrollIntoView()}>Documents</li>
+                            <li className={`${activeTab === 'Updates' ? 'active-tab' : ''} `} onClick={() => updatesToRef.current.scrollIntoView
                                 ()}>Updates</li>
-                            <li className={`${activeTab === 'Comments' ? 'active-tab' : ''}`} onClick={() => commentToRef.current.scrollIntoView
+                            <li className={`${activeTab === 'Comments' ? 'active-tab' : ''} `} onClick={() => commentToRef.current.scrollIntoView
                                 ()}>Comments</li>
                         </div>
                         <hr className='donation-underline bg-dark' />
@@ -219,12 +280,26 @@ const EditDonationTab = () => {
 
                         <div className="paraLeft d-head mt-5" ref={updatesToRef}>
                             <h5> Updates</h5>
-                            <p>Check Your Updates Now</p>
+                            {
+                                donationTab?.logs?.map((item, index) => (<div key={index}>
+                                    <span>Date: {formattedDate}</span>
+                                    <div className='d-flex justify-content-between'>
+                                        <p>{item.text}</p>
+                                        <img className='me-4' onClick={() => deletePost(item._id)} src="/Image/trash.png" alt="#" style={{ width: '15px', height: '15px', marginBottom: '20px' }} />
+                                    </div>
+                                </div>))
+                            }
                         </div>
 
                         <div className="paraLeft d-head mt-5" ref={commentToRef}>
                             <h5> Comment</h5>
-                            <p>Hello World</p>
+                            {
+                                donationTab?.comments?.map((item, index) => (<div key={index}>
+                                    <span>Date: {formattedDate}</span>
+                                    <p>{item.text}</p>
+                                </div>))
+
+                            }
                         </div>
 
                     </Col>
@@ -250,8 +325,8 @@ const EditDonationTab = () => {
                             </div>
 
                             <div className='topdonor2'>
-                                <p className={`${donarTab && 'active'}`} onClick={() => setDonarTab(true)}>Top Donors</p>
-                                <p className={`${!donarTab && 'active'}`} onClick={() => setDonarTab(false)}>Recent Donors</p>
+                                <p className={`${donarTab && 'active'} `} onClick={() => setDonarTab(true)}>Top Donors</p>
+                                <p className={`${!donarTab && 'active'} `} onClick={() => setDonarTab(false)}>Recent Donors</p>
 
                             </div>
                             <hr style={{ margin: '0', width: '100%' }} />
@@ -341,32 +416,32 @@ const EditDonationTab = () => {
 
             {/* ---------DocumentSection--------     */}
 
-            <Container className='DocumentSection'>
+            <Container className='DocumentSection' >
                 <Row>
-                    <div className="d-head">
-                        <h5>Document</h5>
-                    </div>
                     <Col md={7} className='DocumentLeft' >
-                        <div ref={documtToRef}>
-                            <div style={{ backgroundColor: '#EBEBEB' }}>
-                                <img className='document-image-section' src={document} alt="Image" />
+                        <div ref={docToRef}>
+                            <div className="d-head">
+                                <h5>Documents</h5>
                             </div>
 
-                            <div className='Imagesleft'>
+                            <div>
                                 {
-                                    donationTab?.documents?.map((item, index) => (<img
-                                        key={index}
-                                        style={{ width: '80px' }}
-                                        src={item.imageUrl}
-                                        alt="Image"
-                                        onClick={() => setActiveDoc(item.imageUrl)} />))
-                                }
+                                    donationTab?.documents?.map((item, index) => (
+                                        <div key={index} className='document-preview'>
+                                            <AiOutlineDownload size={22} />
+                                            <a href={item.imageUrl} target="_blank" rel="noopener noreferrer">
+                                                <span>Download</span>
+                                            </a>
+                                        </div>
+
+                                    ))}
                             </div>
                         </div>
                     </Col>
 
                 </Row>
             </Container>
+
 
             {/* --------FooterSection----------- */}
 

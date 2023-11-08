@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import './nav.css'
@@ -6,7 +6,7 @@ import { FaPencilAlt } from 'react-icons/fa';
 
 
 const NavSection = () => {
-    const { _id } = useParams();
+    const { _id, slug } = useParams();
     const location = useLocation();
     const { pathname } = location;
 
@@ -17,19 +17,19 @@ const NavSection = () => {
                     <Col lg={9} md={9}>
                         <div className="dashboard">
                             <div className="listDash">
-                                <Link className={`linkItem2 ${pathname === `/myfundraiser/dashboard/${_id}` ? 'active' : ''}`} to={`/myfundraiser/dashboard/${_id}`}> <li> Dashboard </li></Link>
+                                <Link className={`linkItem2 ${pathname === `/myfundraiser/dashboard/${_id}/${slug}` ? 'active' : ''}`} to={`/myfundraiser/dashboard/${_id}/${slug}`}> <li> Dashboard </li></Link>
 
                                 <Link
-                                    className={`linkItem2 ${pathname === `/donationdb/${_id}` ? 'active' : ''}`}
-                                    to={`/donationdb/${_id}`}>
+                                    className={`linkItem2 ${pathname === `/donationdb/${_id}/${slug}` ? 'active' : ''}`}
+                                    to={`/donationdb/${_id}/${slug}`}>
                                     <li>Donation</li>
                                 </Link>
 
-                                <Link className={`linkItem2 ${pathname === `/promotePage/${_id}` ? 'active' : ''}`} to={'/promotePage/' + _id} > <li>Promotions</li></Link>
+                                <Link className={`linkItem2 ${pathname === `/promotePage/${_id}/${slug}` ? 'active' : ''}`} to={`/promotePage/${_id}/${slug}`} > <li>Promotions</li></Link>
 
-                                <Link className={`linkItem2 ${pathname === `/mywithdraw/${_id}` ? 'active' : ''}`} to={'/mywithdraw/' + _id} > <li>My withdraw</li></Link>
+                                <Link className={`linkItem2 ${pathname === `/mywithdraw/${_id}/${slug}` ? 'active' : ''}`} to={`/mywithdraw/${_id}/${slug}`} > <li>My withdraw</li></Link>
 
-                                <Link className={`linkItem2 ${pathname === `/setting/${_id}` ? 'active' : ''}`} to={'/setting/' + _id}><li>Settings</li></Link>
+                                <Link className={`linkItem2 ${pathname === `/setting/${_id}/${slug}` ? 'active' : ''}`} to={`/setting/${_id}/${slug}`}><li>Settings</li></Link>
                             </div>
                         </div>
                     </Col>

@@ -134,7 +134,7 @@ const ChooseFund = () => {
                             <Form.Group className="mb-3">
                                 <Form.Label name="category_id" onChange={handleFormUpdate}>Categories</Form.Label>
                                 <Form.Select>
-                                    <option defaultValue={campaign.categories}>other</option>
+                                    <option defaultValue={'other'}>other</option>
                                 </Form.Select>
                             </Form.Group>
 

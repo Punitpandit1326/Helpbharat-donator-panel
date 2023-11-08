@@ -197,7 +197,7 @@ const Myprofile = () => {
             const resp = await fetch(`${donatorUrl}account?user_id=${userId}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${tokenWeb}`
+                    Authorization: `Bearer ${tokenWeb}`
                 },
             });
 
@@ -248,7 +248,7 @@ const Myprofile = () => {
         const resp = await fetch(`${donatorUrl}account`, {
             method: 'PATCH',
             headers: {
-                'Authorization': `Bearer ${tokenWeb}`
+                Authorization: `Bearer ${tokenWeb}`
             },
             body: formData
         });
@@ -286,7 +286,7 @@ const Myprofile = () => {
         formData.append('bank_name', detail.bank_name);
 
 
-        const response = await fetch(`${donatorUrl}account`, {
+        const response = await fetch(`${donatorUrl}account/user_id=${userId}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${tokenWeb}`

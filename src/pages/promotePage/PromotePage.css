@@ -9,10 +9,17 @@
   font-weight: 500;
   padding-top: 10px;
   margin: 10px;
+  cursor: pointer;
   text-align: center;
   border-radius: 4px;
   color: var(--main-color2);
   background-color: #0abd89a1;
+}
+
+.social-media-icon {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
 }
 
 .socialIcon:first-child {

@@ -21,7 +21,7 @@ const DonationDb = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
   const [donation, setDonation] = useState([]);
-  const { _id } = useParams()
+  const { _id, slug } = useParams()
   const cookie = new Cookies();
   const tokenWeb = cookie.get('token_web');
 
@@ -33,7 +33,7 @@ const DonationDb = () => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${tokenWeb}`
       }
-    })
+    });
     const data = await response.json();
     if (!data.success) {
       toast.update(toastID, {

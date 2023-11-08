@@ -86,10 +86,12 @@ const Myfundraiser = () => {
                   <Row className='main-child-row' onClick={() => handleClickChnage(item.slug)} >
 
                     <Col lg={3} className='left-child'>
-                      <img src={asset(item?.cover_photo[0]?.name)} alt={item.name}
-                        onError={({ currentTarget }) => {
-                          currentTarget.src = "/image/placeholder.png";
-                        }} />
+                      <div className='left-child-image'>
+                        <img src={asset(item?.cover_photo[0]?.name)} alt={item.name}
+                          onError={({ currentTarget }) => {
+                            currentTarget.src = "/image/placeholder.png";
+                          }} />
+                      </div>
                     </Col>
                     <Col lg={9} className='Right-child'>
                       <div className='d-flex justify-content-end'> {!item.is_active && <Badge bg="danger">Closed</Badge>}</div>
@@ -104,7 +106,7 @@ const Myfundraiser = () => {
                   </Row>
 
                   <div className='btn-view'>
-                    <button className='bg-white text-success' onClick={() => navigate(`/myfundraiser/dashboard/${item._id}`)} style={{ border: '1px solid #00A978' }}>View Dashboard</button>
+                    <button className='bg-white text-success' onClick={() => navigate(`/myfundraiser/dashboard/${item._id}/${item.slug}`)} style={{ border: '1px solid #00A978' }}>View Dashboard</button>
                     <button onClick={() => handleEditClick(item.slug)}>Edit Fundraiser</button>
                   </div>
 

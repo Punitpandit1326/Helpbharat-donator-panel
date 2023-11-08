@@ -55,11 +55,11 @@ function App() {
           <Route path='mycomments' element={<MyComments />} />
           <Route path='/myfundraiser/donationtab/:slug' element={<DonationTab />} />
           <Route path='editdonationtab/:slug' element={<EditDonationTab />} />
-          <Route path='/myfundraiser/dashboard/:_id' element={<DashBoard />} />
-          <Route path='/donationdb/:_id' element={<DonationDb />} />
-          <Route path='promotepage/:_id' element={<PromotePage />} />
-          <Route path='mywithdraw/:_id' element={<MyWithdraw />} />
-          <Route path='setting/:_id' element={<Setting />} />
+          <Route path='/myfundraiser/dashboard/:_id/:slug' element={<DashBoard />} />
+          <Route path='/donationdb/:_id/:slug' element={<DonationDb />} />
+          <Route path='promotepage/:_id/:slug' element={<PromotePage />} />
+          <Route path='mywithdraw/:_id/:slug' element={<MyWithdraw />} />
+          <Route path='setting/:_id/:slug' element={<Setting />} />
           <Route path='/login' element={<Login />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>

@@ -1,22 +1,215 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Setting.css';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { FaPencilAlt, } from 'react-icons/fa';
+import { Link, json, useNavigate, useParams } from 'react-router-dom';
 import Footer from '../../component/footer/Footer';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import { donatorUrl } from '../../utils/url';
 import NavSection from '../../component/NavSection/NavSection';
 import Cookies from 'universal-cookie';
-import { AiOutlineCloud } from 'react-icons/ai';
+import { AiOutlineCloud, AiOutlineCloseCircle } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 
 
 const Setting = () => {
+    const imageRef = useRef();
+    const photoInputRef = useRef(null);
     const [deleted, setDeleted] = useState(false);
-    const { _id } = useParams();
+    const { _id, slug } = useParams();
     const navigate = useNavigate()
+    const [postUpdate, setPostUpdate] = useState({
+        text: ''
+    })
+    const [uploadImage, setUploadImage] = useState(null)
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    const [images, setImages] = useState([]);
+
     const cookie = new Cookies();
     const tokenWeb = cookie.get('token_web');
+
+
+    // ------------Patcht_update-Campaign--------------
+
+    const fetchApi = async (e) => {
+        const toastID = toast.loading('Please wait..');
+        const response = await fetch(`${donatorUrl}get-Campaign-By-Slug?slug=${slug}`, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${tokenWeb}`
+            },
+        });
+        const data = await response.json();
+
+        if (!data.success) {
+            toast.update(toastID, {
+                render: data.message.message,
+                type: 'error',
+                autoClose: 1500,
+                isLoading: false
+            })
+            return
+        }
+
+        setImages(data.data.response.images);
+
+        toast.update(toastID, {
+            render: data.message.message,
+            type: 'success',
+            autoClose: 1500,
+            isLoading: false
+        })
+
+    }
+
+    const updatePost = async (e) => {
+
+        e.preventDefault();
+        const toastID = toast.loading('please wait')
+
+        const payload = {
+            logs: [
+                postUpdate
+            ],
+        }
+
+        const response = await fetch(`${donatorUrl}post-Update-Campaign/${_id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${tokenWeb}`
+            },
+            body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+
+        if (!data.success) {
+            toast.update(toastID, {
+                render: data.message.message,
+                type: 'error',
+                autoClose: 1500,
+                isLoading: false
+            })
+            return
+        }
+
+        toast.update(toastID, {
+            render: data.message.message,
+            type: 'success',
+            autoClose: 1500,
+            isLoading: false
+        })
+
+    }
+
+    const handleChange = (e) => {
+        setPostUpdate({ ...postUpdate, [e.target.files]: e.target.value });
+    };
+
+    useEffect(() => {
+        fetchApi();
+        return () => toast.dismiss();
+    }, []);
+
+    // --------------update-image-api------------
+
+    const uploadData = async (e) => {
+        e.preventDefault()
+
+        if (uploadImage) {
+            const formData = new FormData();
+            formData.append('images', uploadImage);
+
+            const toastID = toast.loading('please Wait')
+            const response = await fetch(`${donatorUrl}campaign/${slug}`, {
+                method: 'PATCH',
+                headers: {
+                    Authorization: `Bearer ${tokenWeb}`
+                },
+                body: formData,
+            });
+            const data = await response.json()
+
+            if (!data.success) {
+                toast.update(toastID, {
+                    render: data.message.message,
+                    type: 'error',
+                    autoClose: 1500,
+                    isLoading: false
+                })
+                return
+            }
+
+            toast.update(toastID, {
+                render: data.message,
+                type: 'success',
+                autoClose: 1500,
+                isLoading: false
+            })
+        } else {
+            console.error('No file selected');
+        }
+    }
+    const deleteImage = async (id) => {
+
+        const delete_images = [id];
+        const toastID = toast.loading('please Wait')
+        const response = await fetch(`${donatorUrl}campaign/${slug}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${tokenWeb}`
+            },
+            body: JSON.stringify({ delete_images }),
+        });
+        const data = await response.json()
+
+        if (!data.success) {
+            toast.update(toastID, {
+                render: data.message.message,
+                type: 'error',
+                autoClose: 1500,
+                isLoading: false
+            })
+            return
+        }
+
+        fetchApi();
+
+        toast.update(toastID, {
+            render: data.message,
+            type: 'success',
+            autoClose: 1500,
+            isLoading: false
+        })
+    }
+
+    const handlePhotoClick = (e) => {
+        photoInputRef.current.click();
+    };
+
+    const handleFileChange = (event) => {
+        const { name, files, value } = event.target;
+
+        if (files) {
+            if (name === 'uploadImage') {
+                const fileURL = URL.createObjectURL(files[0]);
+                if (imageRef.current) {
+                    imageRef.current.src = fileURL;
+                }
+                setSelectedImage(fileURL);
+            }
+            setUploadImage({
+                ...uploadImage,
+                [name]: files[0],
+            });
+        } else {
+            setUploadImage({
+                ...uploadImage,
+                [name]: value,
+            });
+        }
+    };
+    // -----------Delete-Api------------
 
     const deleteCampaign = async () => {
         const toastID = toast.loading('please Wait')
@@ -74,14 +267,16 @@ const Setting = () => {
                 {/* ---------EndSection--------- */}
 
                 <Row>
-                    <Form>
+                    <Form onSubmit={updatePost}>
                         <Form.Group className="mt-3" controlId="formBasicDesc">
                             <h6>Post an Update</h6>
                             <Form.Control type="text"
                                 as="textarea"
                                 cols={10}
                                 rows={5}
-                                name="description"
+                                name="text"
+                                value={postUpdate.text}
+                                onChange={handleChange}
                             />
                             <div className='post_btn'>
 
@@ -89,34 +284,40 @@ const Setting = () => {
                             </div>
 
                         </Form.Group>
+                    </Form>
 
-                        <Form.Group className="mt-3 upload" controlId="formBasicImage">
+                    <Form>
+
+                        <Form.Group className="mt-3 upload" controlId="formBasicImage" onClick={handlePhotoClick}>
                             <h6>Upload Photos</h6>
                             <AiOutlineCloud size={26} className='text-success' />
                             <p>Upload Photos In Jpeg And Png Only</p>
                             <input
                                 type="file"
-                                // ref={photoInputRef}
+                                ref={photoInputRef}
                                 style={{ display: 'none' }}
                                 accept=".jpeg, .jpg, .png"
-                                name="images"
+                                name='uploadImages'
+                                onChange={handleFileChange}
                             />
-                            {/* <div>
-                                <img
-                                    src={''}
-                                    alt="Thumb"
-                                    // ref={imageRef}
-                                    width='100px'
-                                    height='100px'
-                                    onError={({ currentTarget }) => {
-                                        currentTarget.src = "/image/placeholder.png";
-                                    }}
-                                />
-                            </div> */}
                         </Form.Group>
+
+                        <div className='img_section'>
+                            <div className='img-hero-section d-flex gap-2'>
+                                {/* Display the uploaded image here */}
+                                {images.map((item, index) => {
+                                    return (<div className='image-preview-container'><img key={index} src={item.imageUrl} alt="" onError={({ currentTarget }) => {
+                                        currentTarget.src = "/image/placeholder.png";
+                                    }} />
+                                        <AiOutlineCloseCircle onClick={() => deleteImage(item._id)} className='icon' /></div>)
+                                }
+                                )}
+                            </div>
+                        </div>
+
                         <div className='post_btn'>
 
-                            <button>Upload</button>
+                            <button onClick={uploadData}>Upload</button>
                         </div>
 
                     </Form>
