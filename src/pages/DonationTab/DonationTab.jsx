@@ -23,7 +23,7 @@ const DonationTab = () => {
     const [endDate, setEndDate] = useState("");
     const [days, setDays] = useState("");
     const [activeImage, setActiveImage] = useState("/Image/Img1.png")
-    const [activeIndex, setActiveIndex] = useState(0);
+    // const [activeIndex, setActiveIndex] = useState(0);
     // const [activeDoc, setActiveDoc] = useState("/Image/doc1.png")
     const [activeTab, setActiveTab] = useState("About")
     const [donarTab, setDonarTab] = useState(true)
@@ -130,9 +130,9 @@ const DonationTab = () => {
         }, [300])
     };
 
-    const handleSelect = (selectedIndex) => {
-        setActiveIndex(selectedIndex);
-    };
+    // const handleSelect = (selectedIndex) => {
+    //     setActiveIndex(selectedIndex);
+    // };
 
     const itemsToShow = 1;
     // ----------For_Date----------------
@@ -159,15 +159,14 @@ const DonationTab = () => {
                             <div className='Imagesleft'>
 
                                 <Swiper
-                                    spaceBetween={50}
-                                    slidesPerView={3}
-                                    navigation={{
-                                        nextEl: '.swiper-button-next',
-                                        prevEl: '.swiper-button-prev',
+                                    spaceBetween={0}
+                                    slidesPerView={4}
+                                    autoplay={{
+                                        delay: 1000, // Delay between slides in milliseconds (adjust as needed)
                                     }}
                                 >
                                     {donationTab?.images?.map((item, index) => (
-                                        <SwiperSlide key={index}>
+                                        <SwiperSlide style={{ width: '100px' }} key={index}>
                                             <img
                                                 style={{ width: '80px' }}
                                                 src={item.imageUrl}

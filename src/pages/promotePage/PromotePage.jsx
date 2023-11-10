@@ -127,8 +127,9 @@ const PromotePage = () => {
 
                     </div>
                 </div> */}
-                <div className='promotepage-main-section'>
-                    {/* <div className="promotepage-btn">
+
+                {/* <div className='promotepage-main-section'>
+                    <div className="promotepage-btn">
                         {selectedDate ? (
                             <button onClick={handleClick}>{selectedDate.toDateString()}</button>
                         ) : (
@@ -141,12 +142,15 @@ const PromotePage = () => {
                                 onChange={handleDateChange} inline />
                         )}
                         <button><FaSortAmountDown /> Sort Range </button>
-                    </div> */}
+                    </div>
+
                     <div className="addContbtn">
                         <button>Add New Contact <FaPlus /></button>
                     </div>
-                </div>
-                <Container fluid className='table-container p-0'>
+
+                </div> */}
+
+                {/* <Container fluid className='table-container p-0'>
                     <Table striped className='table-promote-section'>
                         <thead>
                             <tr>
@@ -181,7 +185,8 @@ const PromotePage = () => {
                             </tr>
                         </tbody>
                     </Table>
-                </Container>
+                </Container> */}
+
             </Container>
 
             {/* --------FooterSection----------- */}

@@ -12,6 +12,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment';
 import { AiOutlineDownload } from "react-icons/ai";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 
 const EditDonationTab = () => {
     const [tabDonor, setTabDonor] = useState(null);
@@ -76,7 +78,6 @@ const EditDonationTab = () => {
     const handleInputChange = (event, name) => {
         setDetail({ ...detail, [event.target.name]: event.target.value });
     };
-
 
     const handleToggleImage = (src) => {
         setIsFade(false)
@@ -199,7 +200,7 @@ const EditDonationTab = () => {
         }
 
         setDonationTab((prev) => {
-            return { ...prev, logs: data.data.logs }
+            return { ...prev, logs: data.data.response.logs }
         })
 
         toast.update(toastID, {
@@ -241,22 +242,33 @@ const EditDonationTab = () => {
                     {/* --------leftSection---------- */}
 
                     <Col md={7} className='DonationLeft DonationLeft2'>
-                        <img className={`${isFade ? 'active' : ''} main - image`} src={coverPhoto} alt="Image" onError={({ currentTarget }) => {
+                        <img className={`${isFade ? 'active' : ''} main_image`} src={coverPhoto} alt="Image" onError={({ currentTarget }) => {
                             currentTarget.src = "/image/placeholder.png";
                         }} />
 
                         <div className='Imagesleft'>
-                            {
-                                donationTab?.images?.map((item, index) => (<img
-                                    key={index}
-                                    style={{ width: '80px' }}
-                                    src={item.imageUrl}
-                                    alt="Image"
-                                    onClick={() => handleToggleImage(item.imageUrl)}
-                                    onError={({ currentTarget }) => {
-                                        currentTarget.src = "/image/placeholder.png";
-                                    }} />))
-                            }
+
+                            <Swiper
+                                spaceBetween={0}
+                                slidesPerView={4}
+                                autoplay={{
+                                    delay: 1000,
+                                }}
+                            >
+                                {donationTab?.images?.map((item, index) => (
+                                    <SwiperSlide style={{ width: '100px' }} key={index}>
+                                        <img
+                                            style={{ width: '80px' }}
+                                            src={item.imageUrl}
+                                            alt="Image"
+                                            onClick={() => handleToggleImage(item.imageUrl)}
+                                            onError={({ currentTarget }) => {
+                                                currentTarget.src = "/image/placeholder.png";
+                                            }}
+                                        />
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
                         </div>
 
                         <div className="Sectionleftt">

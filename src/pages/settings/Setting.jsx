@@ -30,7 +30,7 @@ const Setting = () => {
 
     // ------------Patcht_update-Campaign--------------
 
-    const fetchApi = async (e) => {
+    const fetchApi = async () => {
         const toastID = toast.loading('Please wait..');
         const response = await fetch(`${donatorUrl}get-Campaign-By-Slug?slug=${slug}`, {
             method: 'get',

@@ -71,8 +71,6 @@ const MyComments = () => {
                     </div>
                   </Col>
 
-
-
                   {/* <Col xl={12}>
                   <div className='commentSection mt-2'>
                     <div className='Comment-Header'>
@@ -86,6 +84,7 @@ const MyComments = () => {
                     </div>
                   </div>
                 </Col> */}
+
                 </Row>
               </Accordion.Body>
             </Accordion.Item>))

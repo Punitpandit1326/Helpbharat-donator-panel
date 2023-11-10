@@ -21,7 +21,7 @@ const DonationDb = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
   const [donation, setDonation] = useState([]);
-  const { _id, slug } = useParams()
+  const { _id } = useParams()
   const cookie = new Cookies();
   const tokenWeb = cookie.get('token_web');
 
@@ -52,6 +52,7 @@ const DonationDb = () => {
     })
     // console.log(data.data.docs, "data show");
     setDonation(data.data.docs)
+    console.log(data.data.docs, 'api success');
     setTotal(data.data.total);
   }
 
@@ -116,7 +117,7 @@ const DonationDb = () => {
                 <tr>
                   <td>{item.user_id.name}</td>
                   <td>{moment(item.createdAt).format("DD MMM  YYYY")}</td>
-                  <td>₹ 400</td>
+                  <td>₹{item.amount}</td>
                 </tr>
               </tbody>))}
           </Table>

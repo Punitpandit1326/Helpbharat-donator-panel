@@ -44,6 +44,7 @@ const Myprofile = () => {
     const authUser = cookie.get('user');
     const userId = authUser?._id;
 
+
     const fetchUser = async () => {
 
         const toastID = toast.loading('Please wait...')
@@ -80,15 +81,15 @@ const Myprofile = () => {
         return () => toast.dismiss();
     }, []);
 
-    const handleSubmit = (event) => {
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
+    // const handleSubmit = (event) => {
+    //     const form = event.currentTarget;
+    //     if (form.checkValidity() === false) {
+    //         event.preventDefault();
+    //         event.stopPropagation();
+    //     }
 
-        setValidated(true);
-    };
+    //     setValidated(true);
+    // };
 
     const handleChangePassword = async (e) => {
         e.preventDefault();
@@ -140,7 +141,19 @@ const Myprofile = () => {
     };
 
     const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
         setDetails({ ...detail, document: e.target.files[0] });
+
+        const maxSize = 2 * 1024 * 1024; // 2 MB
+
+        if (selectedFile && selectedFile.size > maxSize) {
+            alert('File is too large. Max size is 2 MB.');
+
+            e.target.value = null;
+        } else {
+
+            console.log(selectedFile);
+        }
     };
 
     // ---------Edit-Users-Api----------
@@ -254,9 +267,9 @@ const Myprofile = () => {
         });
         const result = await resp.json();
 
-        if (!data.success) {
+        if (!result.success) {
             toast.update(toastID, {
-                render: data.message.message,
+                render: result.message.message,
                 type: 'error',
                 autoClose: 1500,
                 isLoading: false
@@ -264,7 +277,7 @@ const Myprofile = () => {
             return
         }
         toast.update(toastID, {
-            render: data.message.message,
+            render: result.message,
             type: 'success',
             autoClose: 1500,
             isLoading: false
@@ -314,6 +327,20 @@ const Myprofile = () => {
         })
         toast.dismiss();
     }
+
+    const handlePreviewClick = () => {
+        const { document } = detail;
+
+        if (document) {
+
+            const documentUrl = URL.createObjectURL(document);
+
+            window.open(documentUrl, '_blank');
+        } else {
+            alert('Please upload a document before previewing.');
+        }
+    };
+
 
     useEffect(() => {
         fetchDetails();
@@ -562,11 +589,13 @@ const Myprofile = () => {
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <br />
                                     </Form.Group>
+
                                     <Form.Group controlId="formFile" className="mb-3">
                                         <Form.Label>Upload Cancel Cheque</Form.Label>
                                         <Form.Control type="file" onChange={handleFileChange} />
                                         <span
                                             style={{ fontSize: '10px', fontWeight: '500', paddingLeft: '5px' }}>Please Upload max size of file is 2mb</span>
+                                        <Button onClick={handlePreviewClick} className='pre-btn'>Preview</Button>
                                     </Form.Group>
 
                                     <div className='d-flex justify-content-end  save-btn'>

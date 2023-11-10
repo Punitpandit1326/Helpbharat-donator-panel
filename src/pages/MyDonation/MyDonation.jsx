@@ -44,8 +44,9 @@ const MyDonation = () => {
         setError(data.message)
         return
       }
-      setUsersDonation(data.data.response);
+      setUsersDonation(data.data.result.docs);
       setTotal(data.data);
+
     }
     catch (error) {
       console.error(error)
@@ -96,14 +97,14 @@ const MyDonation = () => {
                         <th scope="col">Tax Exemption</th>
                       </tr>
                     </thead>
-                    {usersDonation.map((item, index) => (<tbody key={index}>
+                    {usersDonation?.map((item, index) => (<tbody key={index}>
                       <tr>
                         <th>
                           <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
                         </th>
-                        <td>{item?.campaign[0]?.name}</td>
+                        <td>{item.campaign && item.campaign.length > 0 && item.campaign[0].name}</td>
                         <td >{formattedDate}</td>
-                        <td>{item?.category[0]?.name}</td>
+                        <td>{item.category && item.category.length > 0 && item.category[0].name}</td>
                         <td>{item.amount}</td>
                         <td className='anchor text-start'>
                           {item.is_tax_relaxation ? (

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import './nav.css'
 import { FaPencilAlt } from 'react-icons/fa';
 
@@ -9,6 +9,12 @@ const NavSection = () => {
     const { _id, slug } = useParams();
     const location = useLocation();
     const { pathname } = location;
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/editdonationtab/${slug}`)
+    }
+
 
     return (
         <>
@@ -35,7 +41,7 @@ const NavSection = () => {
                     </Col>
                     <Col lg={3} md={3}>
                         <div className="edit-fund text-end">
-                            <button>Edit Fundraiser <FaPencilAlt /></button>
+                            <button onClick={handleClick}>Edit Fundraiser <FaPencilAlt /></button>
                         </div>
                     </Col>
                 </Row>
