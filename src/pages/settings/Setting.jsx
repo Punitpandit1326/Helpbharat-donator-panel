@@ -28,7 +28,7 @@ const Setting = () => {
     const tokenWeb = cookie.get('token_web');
 
 
-    // ------------Patcht_update-Campaign--------------
+    // ------------Patch_update-Campaign--------------
 
     const fetchApi = async () => {
         const toastID = toast.loading('Please wait..');
@@ -73,7 +73,7 @@ const Setting = () => {
             ],
         }
 
-        const response = await fetch(`${donatorUrl}post-Update-Campaign/${_id}`, {
+        const response = await fetch(`${donatorUrl}post-Update-Campaign/${slug}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ const Setting = () => {
     }
 
     const handleChange = (e) => {
-        setPostUpdate({ ...postUpdate, [e.target.files]: e.target.value });
+        setPostUpdate({ ...postUpdate, [e.target.name]: e.target.value });
     };
 
     useEffect(() => {
@@ -118,13 +118,13 @@ const Setting = () => {
 
         if (uploadImage) {
             const formData = new FormData();
-            formData.append('images', uploadImage);
+            formData.append('images[]', uploadImage);
 
             const toastID = toast.loading('please Wait')
             const response = await fetch(`${donatorUrl}campaign/${slug}`, {
                 method: 'PATCH',
                 headers: {
-                    Authorization: `Bearer ${tokenWeb}`
+                    Authorization: `Bearer ${tokenWeb}`,
                 },
                 body: formData,
             });
@@ -150,6 +150,7 @@ const Setting = () => {
             console.error('No file selected');
         }
     }
+
     const deleteImage = async (id) => {
 
         const delete_images = [id];

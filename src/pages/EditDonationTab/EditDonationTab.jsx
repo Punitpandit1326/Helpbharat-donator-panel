@@ -179,7 +179,7 @@ const EditDonationTab = () => {
             delete_logs: [id]
         }
 
-        const response = await fetch(`${donatorUrl}post-Update-Campaign/${donationTab._id}`, {
+        const response = await fetch(`${donatorUrl}post-Update-Campaign/${slug}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -200,7 +200,7 @@ const EditDonationTab = () => {
         }
 
         setDonationTab((prev) => {
-            return { ...prev, logs: data.data.response.logs }
+            return { ...prev, logs: data.data.logs }
         })
 
         toast.update(toastID, {

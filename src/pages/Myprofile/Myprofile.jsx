@@ -26,8 +26,9 @@ const Myprofile = () => {
         bank_account_no: '',
         ifsc: '',
         branch: '',
-        document: ''
     });
+
+    const [document, setDocument] = useState(null)
 
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(true)
@@ -142,18 +143,14 @@ const Myprofile = () => {
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
-        setDetails({ ...detail, document: e.target.files[0] });
 
         const maxSize = 2 * 1024 * 1024; // 2 MB
-
         if (selectedFile && selectedFile.size > maxSize) {
             alert('File is too large. Max size is 2 MB.');
-
             e.target.value = null;
-        } else {
-
-            console.log(selectedFile);
         }
+        setDocument(() => selectedFile);
+        console.log(document);
     };
 
     // ---------Edit-Users-Api----------
@@ -249,7 +246,7 @@ const Myprofile = () => {
         const toastID = toast.loading('Please wait...')
 
         const formData = new FormData();
-        formData.append('document', detail.document);
+        formData.append('document', document);
         formData.append('branch', detail.branch);
         formData.append('ifsc', detail.ifsc);
         formData.append('bank_account_no', detail.bank_account_no);
@@ -282,6 +279,10 @@ const Myprofile = () => {
             autoClose: 1500,
             isLoading: false
         })
+        if (!result.data || result.data.length == 0) {
+            return
+        }
+
         setDetails(result.data);
 
     }
@@ -290,16 +291,17 @@ const Myprofile = () => {
         e.preventDefault();
         const toastId = toast.loading('Please wait...');
 
+        // console.log(document.name);
+
         const formData = new FormData();
         formData.append('user_id', userId);
-        formData.append('document', detail.document);
+        formData.append('document[]', document);
         formData.append('branch', detail.branch);
         formData.append('ifsc', detail.ifsc);
         formData.append('bank_account_no', detail.bank_account_no);
         formData.append('bank_name', detail.bank_name);
 
-
-        const response = await fetch(`${donatorUrl}account/user_id=${userId}`, {
+        const response = await fetch(`${donatorUrl}account`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${tokenWeb}`
@@ -329,11 +331,11 @@ const Myprofile = () => {
     }
 
     const handlePreviewClick = () => {
-        const { document } = detail;
+        const docs = document;
 
-        if (document) {
+        if (docs) {
 
-            const documentUrl = URL.createObjectURL(document);
+            const documentUrl = URL.createObjectURL(docs);
 
             window.open(documentUrl, '_blank');
         } else {
@@ -592,7 +594,7 @@ const Myprofile = () => {
 
                                     <Form.Group controlId="formFile" className="mb-3">
                                         <Form.Label>Upload Cancel Cheque</Form.Label>
-                                        <Form.Control type="file" onChange={handleFileChange} />
+                                        <Form.Control type="file" name='document' onChange={handleFileChange} />
                                         <span
                                             style={{ fontSize: '10px', fontWeight: '500', paddingLeft: '5px' }}>Please Upload max size of file is 2mb</span>
                                         <Button onClick={handlePreviewClick} className='pre-btn'>Preview</Button>

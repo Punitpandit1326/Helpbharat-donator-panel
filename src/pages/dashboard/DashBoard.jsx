@@ -108,7 +108,6 @@ const DashBoard = () => {
     fetchRecentDonor(_id)
     fetchTabDonor(_id)
 
-
   }
 
   function calculateCompletionPercentage(dashboard) {

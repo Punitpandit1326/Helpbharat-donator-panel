@@ -15,8 +15,8 @@ import { toast } from 'react-toastify';
 const Myfundraiser = () => {
   const [total, setTotal] = useState(1);
   const [page, setPage] = useState(1)
-  const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(true)
+  // const [error, setError] = useState(null)
+  // const [loading, setLoading] = useState(true)
   const [users, setUsers] = useState([]);
   const navigate = useNavigate()
 
