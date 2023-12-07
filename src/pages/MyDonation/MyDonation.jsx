@@ -18,10 +18,6 @@ const MyDonation = () => {
 
   const createdAt = "2023-10-25T05:48:09.437Z";
   const formattedDate = moment(createdAt).format("DD/MM/YYYY");
-
-  console.log(formattedDate); // Output: "25/10/2023"
-
-
   const cookie = new Cookies();
   const tokenWeb = cookie.get('token_web');
   const authUser = cookie.get('user');
@@ -39,6 +35,7 @@ const MyDonation = () => {
       )
 
       const data = await response.json();
+
       // console.log(data, 'response1');
       if (!data.message) {
         setError(data.message)
@@ -102,9 +99,9 @@ const MyDonation = () => {
                         <th>
                           <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
                         </th>
-                        <td>{item.campaign && item.campaign.length > 0 && item.campaign[0].name}</td>
+                        <td>{item.fund_raiser_id.name}</td>
                         <td >{formattedDate}</td>
-                        <td>{item.category && item.category.length > 0 && item.category[0].name}</td>
+                        <td>{item.fund_raiser_id.category_id?.name}</td>
                         <td>{item.amount}</td>
                         <td className='anchor text-start'>
                           {item.is_tax_relaxation ? (

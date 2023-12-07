@@ -19,7 +19,7 @@ const CreateFund = () => {
     const { slug } = useParams();
     const [uploadData, setUploadData] = useState({
         description: '',
-        coverPhoto: '',
+        images: '',
         docs: '',
     })
 
@@ -39,7 +39,7 @@ const CreateFund = () => {
 
         const formData = new FormData();
         formData.append('description', uploadData.description);
-        formData.append('cover_photo', uploadData.coverPhoto);
+        formData.append('images[]', uploadData.images);
         formData.append('documents[]', uploadData.docs);
 
         const toastID = toast.loading('please Wait...')
@@ -75,7 +75,7 @@ const CreateFund = () => {
         const { name, files, value } = event.target;
 
         if (files) {
-            if (name === 'coverPhoto') {
+            if (name === 'images') {
                 const fileURL = URL.createObjectURL(files[0]);
                 if (imageRef.current) {
                     imageRef.current.src = fileURL;
@@ -150,7 +150,7 @@ const CreateFund = () => {
                                             ref={photoInputRef}
                                             style={{ display: 'none' }}
                                             accept=".jpeg, .jpg, .png"
-                                            name="coverPhoto"
+                                            name="images"
                                             onChange={handleFileChange}
                                         />
                                     </>

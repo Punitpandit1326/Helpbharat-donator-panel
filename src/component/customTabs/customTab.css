@@ -46,12 +46,16 @@
   font-weight: 600;
 }
 
+/* --------------media-Queries-------------- */
+
 @media screen and (max-width: 568px) {
   .another-listNav ul {
     font-size: 10px;
     overflow-x: scroll;
     justify-content: flex-start;
     gap: 10px;
+    width: 96%;
+    height: 45px;
   }
 
   .another-listNav ul::-webkit-scrollbar {
@@ -74,7 +78,10 @@
     width: 100%;
   }
 
-  .another-listNav {
-    overflow-x: scroll;
+  @media (max-width: 768px) {
+    .another-listNav {
+      overflow-x: auto;
+    }
   }
+
 }

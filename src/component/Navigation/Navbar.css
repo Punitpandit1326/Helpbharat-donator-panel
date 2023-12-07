@@ -167,27 +167,20 @@ hr {
     display: none;
   }
 
-  .navfont {
-    height: 300px;
-    width: 100%;
-    margin: 0;
-    background-color: black;
-  }
-
-  .dropDownMain:hover ul.toggleDropdown {
-    /* display: none; */
-  }
-
   .dropDownMain ul.toggleDropdown {
     z-index: 4;
   }
 
   .btn-donate {
     background-color: transparent;
-    border: 2px solid;
-    margin-top: -90px;
-    margin-left: 13px;
-    border-radius: 1;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 3px;
+  }
+
+  .btn-donate:hover {
+    background-color: var(--main-color);
+    color: var(--main-color2);
   }
 
   .navbar-collapse {

@@ -82,8 +82,8 @@ i.pecilIcon {
 .paraLeft p {
   padding-top: 10px;
   font-family: Poppins;
-  font-size: 0.9rem;
-  font-weight: 400;
+  font-size: 1rem;
+  font-weight: 500;
   line-height: 30px;
 }
 
@@ -95,8 +95,8 @@ i.pecilIcon {
 .paraLeft span {
   color: #00A978;
   font-family: Poppins;
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 0.9rem;
+
 }
 
 .documentSec h2 {
@@ -649,4 +649,19 @@ p.donoted-inr {
   }
 }
 
-@media screen and (min-width: 1200px) {}
+@media screen and (max-width: 568px) {
+  .donation_tab_header {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    & button {
+      position: absolute;
+      top: -10px;
+      right: 0;
+      margin: 0;
+    }
+  }
+
+}

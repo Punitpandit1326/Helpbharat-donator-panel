@@ -11,18 +11,16 @@ import Pagination from '../../component/Pagination/Pagination';
 import asset from '../../utils/asset';
 import { toast } from 'react-toastify';
 
-
 const Myfundraiser = () => {
   const [total, setTotal] = useState(1);
   const [page, setPage] = useState(1)
-  // const [error, setError] = useState(null)
-  // const [loading, setLoading] = useState(true)
   const [users, setUsers] = useState([]);
   const navigate = useNavigate()
 
   const handleClickChnage = (slug) => {
     navigate(`/myfundraiser/donationtab/${slug}`);
   }
+
   const handleEditClick = (slug) => {
     navigate(`/editdonationtab/${slug}`);
   };
@@ -61,7 +59,6 @@ const Myfundraiser = () => {
     })
     setUsers(data.data.response);
     setTotal(data.data.total);
-
   }
 
   useEffect(() => {
@@ -74,6 +71,7 @@ const Myfundraiser = () => {
       <CustomTab activeLink={"MyFundraiser"} />
 
       {/* --------AccordianSection----------- */}
+
       <Container>
 
         <Accordion defaultActiveKey="0">
@@ -94,7 +92,7 @@ const Myfundraiser = () => {
                       </div>
                     </Col>
                     <Col lg={9} className='Right-child'>
-                      <div className='d-flex justify-content-end'> {!item.is_active && <Badge bg="danger">Closed</Badge>}</div>
+                      <div className='badge_icon'> {!item.is_active && <Badge bg="danger p-2">Closed</Badge>}</div>
                       <h6>{item.name}</h6>
                       <p>{item.description}  &nbsp; <a href="#" className='text-success text-decoration-underline'>More</a> </p>
                       <div className="raised-section">
@@ -121,10 +119,7 @@ const Myfundraiser = () => {
 
       {/* --------FooterSection----------- */}
 
-      <div>
-        <Footer />
-      </div>
-
+      <Footer />
 
     </div>
   )

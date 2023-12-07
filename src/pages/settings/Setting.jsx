@@ -20,8 +20,8 @@ const Setting = () => {
         text: ''
     })
     const [uploadImage, setUploadImage] = useState(null)
-    const [selectedImage, setSelectedImage] = useState(null);
 
+    const [error, setError] = useState(null)
     const [images, setImages] = useState([]);
 
     const cookie = new Cookies();
@@ -111,16 +111,18 @@ const Setting = () => {
         return () => toast.dismiss();
     }, []);
 
-    // --------------update-image-api------------
+    // ------------------------------update-image-api------------------
 
     const uploadData = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         if (uploadImage) {
             const formData = new FormData();
             formData.append('images[]', uploadImage);
 
-            const toastID = toast.loading('please Wait')
+            const toastID = toast.loading('Please Wait for Image');
+
+
             const response = await fetch(`${donatorUrl}campaign/${slug}`, {
                 method: 'PATCH',
                 headers: {
@@ -128,88 +130,65 @@ const Setting = () => {
                 },
                 body: formData,
             });
-            const data = await response.json()
+
+            const data = await response.json();
 
             if (!data.success) {
                 toast.update(toastID, {
-                    render: data.message.message,
+                    render: data.message,
                     type: 'error',
                     autoClose: 1500,
-                    isLoading: false
-                })
+                    isLoading: false,
+                });
                 return
             }
-
             toast.update(toastID, {
                 render: data.message,
                 type: 'success',
                 autoClose: 1500,
-                isLoading: false
-            })
-        } else {
-            console.error('No file selected');
+                isLoading: false,
+            });
+
+            fetchApi()
+
         }
-    }
+    };
 
     const deleteImage = async (id) => {
+        const formData = new FormData();
+        formData.append('delete_images[]', id);
+        try {
+            const response = await fetch(`${donatorUrl}campaign/${slug}`, {
+                method: 'PATCH',
+                headers: {
+                    Authorization: `Bearer ${tokenWeb}`,
+                },
+                body: formData,
+            });
 
-        const delete_images = [id];
-        const toastID = toast.loading('please Wait')
-        const response = await fetch(`${donatorUrl}campaign/${slug}`, {
-            method: 'PATCH',
-            headers: {
-                Authorization: `Bearer ${tokenWeb}`
-            },
-            body: JSON.stringify({ delete_images }),
-        });
-        const data = await response.json()
+            const data = await response.json();
+            if (!data.success) {
+                setError(data.message);
+            }
+            fetchApi();
 
-        if (!data.success) {
-            toast.update(toastID, {
-                render: data.message.message,
-                type: 'error',
-                autoClose: 1500,
-                isLoading: false
-            })
-            return
-        }
+        } catch (error) {
+            setError(error.message)
 
-        fetchApi();
-
-        toast.update(toastID, {
-            render: data.message,
-            type: 'success',
-            autoClose: 1500,
-            isLoading: false
-        })
+        };
     }
+
 
     const handlePhotoClick = (e) => {
         photoInputRef.current.click();
     };
 
-    const handleFileChange = (event) => {
-        const { name, files, value } = event.target;
-
-        if (files) {
-            if (name === 'uploadImage') {
-                const fileURL = URL.createObjectURL(files[0]);
-                if (imageRef.current) {
-                    imageRef.current.src = fileURL;
-                }
-                setSelectedImage(fileURL);
-            }
-            setUploadImage({
-                ...uploadImage,
-                [name]: files[0],
-            });
-        } else {
-            setUploadImage({
-                ...uploadImage,
-                [name]: value,
-            });
-        }
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setUploadImage(file);
     };
+
+
     // -----------Delete-Api------------
 
     const deleteCampaign = async () => {
@@ -287,7 +266,7 @@ const Setting = () => {
                         </Form.Group>
                     </Form>
 
-                    <Form>
+                    <Form onSubmit={uploadData}>
 
                         <Form.Group className="mt-3 upload" controlId="formBasicImage" onClick={handlePhotoClick}>
                             <h6>Upload Photos</h6>
@@ -305,11 +284,11 @@ const Setting = () => {
 
                         <div className='img_section'>
                             <div className='img-hero-section d-flex gap-2'>
-                                {/* Display the uploaded image here */}
                                 {images.map((item, index) => {
-                                    return (<div className='image-preview-container'><img key={index} src={item.imageUrl} alt="" onError={({ currentTarget }) => {
-                                        currentTarget.src = "/image/placeholder.png";
-                                    }} />
+                                    return (<div className='image-preview-container' key={index}>
+                                        <img src={item.imageUrl} alt="" onError={({ currentTarget }) => {
+                                            currentTarget.src = "/image/placeholder.png";
+                                        }} />
                                         <AiOutlineCloseCircle onClick={() => deleteImage(item._id)} className='icon' /></div>)
                                 }
                                 )}
@@ -318,7 +297,7 @@ const Setting = () => {
 
                         <div className='post_btn'>
 
-                            <button onClick={uploadData}>Upload</button>
+                            <button type='submit'>Upload</button>
                         </div>
 
                     </Form>

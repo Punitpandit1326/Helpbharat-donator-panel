@@ -138,10 +138,8 @@ const DashBoard = () => {
   const gotoUpdate = () => {
     navigate(`/setting/${_id}`)
   }
-
-
   return (
-    <>
+    <React.Fragment>
       {/* -------TopHeaderSection---------- */}
 
       <NavSection />
@@ -277,7 +275,7 @@ const DashBoard = () => {
         <Footer />
       </div>
 
-    </>
+    </React.Fragment>
   )
 }
 

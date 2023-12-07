@@ -6,10 +6,13 @@ import Footer from '../../component/footer/Footer';
 import Cookies from 'universal-cookie';
 import { donatorUrl } from '../../utils/url';
 import { toast } from 'react-toastify';
+import Pagination from '../../component/Pagination/Pagination';
 
 
 const MyComments = () => {
   const [comments, setComments] = useState([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
 
   const cookie = new Cookies();
   const tokenWeb = cookie.get('token_web');
@@ -19,7 +22,7 @@ const MyComments = () => {
 
   const fetchUserComments = async () => {
     const toastID = toast.loading('Please Wait')
-    const response = await fetch(`${donatorUrl}get-User-Comments?user_id=${userId}&limit=10&offset=0`, {
+    const response = await fetch(`${donatorUrl}get-User-Comments?user_id=${userId}&limit=${page}`, {
       headers: {
         'Content_Type': 'application/json',
         Authorization: `Bearer ${tokenWeb}`
@@ -41,12 +44,13 @@ const MyComments = () => {
       autoClose: 1500,
       isLoading: false
     })
-    setComments(data.data.comments)
+    setComments(data.data.docs)
+    setTotal(data.data.totalDocs)
   }
 
   useEffect(() => {
     fetchUserComments()
-  }, [])
+  }, [page])
   return (
     <>
       <CustomTab activeLink={"mycomments"} />
@@ -65,30 +69,17 @@ const MyComments = () => {
                     <div className='commentSection'>
                       <div className='Comment-Header'>
                         <img src="/Image/Client.png" alt="Client" />
-                        <span>{item?.name}</span>
-                        <p>{item?.comments}</p>
+                        <span>{item.name ? 'item.name' : 'Punit'}</span>
+                        <p>{item?.text}</p>
                       </div>
                     </div>
                   </Col>
-
-                  {/* <Col xl={12}>
-                  <div className='commentSection mt-2'>
-                    <div className='Comment-Header'>
-                      <img src="/Image/Client2.png" alt="Client2" />
-                      <span>Daniel Redcliff</span>
-                      <p>Kudos to the team behind this fantastic fundraiser! Your dedication and hard work are evident in every aspect of this event. I'm inspired by your commitment to making a difference and helping those in need. This fundraiser not only raises funds but also raises awareness about the pressing issues we face.</p>
-                    </div>
-                    <div className='Comment-footer'>
-                      <p>Reply</p>
-                      <p>Send Thanks</p>
-                    </div>
-                  </div>
-                </Col> */}
 
                 </Row>
               </Accordion.Body>
             </Accordion.Item>))
           }
+          <Pagination total={total} page={page} pageSetter={setPage} />
         </Accordion>
       </Container>
 

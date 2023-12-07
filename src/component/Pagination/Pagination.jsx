@@ -4,10 +4,9 @@ import './pagination.css';
 
 const Pagination = (props) => {
 
-
     // Lenght of data
     const total = props.total;
-    console.log(total, "response 1");
+    // console.log(total, "response 1");
 
     // Total no of pages 
     const noOfPages = Math.ceil(total / 1)

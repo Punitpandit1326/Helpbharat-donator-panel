@@ -19,10 +19,9 @@ const EditDonationTab = () => {
     const [tabDonor, setTabDonor] = useState(null);
     const [recentDonor, setRecentDonor] = useState(null);
     const [coverPhoto, setCoverPhoto] = useState("");
-    const [document, setDocument] = useState("");
     const [error, setError] = useState(null);
-    const [donationTab, setDonationTab] = useState({});
-    const [editCampaign, setEditCampaign] = useState({});
+    const [donationTab, setDonationTab] = useState([]);
+    // const [editCampaign, setEditCampaign] = useState({});
     const [supporters, setSupporters] = useState(null)
     const [activeImage, setActiveImage] = useState("/Image/Img1.png");
     const [activeDoc, setActiveDoc] = useState("/Image/doc1.png");
@@ -79,10 +78,10 @@ const EditDonationTab = () => {
         setDetail({ ...detail, [event.target.name]: event.target.value });
     };
 
-    const handleToggleImage = (src) => {
+    const handleToggleImage = (imageUrl) => {
         setIsFade(false)
-        setActiveImage(src)
-
+        setActiveImage(imageUrl)
+        // setCoverPhoto(imageUrl);
         setTimeout(() => {
             setIsFade(true)
         }, [500])
@@ -172,7 +171,6 @@ const EditDonationTab = () => {
     // ---------------Delete-Post----------
 
     const deletePost = async (id) => {
-
         const toastID = toast.loading('please wait')
 
         const deletePost = {
@@ -209,9 +207,7 @@ const EditDonationTab = () => {
             autoClose: 1500,
             isLoading: false
         })
-
     }
-
 
     useEffect(() => {
         fetchDonationTab()
@@ -222,8 +218,6 @@ const EditDonationTab = () => {
 
     const createdAt = "2023-10-25T05:48:09.437Z";
     const formattedDate = moment(createdAt).format("DD/MM/YYYY");
-
-    // console.log(formattedDate);
 
     return (
         <div>
@@ -248,27 +242,16 @@ const EditDonationTab = () => {
 
                         <div className='Imagesleft'>
 
-                            <Swiper
-                                spaceBetween={0}
-                                slidesPerView={4}
-                                autoplay={{
-                                    delay: 1000,
-                                }}
-                            >
-                                {donationTab?.images?.map((item, index) => (
-                                    <SwiperSlide style={{ width: '100px' }} key={index}>
-                                        <img
-                                            style={{ width: '80px' }}
-                                            src={item.imageUrl}
-                                            alt="Image"
-                                            onClick={() => handleToggleImage(item.imageUrl)}
-                                            onError={({ currentTarget }) => {
-                                                currentTarget.src = "/image/placeholder.png";
-                                            }}
-                                        />
-                                    </SwiperSlide>
-                                ))}
-                            </Swiper>
+                            {donationTab?.images?.map((item, index) => (
+                                <img
+                                    key={index}
+                                    style={{ width: '80px', cursor: 'pointer' }}
+                                    src={item.imageUrl}
+                                    alt="Image"
+                                    onClick={() => handleToggleImage(item.imageUrl)}
+                                    onError={({ currentTarget }) => {
+                                        currentTarget.src = "/image/placeholder.png";
+                                    }} />))}
                         </div>
 
                         <div className="Sectionleftt">

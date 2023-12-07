@@ -13,8 +13,8 @@ const PromotePage = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [showCalendar, setShowCalendar] = useState(false);
 
-
     const navigate = useNavigate();
+
     const handleDateChange = (date) => {
         setSelectedDate(date);
         setShowCalendar(false);
@@ -23,6 +23,7 @@ const PromotePage = () => {
     const handleClick = () => {
         setShowCalendar(true);
     };
+
     return (
         <>
             {/* -------TopHeaderSection---------- */}

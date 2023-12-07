@@ -55,3 +55,17 @@
     border: none;
     color: var(--main-color2);
 }
+
+/* -----------media-Queries--------------- */
+
+@media screen and (max-width: 568px) {
+    .dashboard {
+        margin: 10px 0;
+    }
+
+    .edit-fund button {
+        margin: 10px 0;
+        width: 100%;
+    }
+
+}

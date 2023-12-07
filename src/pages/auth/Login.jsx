@@ -42,7 +42,7 @@ const Login = () => {
                 return
             }
             const token = data.response.data.access_token;
-            console.log(data.response.data.access_token, 'data');
+            // console.log(data.response.data.access_token, 'data');
             const cookie = new Cookies();
             const user = data.response.data.user;
             cookie.set('token_web', token)
